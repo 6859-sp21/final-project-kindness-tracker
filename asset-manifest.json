@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/final-project-kindness-tracker/static/css/main.9d5b29c0.chunk.css",
-    "main.js": "/final-project-kindness-tracker/static/js/main.243bcada.chunk.js",
-    "main.js.map": "/final-project-kindness-tracker/static/js/main.243bcada.chunk.js.map",
-    "runtime-main.js": "/final-project-kindness-tracker/static/js/runtime-main.555de7b0.js",
-    "runtime-main.js.map": "/final-project-kindness-tracker/static/js/runtime-main.555de7b0.js.map",
-    "static/js/2.5c2d6ba7.chunk.js": "/final-project-kindness-tracker/static/js/2.5c2d6ba7.chunk.js",
-    "static/js/2.5c2d6ba7.chunk.js.map": "/final-project-kindness-tracker/static/js/2.5c2d6ba7.chunk.js.map",
-    "static/js/3.9bb78d54.chunk.js": "/final-project-kindness-tracker/static/js/3.9bb78d54.chunk.js",
-    "static/js/3.9bb78d54.chunk.js.map": "/final-project-kindness-tracker/static/js/3.9bb78d54.chunk.js.map",
+    "main.css": "/final-project-kindness-tracker/static/css/main.ff8f7332.chunk.css",
+    "main.js": "/final-project-kindness-tracker/static/js/main.d1537917.chunk.js",
+    "main.js.map": "/final-project-kindness-tracker/static/js/main.d1537917.chunk.js.map",
+    "runtime-main.js": "/final-project-kindness-tracker/static/js/runtime-main.1102ff14.js",
+    "runtime-main.js.map": "/final-project-kindness-tracker/static/js/runtime-main.1102ff14.js.map",
+    "static/js/2.0d409d51.chunk.js": "/final-project-kindness-tracker/static/js/2.0d409d51.chunk.js",
+    "static/js/2.0d409d51.chunk.js.map": "/final-project-kindness-tracker/static/js/2.0d409d51.chunk.js.map",
+    "static/js/3.9b19063a.chunk.js": "/final-project-kindness-tracker/static/js/3.9b19063a.chunk.js",
+    "static/js/3.9b19063a.chunk.js.map": "/final-project-kindness-tracker/static/js/3.9b19063a.chunk.js.map",
     "index.html": "/final-project-kindness-tracker/index.html",
-    "static/css/main.9d5b29c0.chunk.css.map": "/final-project-kindness-tracker/static/css/main.9d5b29c0.chunk.css.map",
-    "static/js/2.5c2d6ba7.chunk.js.LICENSE.txt": "/final-project-kindness-tracker/static/js/2.5c2d6ba7.chunk.js.LICENSE.txt"
+    "static/css/main.ff8f7332.chunk.css.map": "/final-project-kindness-tracker/static/css/main.ff8f7332.chunk.css.map",
+    "static/js/2.0d409d51.chunk.js.LICENSE.txt": "/final-project-kindness-tracker/static/js/2.0d409d51.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.555de7b0.js",
-    "static/js/2.5c2d6ba7.chunk.js",
-    "static/css/main.9d5b29c0.chunk.css",
-    "static/js/main.243bcada.chunk.js"
+    "static/js/runtime-main.1102ff14.js",
+    "static/js/2.0d409d51.chunk.js",
+    "static/css/main.ff8f7332.chunk.css",
+    "static/js/main.d1537917.chunk.js"
   ]
 }
