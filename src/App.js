@@ -17,6 +17,7 @@ const App = () => {
         simpleSheet: true,
       })
         .then(data => {
+          console.log(data)
           setData(data)
         })
         .catch(console.warn)
