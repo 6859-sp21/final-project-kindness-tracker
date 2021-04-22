@@ -71,12 +71,10 @@ const MapViewDemo = ({ data }) => {
                 g.attr("stroke-width", 1 / transform.k);
             }
         },
-        // [data.length]
         []
     )
 
     return (
-        // <h1>Hello World</h1>
         <svg ref={ref}
           style={{
             height: 750,
