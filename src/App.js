@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Tabletop from 'tabletop'
-import { BarChartDemo } from './components'
+import { BarChartDemo, MapViewDemo } from './components'
 import demoData from './data/demo-data'
 
 import './App.css'
@@ -38,6 +38,9 @@ const App = () => {
         </p>
         <div className="bar-wrapper">
           <BarChartDemo data={demoData} />
+        </div>
+        <div className="map-wrapper">
+          <MapViewDemo data={data} />
         </div>
       </header>
     </div>
