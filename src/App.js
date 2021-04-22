@@ -36,9 +36,9 @@ const App = () => {
         <p>
           :-)
         </p>
-        <div className="bar-wrapper">
+        {/* <div className="bar-wrapper">
           <BarChartDemo data={demoData} />
-        </div>
+        </div> */}
         <div className="map-wrapper">
           <MapViewDemo data={data} />
         </div>

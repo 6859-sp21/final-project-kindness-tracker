@@ -1,89 +1,85 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useD3 } from '../hooks'
 import * as d3 from 'd3'
-import * as topojson from 'topojson'
-import us from '../data/states-albers-10m.json'
+import mapboxgl from 'mapbox-gl/dist/mapbox-gl-csp';
+import MapboxWorker from 'worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker';
+
+const MAPBOX_ACCESS_TOKEN = 'pk.eyJ1IjoiY21vcm9uZXkiLCJhIjoiY2tudGNscDJjMDFldDJ3b3pjMTh6ejJyayJ9.YAPmFkdy_Eh9K20cFlIvaQ';
+
+mapboxgl.workerClass = MapboxWorker;
+mapboxgl.accessToken = MAPBOX_ACCESS_TOKEN;
+
 
 const MapViewDemo = ({ data }) => {
     console.log("Map View Demo Data --> ", data)
-    const path = d3.geoPath()
-    const ref = useD3(
-        (svg) => {
-            const width = 975;
-            const height = 610;
 
-            const zoom = d3.zoom()
-                .scaleExtent([1, 8])
-                .on("zoom", zoomed);
+    // Make sure we are only rendering the full map when we actually have data
+    if (data === null) {
+        return null;
+    };
 
-            svg.attr("viewBox", [0, 0, width, height])
-                .on("click", reset);
+    const mapContainer = useRef();
 
-            const g = svg.append("g");
+    useEffect(() => {
+        const map = new mapboxgl.Map({
+            'container': 'map',
+            style: 'mapbox://styles/mapbox/light-v10',
+            // center: [lng, lat],
+            // zoom: zoom
+            center: [-74, 42.25],
+            zoom: 5.6
+        });
 
-            const states = g.append("g")
-                .attr("fill", "#444")
-                .attr("cursor", "pointer")
-                .selectAll("path")
-                .data(topojson.feature(us, us.objects.states).features)
-                .join("path")
-                .on("click", clicked)
-                .attr("d", path);
+        var container = map.getCanvasContainer();
+        var svg = d3
+            .select(container)
+            .append("svg")
+            .attr("width", "100%")
+            .attr("height", "500px")
+            .style("position", "absolute")
+            .style("z-index", 2)
+            .style('top', 0)
+            .style('left', 0);
 
-            states.append("title")
-                .text(d => d.properties.name);
+        // write projection function
+        const project = d => {
+            return map.project(new mapboxgl.LngLat(d[0], d[1]))
+        }
 
-            g.append("path")
-                .attr("fill", "none")
-                .attr("stroke", "white")
-                .attr("stroke-linejoin", "round")
-                .attr("d", path(topojson.mesh(us, us.objects.states, (a, b) => a !== b)));
+        // create data, bind circles to that data
+        // var latLonData = [[-74.5, 40.05], [-74.45, 40.0], [-74.55, 40.0]]; // dummy test data in New Jersey
+        var lonLatData = data.map(obj => {
+            return [+obj.CenterLon, +obj.CenterLat]
+        })
 
-            svg.call(zoom);
+        console.log(lonLatData)
 
-            function reset() {
-                states.transition().style("fill", null);
-                svg.transition().duration(750).call(
-                    zoom.transform,
-                    d3.zoomIdentity,
-                    d3.zoomTransform(svg.node()).invert([width / 2, height / 2])
-                );
-            }
+        var dots = svg
+            .selectAll("circle")
+            .data(lonLatData)
+            .enter()
+            .append("circle")
+            .attr("r", 7)
+            .style("fill", "steelblue")
 
-            function clicked(event, d) {
-                const [[x0, y0], [x1, y1]] = path.bounds(d);
-                event.stopPropagation();
-                states.transition().style("fill", null);
-                d3.select(this).transition().style("fill", "red");
-                svg.transition().duration(750).call(
-                    zoom.transform,
-                    d3.zoomIdentity
-                        .translate(width / 2, height / 2)
-                        .scale(Math.min(8, 0.9 / Math.max((x1 - x0) / width, (y1 - y0) / height)))
-                        .translate(-(x0 + x1) / 2, -(y0 + y1) / 2),
-                    d3.pointer(event, svg.node())
-                );
-            }
+        // define render function for mapbox
+        const render = () => dots 
+            .attr('cx', d => project(d).x)
+            .attr('cy', d => project(d).y)
 
-            function zoomed(event) {
-                const { transform } = event;
-                g.attr("transform", transform);
-                g.attr("stroke-width", 1 / transform.k);
-            }
-        },
-        []
-    )
+        map.on('viewreset', render)
+        map.on('move', render)
+        map.on('moveend', render)
+
+        render()
+
+        return () => map.remove();
+    }, []);
 
     return (
-        <svg ref={ref}
-          style={{
-            height: 750,
-            width: '100%',
-            marginRight: '0px',
-            marginLeft: '0px',
-          }}
-        >
-        </svg>
+        <div>
+            <div className="map-container" ref={mapContainer} id='map'/>
+        </div>
     )
 }
 
