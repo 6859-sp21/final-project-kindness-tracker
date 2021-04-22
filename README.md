@@ -6,13 +6,21 @@ Here we go!
 - Jackson Bernatchez (jrbernat)
 - Kevin Lyons (kalyons)
 
-# install dependencies
+## install dependencies
 
 ```
 npm ci
 ```
 
-# deploy it to GitHub pages
+## run the app on your local machine
+
+(make sure you ran `npm ci` to install dependencies)
+
+```
+npm start
+```
+
+## deploy it to GitHub pages
 
 ```
 npm run deploy
