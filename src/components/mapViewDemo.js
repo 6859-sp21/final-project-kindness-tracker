@@ -40,21 +40,13 @@ const MapViewDemo = ({ data }) => {
             .style('left', 0)
 
         // write projection function
-        const project = d => {
-            return map.project(new mapboxgl.LngLat(d[0], d[1]))
+        const project = ({ CenterLon, CenterLat }) => {
+            return map.project(new mapboxgl.LngLat(CenterLon, CenterLat))
         }
-
-        // create data, bind circles to that data
-        // var latLonData = [[-74.5, 40.05], [-74.45, 40.0], [-74.55, 40.0]] // dummy test data in New Jersey
-        var lonLatData = data.map(obj => {
-            return [+obj.CenterLon, +obj.CenterLat]
-        })
-
-        console.log(lonLatData)
 
         var dots = svg
             .selectAll("circle")
-            .data(lonLatData)
+            .data(data)
             .enter()
             .append("circle")
             .attr("r", 7)
