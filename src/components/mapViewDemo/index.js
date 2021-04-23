@@ -13,7 +13,7 @@ mapboxgl.accessToken = MAPBOX_ACCESS_TOKEN
 const US_CENTER_LAT = 39.8283
 const US_CENTER_LNG = -98.5795
 
-const MapViewDemo = ({ data }) => {
+const MapViewDemo = ({ data, selectedNode, setSelectedNode }) => {
     console.log("Map View Demo Data --> ", data)
 
     // Make sure we are only rendering the full map when we actually have data
@@ -83,15 +83,21 @@ const MapViewDemo = ({ data }) => {
 
                 MapUtils.selectNode(e.target, d)
 
+                // get width of page
+                const pageWidth = window.innerWidth
+
                 // fly there baby
                 map.flyTo({
                     center: [
-                        d.CenterLon,
+                        d.CenterLon - .27,
                         d.CenterLat,
                     ],
-                    zoom: 9,
+                    zoom: 9, // TODO cofigure this zoom amount
                     essential: true // this animation is considered essential with respect to prefers-reduced-motion
                 });
+
+                // set the selected node and callback the parent
+                setSelectedNode(d)
             })
 
         // define render function for mapbox

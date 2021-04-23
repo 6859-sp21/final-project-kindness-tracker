@@ -1,4 +1,5 @@
 import * as d3 from 'd3'
+import * as DataConstants from '../../utils/dataConstants'
 
 const DEFAULT_KINDESS = 'A random act of kindess took place!'
 
@@ -12,9 +13,9 @@ const showTooltip = (e, d) => {
         .style('top', `${e.pageY - 50}px`)
 
     // also update the text
-    const city = d['CITY where act of kindness took place']
-    const state = d['STATE']
-    const kindness = d['[Optional] Tell us about the act of kindness you received!']
+    const city = d[DataConstants.CITY_KEY_NAME]
+    const state = d[DataConstants.STATE_KEY_NAME]
+    const kindness = d[DataConstants.KINDNESS_KEY_NAME]
     const kindnessFormatted = kindness || DEFAULT_KINDESS;
 
     const htmlString = `<p><b>${city}, ${state}</b></p><p>${kindnessFormatted}</p>`

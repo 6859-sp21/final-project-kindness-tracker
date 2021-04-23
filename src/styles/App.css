@@ -36,3 +36,21 @@
     transform: rotate(360deg);
   }
 }
+
+.horizontal-stack {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.left-sidebar {
+  width: 20%;
+  opacity: 0.7;
+  z-index: 100;
+  background: gray;
+  color: white;
+}
