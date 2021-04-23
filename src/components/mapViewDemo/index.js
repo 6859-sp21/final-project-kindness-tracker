@@ -12,12 +12,14 @@ mapboxgl.accessToken = MAPBOX_ACCESS_TOKEN
 
 const US_CENTER_LAT = 39.8283
 const US_CENTER_LNG = -98.5795
+const INITIAL_ZOOM = 3.75
 
-const MapViewDemo = ({ data, selectedNode, setSelectedNode }) => {
+const MapViewDemo = ({ map, data, selectedNode, setSelectedNode }) => {
+    console.log(map)
     console.log("Map View Demo Data --> ", data)
 
     // Make sure we are only rendering the full map when we actually have data
-    if (data === null) {
+    if (data === null || ! map) {
         return null
     }
 
@@ -27,15 +29,9 @@ const MapViewDemo = ({ data, selectedNode, setSelectedNode }) => {
         index: i
     }))
 
-    const mapContainer = useRef()
-
     useEffect(() => {
-        const map = new mapboxgl.Map({
-            'container': 'map',
-            style: 'mapbox://styles/mapbox/light-v10',
-            center: [US_CENTER_LNG, US_CENTER_LAT],
-            zoom: 3.75,
-        })
+        console.log('here!!!')
+        
 
         var container = map.getCanvasContainer()
         var svg = d3
@@ -83,10 +79,7 @@ const MapViewDemo = ({ data, selectedNode, setSelectedNode }) => {
 
                 MapUtils.selectNode(e.target, d)
 
-                // get width of page
-                const pageWidth = window.innerWidth
-
-                // fly there baby
+                // fly there!
                 map.flyTo({
                     center: [
                         d.CenterLon - .27,
@@ -121,10 +114,24 @@ const MapViewDemo = ({ data, selectedNode, setSelectedNode }) => {
         return () => map.remove()
     }, [])
 
+    useEffect(() => {
+        // re-fly to center on selectedNode update
+        if (data && !selectedNode) {
+            map.flyTo({
+                center: [
+                    US_CENTER_LNG - .27,
+                    US_CENTER_LAT,
+                ],
+                zoom: INITIAL_ZOOM,
+                essential: true // this animation is considered essential with respect to prefers-reduced-motion
+            })
+        }
+    }, [data, selectedNode])
+
     return (
-        <div className="map-container" ref={mapContainer} id='map'>
+        <div className="map-container" id="map">
             <div className="map-tooltip" style={{ "opacity": 0 }}>
-                <p>Bhupi Ghupi</p>
+                <p>Tooltip contents will go here.</p>
             </div>
         </div>
     )

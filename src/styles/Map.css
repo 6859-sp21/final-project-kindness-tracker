@@ -17,15 +17,17 @@
 
 .map-tooltip {
     position: absolute;
-    text-align: center;
+    /* text-align: center; */
+    text-align: left;
     width: auto;
     height: auto;
     padding: 10px;
-    font: 0.9em sans-serif;
+    font: sans-serif;
     background-color: white;
     border-width: 1px;
     border-color: #808080;
     border-radius: 10px;
     pointer-events: none;
     z-index: 99;
+    max-width: 250px;
 }

@@ -1,8 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import Tabletop from 'tabletop'
-import { MapViewDemo } from './components'
+import { MapViewDemo, Sidebar } from './components'
+import mapboxgl from 'mapbox-gl/dist/mapbox-gl-csp'
+import MapboxWorker from 'worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker'
+
+
+const MAPBOX_ACCESS_TOKEN = 'pk.eyJ1IjoiY21vcm9uZXkiLCJhIjoiY2tudGNscDJjMDFldDJ3b3pjMTh6ejJyayJ9.YAPmFkdy_Eh9K20cFlIvaQ'
+mapboxgl.workerClass = MapboxWorker
+mapboxgl.accessToken = MAPBOX_ACCESS_TOKEN
+
+const US_CENTER_LAT = 39.8283
+const US_CENTER_LNG = -98.5795
+const INITIAL_ZOOM = 3.75
 
 import './styles/App.css'
+import MapboxGLMap from './components/mapViewDemo/mapboxGLMap'
 
 const App = () => {
   const [data, setData] = useState(null)
@@ -16,7 +28,6 @@ const App = () => {
         simpleSheet: true,
       })
         .then(data => {
-          console.log(data)
           setData(data)
         })
         .catch(console.warn)
@@ -27,12 +38,15 @@ const App = () => {
     <div className="App">
       <div className="horizontal-stack">
         <div className="left-sidebar">
-          <h1>Kindess Tracker</h1>
-          <h3>{selectedNode ? selectedNode.STATE : null}</h3>
-          <h3>{selectedNode ? selectedNode['[Optional] Tell us about the act of kindness you received!'] : null}</h3>
+          <Sidebar selectedNode={selectedNode} setSelectedNode={setSelectedNode} />
         </div>
         <div className="map-wrapper">
-          <MapViewDemo data={data} selectedNode={selectedNode} setSelectedNode={setSelectedNode}  />
+          {/* <MapViewDemo data={data} map={map} selectedNode={selectedNode} setSelectedNode={setSelectedNode}  /> */}
+          <MapboxGLMap
+            data={data}
+            selectedNode={selectedNode}
+            setSelectedNode={setSelectedNode}
+          />
         </div>
       </div>
 
