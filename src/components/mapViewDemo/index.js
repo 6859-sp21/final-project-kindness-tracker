@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import * as d3 from 'd3'
 import mapboxgl from 'mapbox-gl/dist/mapbox-gl-csp'
 import MapboxWorker from 'worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker'
-import { showTooltip, hideTooltip, selectNode } from './mapUtils'
+import * as MapUtils from './mapUtils'
 
 import '../../styles/Map.css'
 
@@ -66,49 +66,58 @@ const MapViewDemo = ({ data }) => {
             .attr("r", 7)
             .style("fill", "steelblue")
             .on('mouseover', (e, d) => {
-                showTooltip(e, d)
+                MapUtils.showTooltip(e, d)
             })
             .on('mouseout', (e, d) => {
-                hideTooltip()
+                MapUtils.hideTooltip()
             })
             .on('click', (e, d) => {
-                // make all other circles steelblue
-                d3.selectAll('.circle')
-                    .transition()
-                    .duration(500)
-                    .style('fill', 'steelblue')
-                
+                MapUtils.resetAllCircleColors()
+
                 // make this circle red
                 const circle = d3.select(`#${uniqueCircleId(d)}`)
                 circle
                     .transition()
                     .duration(500)
                     .style('fill', 'red')
-                
-                    selectNode(e.target, d)
+
+                MapUtils.selectNode(e.target, d)
+
+                // fly there baby
+                map.flyTo({
+                    center: [
+                        d.CenterLon,
+                        d.CenterLat,
+                    ],
+                    zoom: 9,
+                    essential: true // this animation is considered essential with respect to prefers-reduced-motion
+                });
             })
 
         // define render function for mapbox
-        const render = () => dots 
-            .attr('cx', d => project(d).x)
-            .attr('cy', d => project(d).y)
+        const mapRender = () => {
+            // project dots
+            dots
+                .attr('cx', d => project(d).x)
+                .attr('cy', d => project(d).y)
+        }
 
-        map.on('viewreset', render)
-        map.on('move', render)
-        map.on('moveend', render)
+        map.on('viewreset', mapRender)
+        map.on('move', mapRender)
+        map.on('moveend', mapRender)
 
         map.on('load', () => {
             map.resize()
         })
 
-        render()
+        mapRender()
 
         return () => map.remove()
     }, [])
 
     return (
         <div className="map-container" ref={mapContainer} id='map'>
-            <div className="map-tooltip" style={{"opacity": 0}}>
+            <div className="map-tooltip" style={{ "opacity": 0 }}>
                 <p>Bhupi Ghupi</p>
             </div>
         </div>

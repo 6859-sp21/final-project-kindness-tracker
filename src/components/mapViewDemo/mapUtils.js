@@ -33,8 +33,16 @@ const selectNode = (target, d) => {
     return
 } 
 
+const resetAllCircleColors = () => {
+    d3.selectAll('.circle')
+        .transition()
+        .duration(500)
+        .style('fill', 'steelblue')
+}
+
 export {
     showTooltip,
     hideTooltip,
     selectNode,
+    resetAllCircleColors,
 }
