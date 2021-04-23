@@ -4,6 +4,7 @@ import "mapbox-gl/dist/mapbox-gl.css"
 import * as d3 from 'd3'
 import * as MapUtils from './mapUtils'
 import * as DataConstants from '../../utils/dataConstants'
+import MapboxWorker from 'worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker';
 
 import '../../styles/Map.css'
 
@@ -16,9 +17,10 @@ const styles = {
 const US_CENTER_LAT = 39.8283
 const US_CENTER_LNG = -98.5795
 const INITIAL_ZOOM = 3.75
-const POINT_ZOOM = 15
+const POINT_ZOOM = 12
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiY21vcm9uZXkiLCJhIjoiY2tudGNscDJjMDFldDJ3b3pjMTh6ejJyayJ9.YAPmFkdy_Eh9K20cFlIvaQ'
+mapboxgl.workerClass = MapboxWorker;
 
 const MapboxGLMap = ({ data, selectedNode, setSelectedNode, traceNode, traceList, setTraceList, traceIndex }) => {
     const [map, setMap] = useState(null)
