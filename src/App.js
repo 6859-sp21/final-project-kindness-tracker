@@ -27,18 +27,6 @@ const App = () => {
   return (
     <div className="App">
       <header className="App-header">
-        <p>
-          Welcome to Kindness Tracker!
-        </p>
-        <p>
-          {loading ? 'Loading...' : `Loaded ${data.length} rows from Google Sheets!`}
-        </p>
-        <p>
-          :-)
-        </p>
-        {/* <div className="bar-wrapper">
-          <BarChartDemo data={demoData} />
-        </div> */}
         <div className="map-wrapper">
           <MapViewDemo data={data} />
         </div>

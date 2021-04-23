@@ -35,7 +35,7 @@ const MapViewDemo = ({ data }) => {
             .select(container)
             .append("svg")
             .attr("width", "100%")
-            .attr("height", "500px")
+            .attr("height", "100%")
             .style("position", "absolute")
             .style("z-index", 2)
             .style('top', 0)
@@ -71,15 +71,17 @@ const MapViewDemo = ({ data }) => {
         map.on('move', render)
         map.on('moveend', render)
 
+        map.on('load', () => {
+            map.resize()
+        })
+
         render()
 
         return () => map.remove();
     }, []);
 
     return (
-        <div>
-            <div className="map-container" ref={mapContainer} id='map'/>
-        </div>
+        <div className="map-container" ref={mapContainer} id='map'/>
     )
 }
 
