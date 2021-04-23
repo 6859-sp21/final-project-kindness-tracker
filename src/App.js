@@ -18,6 +18,9 @@ import './styles/App.css'
 const App = () => {
   const [data, setData] = useState(null)
   const [selectedNode, setSelectedNode] = useState(null)
+  const [traceNode, setTraceNode] = useState(null)
+  const [traceList, setTraceList] = useState([])
+  const [traceIndex, setTraceIndex] = useState(-1)
 
   useEffect(() => {
     if (data === null) {
@@ -37,7 +40,15 @@ const App = () => {
     <div className="App">
       <div className="horizontal-stack">
         <div className="left-sidebar">
-          <Sidebar selectedNode={selectedNode} setSelectedNode={setSelectedNode} />
+          <Sidebar
+            selectedNode={selectedNode}
+            setSelectedNode={setSelectedNode}
+            setTraceNode={setTraceNode}
+            traceList={traceList}
+            setTraceList={setTraceList}
+            traceIndex={traceIndex}
+            setTraceIndex={setTraceIndex}
+          />
         </div>
         <div className="map-wrapper">
           {/* <MapViewDemo data={data} map={map} selectedNode={selectedNode} setSelectedNode={setSelectedNode}  /> */}
@@ -45,6 +56,10 @@ const App = () => {
             data={data}
             selectedNode={selectedNode}
             setSelectedNode={setSelectedNode}
+            traceNode={traceNode}
+            traceList={traceList}
+            setTraceList={setTraceList}
+            traceIndex={traceIndex}
           />
         </div>
       </div>
