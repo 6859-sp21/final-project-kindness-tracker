@@ -1,24 +1,27 @@
 {
   "files": {
-    "main.css": "/final-project-kindness-tracker/static/css/main.055961ab.chunk.css",
-    "main.js": "/final-project-kindness-tracker/static/js/main.02b8c97d.chunk.js",
-    "main.js.map": "/final-project-kindness-tracker/static/js/main.02b8c97d.chunk.js.map",
-    "runtime-main.js": "/final-project-kindness-tracker/static/js/runtime-main.79e3d6df.js",
-    "runtime-main.js.map": "/final-project-kindness-tracker/static/js/runtime-main.79e3d6df.js.map",
-    "static/js/2.798b6442.chunk.js": "/final-project-kindness-tracker/static/js/2.798b6442.chunk.js",
-    "static/js/2.798b6442.chunk.js.map": "/final-project-kindness-tracker/static/js/2.798b6442.chunk.js.map",
-    "static/js/3.99dada3d.chunk.js": "/final-project-kindness-tracker/static/js/3.99dada3d.chunk.js",
-    "static/js/3.99dada3d.chunk.js.map": "/final-project-kindness-tracker/static/js/3.99dada3d.chunk.js.map",
+    "main.css": "/final-project-kindness-tracker/static/css/main.b6774dc9.chunk.css",
+    "main.js": "/final-project-kindness-tracker/static/js/main.b81e6b45.chunk.js",
+    "main.js.map": "/final-project-kindness-tracker/static/js/main.b81e6b45.chunk.js.map",
+    "runtime-main.js": "/final-project-kindness-tracker/static/js/runtime-main.4152397b.js",
+    "runtime-main.js.map": "/final-project-kindness-tracker/static/js/runtime-main.4152397b.js.map",
+    "static/css/2.19072978.chunk.css": "/final-project-kindness-tracker/static/css/2.19072978.chunk.css",
+    "static/js/2.e97a5a14.chunk.js": "/final-project-kindness-tracker/static/js/2.e97a5a14.chunk.js",
+    "static/js/2.e97a5a14.chunk.js.map": "/final-project-kindness-tracker/static/js/2.e97a5a14.chunk.js.map",
+    "static/js/3.a27443aa.chunk.js": "/final-project-kindness-tracker/static/js/3.a27443aa.chunk.js",
+    "static/js/3.a27443aa.chunk.js.map": "/final-project-kindness-tracker/static/js/3.a27443aa.chunk.js.map",
     "index.html": "/final-project-kindness-tracker/index.html",
-    "static/css/main.055961ab.chunk.css.map": "/final-project-kindness-tracker/static/css/main.055961ab.chunk.css.map",
-    "static/js/2.798b6442.chunk.js.LICENSE.txt": "/final-project-kindness-tracker/static/js/2.798b6442.chunk.js.LICENSE.txt",
+    "static/css/2.19072978.chunk.css.map": "/final-project-kindness-tracker/static/css/2.19072978.chunk.css.map",
+    "static/css/main.b6774dc9.chunk.css.map": "/final-project-kindness-tracker/static/css/main.b6774dc9.chunk.css.map",
+    "static/js/2.e97a5a14.chunk.js.LICENSE.txt": "/final-project-kindness-tracker/static/js/2.e97a5a14.chunk.js.LICENSE.txt",
     "static/js/mapbox-gl-csp-worker.decd147c.worker.js": "/final-project-kindness-tracker/static/js/mapbox-gl-csp-worker.decd147c.worker.js",
     "static/js/mapbox-gl-csp-worker.decd147c.worker.js.map": "/final-project-kindness-tracker/static/js/mapbox-gl-csp-worker.decd147c.worker.js.map"
   },
   "entrypoints": [
-    "static/js/runtime-main.79e3d6df.js",
-    "static/js/2.798b6442.chunk.js",
-    "static/css/main.055961ab.chunk.css",
-    "static/js/main.02b8c97d.chunk.js"
+    "static/js/runtime-main.4152397b.js",
+    "static/css/2.19072978.chunk.css",
+    "static/js/2.e97a5a14.chunk.js",
+    "static/css/main.b6774dc9.chunk.css",
+    "static/js/main.b81e6b45.chunk.js"
   ]
 }
