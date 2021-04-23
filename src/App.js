@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import Tabletop from 'tabletop'
-import { BarChartDemo, MapViewDemo } from './components'
-import demoData from './data/demo-data'
+import { MapViewDemo } from './components'
 
-import './App.css'
+import './styles/App.css'
 
 const App = () => {
   const [data, setData] = useState(null)
-  const loading = data === null
 
   useEffect(() => {
     if (data === null) {

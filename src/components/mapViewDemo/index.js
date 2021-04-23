@@ -2,6 +2,9 @@ import React, { useEffect, useRef, useState } from 'react'
 import * as d3 from 'd3'
 import mapboxgl from 'mapbox-gl/dist/mapbox-gl-csp'
 import MapboxWorker from 'worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker'
+import { showTooltip, hideTooltip } from './mapUtils'
+
+import '../../styles/Map.css'
 
 const MAPBOX_ACCESS_TOKEN = 'pk.eyJ1IjoiY21vcm9uZXkiLCJhIjoiY2tudGNscDJjMDFldDJ3b3pjMTh6ejJyayJ9.YAPmFkdy_Eh9K20cFlIvaQ'
 mapboxgl.workerClass = MapboxWorker
@@ -51,6 +54,12 @@ const MapViewDemo = ({ data }) => {
             .append("circle")
             .attr("r", 7)
             .style("fill", "steelblue")
+            .on('mouseover', (e, d) => {
+                showTooltip(e, d)
+            })
+            .on('mouseout', (e, d) => {
+                hideTooltip()
+            })
 
         // define render function for mapbox
         const render = () => dots 
@@ -71,7 +80,11 @@ const MapViewDemo = ({ data }) => {
     }, [])
 
     return (
-        <div className="map-container" ref={mapContainer} id='map'/>
+        <div className="map-container" ref={mapContainer} id='map'>
+            <div className="map-tooltip" style={{"opacity": 0}}>
+                <p>Bhupi Ghupi</p>
+            </div>
+        </div>
     )
 }
 
