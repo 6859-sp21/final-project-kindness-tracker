@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import * as d3 from 'd3'
 import mapboxgl from 'mapbox-gl/dist/mapbox-gl-csp'
 import MapboxWorker from 'worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker'
-import { showTooltip, hideTooltip } from './mapUtils'
+import { showTooltip, hideTooltip, selectNode } from './mapUtils'
 
 import '../../styles/Map.css'
 
@@ -20,6 +20,12 @@ const MapViewDemo = ({ data }) => {
     if (data === null) {
         return null
     }
+
+    // add unique index to each datum
+    const dataProc = data.map((d, i) => ({
+        ...d,
+        index: i
+    }))
 
     const mapContainer = useRef()
 
@@ -47,11 +53,16 @@ const MapViewDemo = ({ data }) => {
             return map.project(new mapboxgl.LngLat(CenterLon, CenterLat))
         }
 
+        // write function to generate ID of circle
+        const uniqueCircleId = d => `circle-${d.index}`
+
         var dots = svg
             .selectAll("circle")
-            .data(data)
+            .data(dataProc)
             .enter()
             .append("circle")
+            .attr('class', 'circle')
+            .attr('id', uniqueCircleId)
             .attr("r", 7)
             .style("fill", "steelblue")
             .on('mouseover', (e, d) => {
@@ -59,6 +70,22 @@ const MapViewDemo = ({ data }) => {
             })
             .on('mouseout', (e, d) => {
                 hideTooltip()
+            })
+            .on('click', (e, d) => {
+                // make all other circles steelblue
+                d3.selectAll('.circle')
+                    .transition()
+                    .duration(500)
+                    .style('fill', 'steelblue')
+                
+                // make this circle red
+                const circle = d3.select(`#${uniqueCircleId(d)}`)
+                circle
+                    .transition()
+                    .duration(500)
+                    .style('fill', 'red')
+                
+                    selectNode(e.target, d)
             })
 
         // define render function for mapbox

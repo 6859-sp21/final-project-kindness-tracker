@@ -8,7 +8,7 @@ const showTooltip = (e, d) => {
         .transition()
         .duration(0)
         .style('opacity', 0.8)
-        .style('left', `${e.pageX}px`)
+        .style('left', `${e.pageX + 50}px`)
         .style('top', `${e.pageY - 50}px`)
 
     // also update the text
@@ -29,7 +29,12 @@ const hideTooltip = () => {
         .style("opacity", 0)
 }
 
+const selectNode = (target, d) => {
+    return
+} 
+
 export {
     showTooltip,
-    hideTooltip
+    hideTooltip,
+    selectNode,
 }
