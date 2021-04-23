@@ -96,11 +96,9 @@ const MapboxGLMap = ({ data, selectedNode, setSelectedNode }) => {
 
                     MapUtils.selectNode(e.target, d)
 
-                    // fly there!
                     map.flyTo({
                         center: [
-                            d.CenterLon - .27,
-                            d.CenterLat,
+                            d.CenterLon, d.CenterLat
                         ],
                         zoom: 9, // TODO cofigure this zoom amount
                         essential: true // this animation is considered essential with respect to prefers-reduced-motion
@@ -138,7 +136,7 @@ const MapboxGLMap = ({ data, selectedNode, setSelectedNode }) => {
             console.log('three')
             map.flyTo({
                 center: [
-                    US_CENTER_LNG - .27,
+                    US_CENTER_LNG,
                     US_CENTER_LAT,
                 ],
                 zoom: INITIAL_ZOOM,

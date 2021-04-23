@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Tabletop from 'tabletop'
-import { MapViewDemo, Sidebar } from './components'
+import { Sidebar, MapboxGLMap } from './components'
 import mapboxgl from 'mapbox-gl/dist/mapbox-gl-csp'
 import MapboxWorker from 'worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker'
 
@@ -14,7 +14,6 @@ const US_CENTER_LNG = -98.5795
 const INITIAL_ZOOM = 3.75
 
 import './styles/App.css'
-import MapboxGLMap from './components/mapViewDemo/mapboxGLMap'
 
 const App = () => {
   const [data, setData] = useState(null)

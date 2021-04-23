@@ -1,9 +1,9 @@
 import BarChartDemo from './barChartDemo'
-import MapViewDemo from './mapViewDemo'
+import MapboxGLMap from './mapboxGLMap'
 import Sidebar from './sidebar'
 
 export {
     BarChartDemo,
-    MapViewDemo,
+    MapboxGLMap,
     Sidebar,
 }
