@@ -26,7 +26,8 @@ const App = () => {
     if (data === null) {
       Tabletop.init({
         // TODO add this key to some environment variable, don't hard-code here
-        key: 'https://docs.google.com/spreadsheets/d/1IqEBIcnFZ_BFCrD8jhk11yVoOjfxzZpiZLdL4cL3oK0/pubhtml',
+        // key: 'https://docs.google.com/spreadsheets/d/1IqEBIcnFZ_BFCrD8jhk11yVoOjfxzZpiZLdL4cL3oK0/pubhtml',
+        key: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTY474cBzfry5jIkizjRvLin6Dl2jfJhXb_ZtHAB71ObXHUqHy7W1Tz2vf0oB3VTO8XvF1eX6TzxeJ0/pubhtml',
         simpleSheet: true,
       })
         .then(data => {

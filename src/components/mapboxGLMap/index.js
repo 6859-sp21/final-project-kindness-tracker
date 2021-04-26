@@ -23,6 +23,7 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiY21vcm9uZXkiLCJhIjoiY2tudGNscDJjMDFldDJ3b3pjM
 mapboxgl.workerClass = MapboxWorker;
 
 const MapboxGLMap = ({ data, selectedNode, setSelectedNode, traceNode, traceList, setTraceList, traceIndex }) => {
+    console.log("Here is the new Data ==> ", data)
     const [map, setMap] = useState(null)
     const mapContainer = useRef(null)
 
@@ -182,8 +183,10 @@ const MapboxGLMap = ({ data, selectedNode, setSelectedNode, traceNode, traceList
             const currentNode = traceList[traceIndex]
             map.flyTo({
                 center: [
-                    currentNode.CenterLon,
-                    currentNode.CenterLat,
+                    // currentNode.CenterLon,
+                    // currentNode.CenterLat,
+                    currentNode.CENTER_LNG_KEY_NAME,
+                    currentNode.CENTER_LAT_KEY_NAME,
                 ],
                 zoom: POINT_ZOOM,
                 essential: true,
