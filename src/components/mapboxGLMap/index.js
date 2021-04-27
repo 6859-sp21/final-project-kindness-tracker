@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react"
 import mapboxgl from "mapbox-gl"
-import "mapbox-gl/dist/mapbox-gl.css"
+// import "mapbox-gl/dist/mapbox-gl.css"
 import * as d3 from 'd3'
 import * as MapUtils from './mapUtils'
 import * as DataConstants from '../../utils/dataConstants'
@@ -16,9 +16,6 @@ const styles = {
     position: "absolute"
 }
 
-const US_CENTER_LAT = 39.8283
-const US_CENTER_LNG = -98.5795
-const INITIAL_ZOOM = 3.75
 const POINT_ZOOM = 12
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiY21vcm9uZXkiLCJhIjoiY2tudGNscDJjMDFldDJ3b3pjMTh6ejJyayJ9.YAPmFkdy_Eh9K20cFlIvaQ'
@@ -36,24 +33,20 @@ const MapboxGLMap = ({ setIsLoading, data, selectedNode, setSelectedNode, hovere
     // write function to generate class of circle based off id key
     const circleClass = d => `circle circle-${d[DataConstants.ID_KEY_NAME]}`
 
-    const initializeMap = ({ setMap, mapContainer }) => {
-        const myMap = new mapboxgl.Map({
-            container: mapContainer.current,
-            style: "mapbox://styles/mapbox/light-v10",
-            center: [US_CENTER_LNG, US_CENTER_LAT],
-            zoom: INITIAL_ZOOM,
-        })
-
-        myMap.on("load", () => {
-            setMap(myMap)
-        })
-    }
+    // get the bounds of our data
+    const boundingObject = dataProc ? DataUtils.computeLngLatBoundingBox(
+        dataProc.map(d => ({
+            lng: d[DataConstants.CENTER_LNG_KEY_NAME],
+            lat: d[DataConstants.CENTER_LAT_KEY_NAME],
+        })),
+        200
+    ) : null
 
     useEffect(() => {
-        if (!map) {
-            initializeMap({ setMap, mapContainer })
+        if (!map && dataProc) {
+            MapUtils.initializeMap({ setMap, mapContainer, boundingObject })
         }
-    }, [map])
+    }, [map, dataProc])
 
     useEffect(() => {
         if (map && data !== null) {
@@ -149,14 +142,7 @@ const MapboxGLMap = ({ setIsLoading, data, selectedNode, setSelectedNode, hovere
     useEffect(() => {
         // re-fly to center on selectedNode update
         if (map && data && !selectedNode) {
-            map.flyTo({
-                center: [
-                    US_CENTER_LNG,
-                    US_CENTER_LAT,
-                ],
-                zoom: INITIAL_ZOOM,
-                essential: true // this animation is considered essential with respect to prefers-reduced-motion
-            })
+            MapUtils.zoomMapToBoundingObject(map, boundingObject)
             MapUtils.resetAllCircleColors()
         }
     }, [map, data, selectedNode])
@@ -173,15 +159,8 @@ const MapboxGLMap = ({ setIsLoading, data, selectedNode, setSelectedNode, hovere
                 .duration(500)
                 .style('fill', 'purple')
             
-            // for now, re-fly map
-            map.flyTo({
-                center: [
-                    US_CENTER_LNG,
-                    US_CENTER_LAT,
-                ],
-                zoom: INITIAL_ZOOM,
-                essential: true,
-            })
+            // for now, re-fly map to center
+            MapUtils.zoomMapToBoundingObject(map, boundingObject)
 
             // set the trace list
             setTraceList(dataFilt)

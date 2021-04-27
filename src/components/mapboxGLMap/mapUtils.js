@@ -1,4 +1,27 @@
 import * as d3 from 'd3'
+import mapboxgl from "mapbox-gl"
+
+const initializeMap = ({ setMap, mapContainer, boundingObject }) => {
+    const myMap = new mapboxgl.Map({
+        container: mapContainer.current,
+        style: 'mapbox://styles/mapbox/light-v10',
+    })
+
+    // immediately center based on the bounding box of our data points
+    zoomMapToBoundingObject(myMap, boundingObject)
+
+    myMap.on("load", () => {
+        setMap(myMap)
+    })
+}
+
+const zoomMapToBoundingObject = (map, boundingObject) => {
+    const { topRight, bottomLeft } = boundingObject
+    map.fitBounds([
+        [bottomLeft.lng, bottomLeft.lat],
+        [topRight.lng, topRight.lat]
+    ]);
+}
 
 const showTooltip = (e, d) => {
     const tooltip = d3.select('.map-tooltip')
@@ -30,6 +53,8 @@ const resetAllCircleColors = () => {
 }
 
 export {
+    initializeMap,
+    zoomMapToBoundingObject,
     showTooltip,
     hideTooltip,
     selectNode,
