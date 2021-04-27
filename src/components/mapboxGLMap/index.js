@@ -33,6 +33,9 @@ const MapboxGLMap = ({ setIsLoading, data, selectedNode, setSelectedNode, hovere
     // write function to generate ID of circle
     const uniqueCircleId = d => `circle-${d.index}`
 
+    // write function to generate class of circle based off id key
+    const circleClass = d => `circle circle-${d[DataConstants.ID_KEY_NAME]}`
+
     const initializeMap = ({ setMap, mapContainer }) => {
         const myMap = new mapboxgl.Map({
             container: mapContainer.current,
@@ -76,9 +79,9 @@ const MapboxGLMap = ({ setIsLoading, data, selectedNode, setSelectedNode, hovere
                 .selectAll("circle")
                 .data(dataProc)
                 .enter()
-                .append("circle")
-                .attr('class', 'circle')
+                .append('circle')
                 .attr('id', uniqueCircleId)
+                .attr('class', circleClass)
                 .attr("r", 10)
                 .style("fill", "steelblue")
                 .on('mouseover', (e, d) => {
