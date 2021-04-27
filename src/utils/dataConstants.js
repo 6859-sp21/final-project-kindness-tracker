@@ -1,3 +1,4 @@
+const TIMESTAMP_KEY_NAME = 'Timestamp'
 const ID_KEY_NAME = 'ID NUMBER on kindness card'
 const CITY_KEY_NAME = 'CITY where act of kindness took place'
 const STATE_KEY_NAME = 'STATE'
@@ -10,8 +11,11 @@ const CENTER_LAT_KEY_NAME = 'CenterLat'
 const TEST_DATA_URL = 'https://docs.google.com/spreadsheets/d/1IqEBIcnFZ_BFCrD8jhk11yVoOjfxzZpiZLdL4cL3oK0/pubhtml'
 const SPOOF_DATA_URL = 'https://docs.google.com/spreadsheets/d/1BvBwyy1xYYhdiokMfbyxssu5nlB0arRMvxyuQLCzsH4/pubhtml'
 
+const TIMESTAMP_FORMAT = 'mm/dd/yyyy h:mm:ss a'
+
 // TOOD add constants for new parsed geo fields when those are avaiable
 // Spoof Data Names
+// const TIMESTAMP_KEY_NAME = 'Timestamp'
 // const ID_KEY_NAME = 'id'
 // const STREET_KEY_NAME = 'street'
 // const STATE_KEY_NAME = 'admin_level_1'
@@ -22,6 +26,7 @@ const SPOOF_DATA_URL = 'https://docs.google.com/spreadsheets/d/1BvBwyy1xYYhdiokM
 // const CENTER_LAT_KEY_NAME = 'center_lat'
 
 export {
+    TIMESTAMP_KEY_NAME,
     ID_KEY_NAME,
     CITY_KEY_NAME,
     STATE_KEY_NAME,
@@ -33,4 +38,6 @@ export {
 
     TEST_DATA_URL,
     SPOOF_DATA_URL,
+
+    TIMESTAMP_FORMAT,
 }

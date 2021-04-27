@@ -4,15 +4,11 @@ import { Sidebar, MapboxGLMap } from './components'
 import mapboxgl from 'mapbox-gl/dist/mapbox-gl-csp'
 import MapboxWorker from 'worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker'
 import * as DataConstants from './utils/dataConstants'
-
+import * as DataUtils from './utils/dataUtils'
 
 const MAPBOX_ACCESS_TOKEN = 'pk.eyJ1IjoiY21vcm9uZXkiLCJhIjoiY2tudGNscDJjMDFldDJ3b3pjMTh6ejJyayJ9.YAPmFkdy_Eh9K20cFlIvaQ'
 mapboxgl.workerClass = MapboxWorker
 mapboxgl.accessToken = MAPBOX_ACCESS_TOKEN
-
-const US_CENTER_LAT = 39.8283
-const US_CENTER_LNG = -98.5795
-const INITIAL_ZOOM = 3.75
 
 import './styles/App.css'
 
@@ -32,7 +28,9 @@ const App = () => {
         simpleSheet: true,
       })
         .then(data => {
-          setData(data)
+          // process data right away
+          const dataProc = DataUtils.processRawSheetsData(data)
+          setData(dataProc)
         })
         .catch(console.warn)
     }

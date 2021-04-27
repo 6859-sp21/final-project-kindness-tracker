@@ -27,7 +27,7 @@ const MapboxGLMap = ({ setIsLoading, data, selectedNode, setSelectedNode, hovere
     const [map, setMap] = useState(null)
     const mapContainer = useRef(null)
 
-    const dataProc = DataUtils.processRawSheetsData(data)
+    console.log('rendering map')
 
     // write function to generate ID of circle
     const uniqueCircleId = d => `circle-${d.index}`
@@ -42,8 +42,8 @@ const MapboxGLMap = ({ setIsLoading, data, selectedNode, setSelectedNode, hovere
     }))
 
     // get the bounds of our data
-    const boundingObject = dataProc ? DataUtils.computeLngLatBoundingBox(
-        generateLngLatArray(dataProc), 200
+    const boundingObject = data ? DataUtils.computeLngLatBoundingBox(
+        generateLngLatArray(data), 200
     ) : null
 
     const setAllEventHandlers = () => {
@@ -85,11 +85,11 @@ const MapboxGLMap = ({ setIsLoading, data, selectedNode, setSelectedNode, hovere
     }
 
     useEffect(() => {
-        if (!map && dataProc) {
+        if (!map && data) {
             console.log('one')
             MapUtils.initializeMap({ setMap, mapContainer, boundingObject })
         }
-    }, [map, dataProc])
+    }, [map, data])
 
     useEffect(() => {
         if (map && data !== null) {
@@ -114,7 +114,7 @@ const MapboxGLMap = ({ setIsLoading, data, selectedNode, setSelectedNode, hovere
 
             var dots = svg
                 .selectAll("circle")
-                .data(dataProc)
+                .data(data)
                 .enter()
                 .append('circle')
                 .attr('id', uniqueCircleId)
@@ -165,7 +165,7 @@ const MapboxGLMap = ({ setIsLoading, data, selectedNode, setSelectedNode, hovere
     useEffect(() => {
         if (traceNode) {
             console.log('four')
-            const dataFilt = dataProc.filter(d => d[DataConstants.ID_KEY_NAME] == traceNode[DataConstants.ID_KEY_NAME])
+            const dataFilt = data.filter(d => d[DataConstants.ID_KEY_NAME] == traceNode[DataConstants.ID_KEY_NAME])
 
             // Remove all circles that aren't in the given class name, and also disable their events
             const otherCircles = d3.selectAll('.circle')
@@ -234,4 +234,12 @@ const MapboxGLMap = ({ setIsLoading, data, selectedNode, setSelectedNode, hovere
     </div>
 }
 
-export default MapboxGLMap
+export default React.memo(MapboxGLMap, (prevProps, nextProps) => {
+    // { setIsLoading, data, selectedNode, setSelectedNode, hoveredNode, setHoveredNode, traceNode, traceList, setTraceList, traceIndex }
+    return prevProps.data === nextProps.data &&
+    prevProps.selectedNode === nextProps.selectedNode &&
+    prevProps.hoveredNode === nextProps.hoveredNode &&
+    prevProps.traceNode === nextProps.traceNode &&
+    prevProps.traceList === nextProps.traceList &&
+    prevProps.traceIndex === nextProps.traceIndex
+})

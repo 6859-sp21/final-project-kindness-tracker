@@ -1,6 +1,7 @@
 import * as DataConstants from '../../utils/dataConstants'
 
 const TraceStepper = ({ traceList, traceIndex, setTraceIndex }) => {
+    console.log('rendering trace')
     return (
         traceList ? (
             traceList.map((d, i) => {

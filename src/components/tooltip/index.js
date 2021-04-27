@@ -7,6 +7,8 @@ const TooltipContents = ({ node, isSelected }) => {
         return null;
     }
 
+    console.log('rendering tooltip')
+
     const city = node[DataConstants.CITY_KEY_NAME]
     const state = node[DataConstants.STATE_KEY_NAME]
     const kindness = node[DataConstants.KINDNESS_KEY_NAME]
