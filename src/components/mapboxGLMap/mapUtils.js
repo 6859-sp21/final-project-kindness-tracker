@@ -41,10 +41,6 @@ const hideTooltip = (callback) => {
         .on('end', callback)
 }
 
-const selectNode = (target, d) => {
-    return
-} 
-
 const resetAllCircleColors = () => {
     return d3.selectAll('.circle')
         .transition()
@@ -52,11 +48,19 @@ const resetAllCircleColors = () => {
         .style('fill', 'steelblue')
 }
 
+const clearAllEventHandlers = (selection) => {
+    selection
+        .on('mouseover', null)
+        .on('mousemove', null)
+        .on('mouseout', null)
+        .on('click', null)
+}
+
 export {
     initializeMap,
     zoomMapToBoundingObject,
     showTooltip,
     hideTooltip,
-    selectNode,
     resetAllCircleColors,
+    clearAllEventHandlers,
 }
