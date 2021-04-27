@@ -48,7 +48,7 @@ const computeLngLatBoundingBox = (lngLatPoints, paddingMiles, isRatioPadding = f
             lat: minLat + paddingDegreesLat,
         },
         bottomLeft: {
-            lng: minLng - paddingDegreesLng * 6,
+            lng: minLng - paddingDegreesLng * 8,
             lat: maxLat - paddingDegreesLat,
         }
     }

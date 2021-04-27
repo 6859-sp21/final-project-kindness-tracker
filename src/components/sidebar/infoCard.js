@@ -5,7 +5,8 @@ const SidebarInfoCard = () => {
     console.log('rendering side info card')
     return (
         <div>
-            <p>Click a circle to explore that act of kindness further!</p>
+            <hr className="sidebar-divider"/>
+            <h3>Click a circle to explore that act of kindness further!</h3>
         </div>
     )
 }

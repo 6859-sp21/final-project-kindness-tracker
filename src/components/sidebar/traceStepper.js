@@ -14,11 +14,9 @@ const TraceStepper = ({ isTracing, setIsTracing, traceList, traceIndex, setTrace
     return (
         <div className="trace-stepper-wrapper">
             <div className="trace-stepper-button-horizontal">
+            <button disabled={traceIndex === 0} onClick={() => setTraceIndex(0)}>Earliest</button>
                 <button disabled={traceIndex === 0} onClick={() => setTraceIndex(traceIndex - 1)}>Previous</button>
                 <button disabled={traceIndex === traceList.length - 1} onClick={() => setTraceIndex(traceIndex + 1)}>Next</button>
-            </div>
-            <div className="trace-stepper-button-horizontal">
-                <button disabled={traceIndex === 0} onClick={() => setTraceIndex(0)}>Earliest</button>
                 <button disabled={traceIndex === traceList.length - 1} onClick={() => setTraceIndex(traceList.length - 1)}>Latest</button>
             </div>
             <p>{`${traceIndex + 1} / ${traceList.length}`}</p>

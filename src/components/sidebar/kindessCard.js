@@ -1,10 +1,10 @@
 import * as DataConstants from '../../utils/dataConstants'
-import { DateTime } from  'luxon'
+import { DateTime } from 'luxon'
 
 const KindnessCard = ({ node }) => {
     console.log('rendering card')
     // handle null node case
-    if (! node) {
+    if (!node) {
         return null;
     }
 
@@ -29,7 +29,9 @@ const KindnessCard = ({ node }) => {
             <p>State: <b>{state || 'No state provided.'}</b></p>
             <p>Zip Code: <b>{zip || 'No zip code provided.'}</b></p>
             <p>Act of Kindness Description:</p>
-            <p><b>{kindness || 'No kindess description provided.'}</b></p>
+            <div className="kindess-card-description">
+                <p><b>{kindness || 'No kindess description provided.'}</b></p>
+            </div>
         </div>
     )
 }
