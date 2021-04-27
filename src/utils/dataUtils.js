@@ -17,10 +17,14 @@ const nodesAreEqual = (one, two) => {
     return one.index == two.index
 }
 
-const computeLngLatBoundingBox = (lngLatPoints, paddingMiles) => {
+const computeLngLatBoundingBox = (lngLatPoints, paddingMiles, isRatioPadding = false) => {
     // compute top right and bottom left
     // then, add some padding amount in miles
-    const paddingDegrees = paddingMiles / DEGREES_TO_MILES
+    var paddingDegreesLng = 0
+    var paddingDegreesLat = 0
+    if (! isRatioPadding)
+        paddingDegreesLng = paddingMiles / DEGREES_TO_MILES
+        paddingDegreesLat = paddingDegreesLng
 
     const extractKey = key => lngLatPoints.map((d => d[key]))
 
@@ -29,14 +33,19 @@ const computeLngLatBoundingBox = (lngLatPoints, paddingMiles) => {
     const maxLat = Math.max(...extractKey(LAT_KEY))
     const minLat = Math.min(...extractKey(LAT_KEY))
 
+    if (isRatioPadding) {
+        paddingDegreesLng = (maxLng - minLng) * paddingMiles
+        paddingDegreesLat = (maxLat - minLat) * paddingMiles
+    }
+
     return {
         topRight: {
-            lng: maxLng + paddingDegrees,
-            lat: minLat + paddingDegrees,
+            lng: maxLng + paddingDegreesLng,
+            lat: minLat + paddingDegreesLat,
         },
         bottomLeft: {
-            lng: minLng - paddingDegrees * 6,
-            lat: maxLat - paddingDegrees,
+            lng: minLng - paddingDegreesLng * 6,
+            lat: maxLat - paddingDegreesLat,
         }
     }
 }

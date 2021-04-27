@@ -86,12 +86,14 @@ const MapboxGLMap = ({ setIsLoading, data, selectedNode, setSelectedNode, hovere
 
     useEffect(() => {
         if (!map && dataProc) {
+            console.log('one')
             MapUtils.initializeMap({ setMap, mapContainer, boundingObject })
         }
     }, [map, dataProc])
 
     useEffect(() => {
         if (map && data !== null) {
+            console.log('two')
             var container = map.getCanvasContainer()
             var svg = d3
                 .select(container)
@@ -151,6 +153,7 @@ const MapboxGLMap = ({ setIsLoading, data, selectedNode, setSelectedNode, hovere
     useEffect(() => {
         // re-fly to center on selectedNode update, as long as we are not tracing
         if (map && data && !selectedNode) {
+            console.log('three')
             MapUtils.zoomMapToBoundingObject(map, boundingObject)
             MapUtils.resetAllCircleColors()
                 .attr("r", DEFAULT_RADIUS)
@@ -161,6 +164,7 @@ const MapboxGLMap = ({ setIsLoading, data, selectedNode, setSelectedNode, hovere
 
     useEffect(() => {
         if (traceNode) {
+            console.log('four')
             const dataFilt = dataProc.filter(d => d[DataConstants.ID_KEY_NAME] == traceNode[DataConstants.ID_KEY_NAME])
 
             // Remove all circles that aren't in the given class name, and also disable their events
@@ -183,7 +187,8 @@ const MapboxGLMap = ({ setIsLoading, data, selectedNode, setSelectedNode, hovere
             // TODO write logic for ratio-based padding
             const boundingObjectFilt = DataUtils.computeLngLatBoundingBox(
                 generateLngLatArray(dataFilt),
-                100
+                0.05,
+                true
             )
             MapUtils.zoomMapToBoundingObject(map, boundingObjectFilt)
 
@@ -194,6 +199,7 @@ const MapboxGLMap = ({ setIsLoading, data, selectedNode, setSelectedNode, hovere
 
     useEffect(() => {
         if (map && traceList && traceIndex > -1) {
+            console.log('five')
             // // get the node at the index and fly there!
             // const currentNode = traceList[traceIndex]
             // map.flyTo({
