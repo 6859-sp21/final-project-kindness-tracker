@@ -1,27 +1,27 @@
 {
   "files": {
-    "main.css": "/final-project-kindness-tracker/static/css/main.fee27ca1.chunk.css",
-    "main.js": "/final-project-kindness-tracker/static/js/main.c3a9d264.chunk.js",
-    "main.js.map": "/final-project-kindness-tracker/static/js/main.c3a9d264.chunk.js.map",
-    "runtime-main.js": "/final-project-kindness-tracker/static/js/runtime-main.4152397b.js",
-    "runtime-main.js.map": "/final-project-kindness-tracker/static/js/runtime-main.4152397b.js.map",
+    "main.css": "/final-project-kindness-tracker/static/css/main.3b923b81.chunk.css",
+    "main.js": "/final-project-kindness-tracker/static/js/main.ab258452.chunk.js",
+    "main.js.map": "/final-project-kindness-tracker/static/js/main.ab258452.chunk.js.map",
+    "runtime-main.js": "/final-project-kindness-tracker/static/js/runtime-main.8cfc91d8.js",
+    "runtime-main.js.map": "/final-project-kindness-tracker/static/js/runtime-main.8cfc91d8.js.map",
     "static/css/2.19072978.chunk.css": "/final-project-kindness-tracker/static/css/2.19072978.chunk.css",
     "static/js/2.79f7a470.chunk.js": "/final-project-kindness-tracker/static/js/2.79f7a470.chunk.js",
     "static/js/2.79f7a470.chunk.js.map": "/final-project-kindness-tracker/static/js/2.79f7a470.chunk.js.map",
-    "static/js/3.a27443aa.chunk.js": "/final-project-kindness-tracker/static/js/3.a27443aa.chunk.js",
-    "static/js/3.a27443aa.chunk.js.map": "/final-project-kindness-tracker/static/js/3.a27443aa.chunk.js.map",
+    "static/js/3.c1d1b475.chunk.js": "/final-project-kindness-tracker/static/js/3.c1d1b475.chunk.js",
+    "static/js/3.c1d1b475.chunk.js.map": "/final-project-kindness-tracker/static/js/3.c1d1b475.chunk.js.map",
     "index.html": "/final-project-kindness-tracker/index.html",
     "static/css/2.19072978.chunk.css.map": "/final-project-kindness-tracker/static/css/2.19072978.chunk.css.map",
-    "static/css/main.fee27ca1.chunk.css.map": "/final-project-kindness-tracker/static/css/main.fee27ca1.chunk.css.map",
+    "static/css/main.3b923b81.chunk.css.map": "/final-project-kindness-tracker/static/css/main.3b923b81.chunk.css.map",
     "static/js/2.79f7a470.chunk.js.LICENSE.txt": "/final-project-kindness-tracker/static/js/2.79f7a470.chunk.js.LICENSE.txt",
     "static/js/mapbox-gl-csp-worker.decd147c.worker.js": "/final-project-kindness-tracker/static/js/mapbox-gl-csp-worker.decd147c.worker.js",
     "static/js/mapbox-gl-csp-worker.decd147c.worker.js.map": "/final-project-kindness-tracker/static/js/mapbox-gl-csp-worker.decd147c.worker.js.map"
   },
   "entrypoints": [
-    "static/js/runtime-main.4152397b.js",
+    "static/js/runtime-main.8cfc91d8.js",
     "static/css/2.19072978.chunk.css",
     "static/js/2.79f7a470.chunk.js",
-    "static/css/main.fee27ca1.chunk.css",
-    "static/js/main.c3a9d264.chunk.js"
+    "static/css/main.3b923b81.chunk.css",
+    "static/js/main.ab258452.chunk.js"
   ]
 }
