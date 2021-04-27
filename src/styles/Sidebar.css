@@ -3,3 +3,14 @@
     flex-direction: column;
     padding: 10px;
 }
+
+.kindness-card-inner {
+    text-align: left;
+    border: 1px solid white;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.selected-card-wrapper {
+    margin-bottom: 20px;
+}

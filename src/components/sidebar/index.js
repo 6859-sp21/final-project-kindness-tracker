@@ -1,12 +1,14 @@
 import '../../styles/Sidebar.css'
 import * as DataConstants from '../../utils/dataConstants'
+import KindessCard from './kindessCard'
 
 const Sidebar = ({ selectedNode, setSelectedNode, setTraceNode, traceList, setTraceList, traceIndex, setTraceIndex }) => {
     return (
         <div className="sidebar-flex">
             <h1>Kindess Tracker</h1>
-            <h3>{selectedNode ? selectedNode.STATE : null}</h3>
-            <h3>{selectedNode ? selectedNode[DataConstants.KINDNESS_KEY_NAME] : null}</h3>
+            <div className="selected-card-wrapper">
+                <KindessCard node={selectedNode} />
+            </div>
             {
                 selectedNode ? (
                     <button onClick={() => {
