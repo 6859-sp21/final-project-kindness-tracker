@@ -5,6 +5,7 @@ import * as d3 from 'd3'
 import * as MapUtils from './mapUtils'
 import * as DataConstants from '../../utils/dataConstants'
 import MapboxWorker from 'worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker';
+import TooltipContents from '../tooltip'
 
 import '../../styles/Map.css'
 
@@ -22,7 +23,7 @@ const POINT_ZOOM = 12
 mapboxgl.accessToken = 'pk.eyJ1IjoiY21vcm9uZXkiLCJhIjoiY2tudGNscDJjMDFldDJ3b3pjMTh6ejJyayJ9.YAPmFkdy_Eh9K20cFlIvaQ'
 mapboxgl.workerClass = MapboxWorker;
 
-const MapboxGLMap = ({ data, selectedNode, setSelectedNode, traceNode, traceList, setTraceList, traceIndex }) => {
+const MapboxGLMap = ({ data, selectedNode, setSelectedNode, hoveredNode, setHoveredNode, traceNode, traceList, setTraceList, traceIndex }) => {
     const [map, setMap] = useState(null)
     const mapContainer = useRef(null)
 
@@ -83,10 +84,14 @@ const MapboxGLMap = ({ data, selectedNode, setSelectedNode, traceNode, traceList
                 .attr("r", 10)
                 .style("fill", "steelblue")
                 .on('mouseover', (e, d) => {
+                    setHoveredNode(d)
+                    MapUtils.showTooltip(e, d)
+                })
+                .on('mousemove', (e, d) => {
                     MapUtils.showTooltip(e, d)
                 })
                 .on('mouseout', (e, d) => {
-                    MapUtils.hideTooltip()
+                    MapUtils.hideTooltip(() => setHoveredNode(null))
                 })
                 .on('click', (e, d) => {
                     MapUtils.resetAllCircleColors()
@@ -208,8 +213,8 @@ const MapboxGLMap = ({ data, selectedNode, setSelectedNode, traceNode, traceList
 
     return <div ref={el => (mapContainer.current = el)} style={styles}>
         <div className="map-tooltip" style={{ "opacity": 0 }}>
-                <p>Tooltip contents will go here.</p>
-            </div>
+            <TooltipContents node={hoveredNode} />
+        </div>
     </div>
 }
 

@@ -19,6 +19,7 @@ import './styles/App.css'
 const App = () => {
   const [data, setData] = useState(null)
   const [selectedNode, setSelectedNode] = useState(null)
+  const [hoveredNode, setHoveredNode] = useState(null)
   const [traceNode, setTraceNode] = useState(null)
   const [traceList, setTraceList] = useState([])
   const [traceIndex, setTraceIndex] = useState(-1)
@@ -56,6 +57,8 @@ const App = () => {
             data={data}
             selectedNode={selectedNode}
             setSelectedNode={setSelectedNode}
+            hoveredNode={hoveredNode}
+            setHoveredNode={setHoveredNode}
             traceNode={traceNode}
             traceList={traceList}
             setTraceList={setTraceList}

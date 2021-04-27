@@ -7,12 +7,6 @@ const KindnessCard = ({ node }) => {
         return null;
     }
 
-    console.log(node)
-
-    useEffect(() => {
-
-    }, [node])
-
     const street = node[DataConstants.STREET_KEY_NAME]
     const city = node[DataConstants.CITY_KEY_NAME]
     const state = node[DataConstants.STATE_KEY_NAME]

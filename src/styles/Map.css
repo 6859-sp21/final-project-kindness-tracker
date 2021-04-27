@@ -17,7 +17,6 @@
 
 .map-tooltip {
     position: absolute;
-    /* text-align: center; */
     text-align: left;
     width: auto;
     height: auto;
@@ -29,5 +28,6 @@
     border-radius: 10px;
     pointer-events: none;
     z-index: 99;
+    min-width: 150px;
     max-width: 250px;
 }
