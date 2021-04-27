@@ -2,6 +2,7 @@ import '../../styles/Sidebar.css'
 import * as DataConstants from '../../utils/dataConstants'
 import KindessCard from './kindessCard'
 import LoadingSpinner from './loadingSpinner'
+import SidebarInfoCard from './infoCard'
 
 const Sidebar = ({ isLoading, selectedNode, setSelectedNode, setTraceNode, traceList, setTraceList, traceIndex, setTraceIndex }) => {
     return (
@@ -9,6 +10,9 @@ const Sidebar = ({ isLoading, selectedNode, setSelectedNode, setTraceNode, trace
             <h1>Kindess Tracker</h1>
             {
                 isLoading ? <LoadingSpinner /> : null
+            }
+            {
+                ! isLoading && ! selectedNode ? <SidebarInfoCard /> : null
             }
             <div className="selected-card-wrapper">
                 <KindessCard node={selectedNode} />
