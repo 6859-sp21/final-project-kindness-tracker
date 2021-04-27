@@ -3,6 +3,7 @@ import Tabletop from 'tabletop'
 import { Sidebar, MapboxGLMap } from './components'
 import mapboxgl from 'mapbox-gl/dist/mapbox-gl-csp'
 import MapboxWorker from 'worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker'
+import * as DataConstants from './utils/dataConstants'
 
 
 const MAPBOX_ACCESS_TOKEN = 'pk.eyJ1IjoiY21vcm9uZXkiLCJhIjoiY2tudGNscDJjMDFldDJ3b3pjMTh6ejJyayJ9.YAPmFkdy_Eh9K20cFlIvaQ'
@@ -25,8 +26,7 @@ const App = () => {
   useEffect(() => {
     if (data === null) {
       Tabletop.init({
-        // TODO add this key to some environment variable, don't hard-code here
-        key: 'https://docs.google.com/spreadsheets/d/1IqEBIcnFZ_BFCrD8jhk11yVoOjfxzZpiZLdL4cL3oK0/pubhtml',
+        key: DataConstants.SPOOF_DATA_URL,
         simpleSheet: true,
       })
         .then(data => {

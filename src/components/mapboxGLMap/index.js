@@ -67,8 +67,10 @@ const MapboxGLMap = ({ data, selectedNode, setSelectedNode, traceNode, traceList
                 .style('left', 0)
 
             // write projection function
-            const project = ({ CenterLon, CenterLat }) => {
-                return map.project(new mapboxgl.LngLat(CenterLon, CenterLat))
+            const project = (d) => {
+                return map.project(
+                    new mapboxgl.LngLat(d[DataConstants.CENTER_LNG_KEY_NAME], d[DataConstants.CENTER_LAT_KEY_NAME])
+                )
             }
 
             var dots = svg
@@ -100,7 +102,8 @@ const MapboxGLMap = ({ data, selectedNode, setSelectedNode, traceNode, traceList
 
                     map.flyTo({
                         center: [
-                            d.CenterLon, d.CenterLat
+                            d[DataConstants.CENTER_LNG_KEY_NAME],
+                            d[DataConstants.CENTER_LAT_KEY_NAME],
                         ],
                         zoom: POINT_ZOOM, // TODO cofigure this zoom amount
                         essential: true // this animation is considered essential with respect to prefers-reduced-motion
@@ -182,8 +185,8 @@ const MapboxGLMap = ({ data, selectedNode, setSelectedNode, traceNode, traceList
             const currentNode = traceList[traceIndex]
             map.flyTo({
                 center: [
-                    currentNode.CenterLon,
-                    currentNode.CenterLat,
+                    currentNode[DataConstants.CENTER_LNG_KEY_NAME],
+                    currentNode[DataConstants.CENTER_LAT_KEY_NAME],
                 ],
                 zoom: POINT_ZOOM,
                 essential: true,
