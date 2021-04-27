@@ -1,8 +1,8 @@
 import '../../styles/Sidebar.css'
-import * as DataConstants from '../../utils/dataConstants'
 import KindessCard from './kindessCard'
 import LoadingSpinner from './loadingSpinner'
 import SidebarInfoCard from './infoCard'
+import TraceStepper from './traceStepper'
 
 const Sidebar = ({ isLoading, selectedNode, setSelectedNode, setTraceNode, traceList, setTraceList, traceIndex, setTraceIndex }) => {
     return (
@@ -23,26 +23,20 @@ const Sidebar = ({ isLoading, selectedNode, setSelectedNode, setTraceNode, trace
                         setSelectedNode(null)
                         setTraceList([])
                         setTraceIndex(-1)
+                        setTraceNode(null)
                     }}>Clear Selected Node</button>
                 ) : null
             }
             {
-                selectedNode ? (
+                (selectedNode && traceList.length === 0) ? (
                     <button onClick={() => setTraceNode(selectedNode)}>Trace this Act!</button>
                 ) : null
             }
-            {
-                traceList ? (
-                    traceList.map((d, i) => {
-                        return (
-                            <p key={i} onClick={() => setTraceIndex(i)} style={{color: i == traceIndex ? 'blue' : 'white', cursor: 'pointer'}}>
-                                {d[DataConstants.ID_KEY_NAME]}
-                            </p>
-                        )
-                    })
-                ) : null
-            }
-
+            <TraceStepper
+                traceList={traceList}
+                traceIndex={traceIndex}
+                setTraceIndex={setTraceIndex}
+            />
         </div>
     )
 }

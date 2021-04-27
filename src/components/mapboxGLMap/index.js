@@ -33,13 +33,15 @@ const MapboxGLMap = ({ setIsLoading, data, selectedNode, setSelectedNode, hovere
     // write function to generate class of circle based off id key
     const circleClass = d => `circle circle-${d[DataConstants.ID_KEY_NAME]}`
 
+    // write function to quickly convert a data array to the fomat for lat lng
+    const generateLngLatArray = data => data.map(d => ({
+        lng: d[DataConstants.CENTER_LNG_KEY_NAME],
+        lat: d[DataConstants.CENTER_LAT_KEY_NAME],
+    }))
+
     // get the bounds of our data
     const boundingObject = dataProc ? DataUtils.computeLngLatBoundingBox(
-        dataProc.map(d => ({
-            lng: d[DataConstants.CENTER_LNG_KEY_NAME],
-            lat: d[DataConstants.CENTER_LAT_KEY_NAME],
-        })),
-        200
+        generateLngLatArray(dataProc), 200
     ) : null
 
     useEffect(() => {
@@ -140,27 +142,40 @@ const MapboxGLMap = ({ setIsLoading, data, selectedNode, setSelectedNode, hovere
     }, [map, data])
 
     useEffect(() => {
-        // re-fly to center on selectedNode update
-        if (map && data && !selectedNode) {
+        // re-fly to center on selectedNode update, as long as we are not tracing
+        if (map && data && !selectedNode && traceList.length === 0) {
             MapUtils.zoomMapToBoundingObject(map, boundingObject)
             MapUtils.resetAllCircleColors()
+                .style('opacity', '1')
         }
-    }, [map, data, selectedNode])
+    }, [map, data, selectedNode, traceList])
 
     useEffect(() => {
         if (traceNode) {
             // Filter data
             const dataFilt = dataProc.filter(d => d[DataConstants.ID_KEY_NAME] == traceNode[DataConstants.ID_KEY_NAME])
-            
-            MapUtils.resetAllCircleColors()
+
+            // Remove all circles that aren't in the given class name
             d3.selectAll('.circle')
-                .filter(d => d[DataConstants.ID_KEY_NAME] == traceNode[DataConstants.ID_KEY_NAME])
+                .filter(d => d[DataConstants.ID_KEY_NAME] !== traceNode[DataConstants.ID_KEY_NAME])
+                .transition()
+                .duration(500)
+                .style('opacity', '0')
+            
+            // MapUtils.resetAllCircleColors()
+            d3.selectAll('.circle')
+                .filter(d => d[DataConstants.ID_KEY_NAME] === traceNode[DataConstants.ID_KEY_NAME])
                 .transition()
                 .duration(500)
                 .style('fill', 'purple')
             
-            // for now, re-fly map to center
-            MapUtils.zoomMapToBoundingObject(map, boundingObject)
+            // re-compute bounding box
+            // TODO write logic for ratio-based padding
+            const boundingObjectFilt = DataUtils.computeLngLatBoundingBox(
+                generateLngLatArray(dataFilt),
+                100
+            )
+            MapUtils.zoomMapToBoundingObject(map, boundingObjectFilt)
 
             // set the trace list
             setTraceList(dataFilt)

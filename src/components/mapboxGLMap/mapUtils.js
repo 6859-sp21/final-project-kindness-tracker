@@ -46,7 +46,7 @@ const selectNode = (target, d) => {
 } 
 
 const resetAllCircleColors = () => {
-    d3.selectAll('.circle')
+    return d3.selectAll('.circle')
         .transition()
         .duration(500)
         .style('fill', 'steelblue')
