@@ -1,7 +1,7 @@
 import * as DataConstants from '../../utils/dataConstants'
 import * as StringUtils from '../../utils/stringUtils'
 
-const TooltipContents = ({ node }) => {
+const TooltipContents = ({ node, isSelected }) => {
     // handle null node case
     if (! node) {
         return null;
@@ -15,7 +15,7 @@ const TooltipContents = ({ node }) => {
         <div>
             <p><b>{city ? `${city}, ` : null}{state}</b></p>
             <p><b>{StringUtils.trimWithElipses(kindness, 140)}</b></p>
-            <p>Click for more info!</p>
+            <p>{! isSelected ? 'Click for more info!' : null}</p>
         </div>
     )
 }

@@ -6,6 +6,7 @@ import * as MapUtils from './mapUtils'
 import * as DataConstants from '../../utils/dataConstants'
 import MapboxWorker from 'worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker';
 import TooltipContents from '../tooltip'
+import * as DataUtils from '../../utils/dataUtils'
 
 import '../../styles/Map.css'
 
@@ -27,10 +28,7 @@ const MapboxGLMap = ({ setIsLoading, data, selectedNode, setSelectedNode, hovere
     const [map, setMap] = useState(null)
     const mapContainer = useRef(null)
 
-    const dataProc = (data || []).map((d, i) => ({
-        ...d,
-        index: i
-    }))
+    const dataProc = DataUtils.processRawSheetsData(data)
 
     // write function to generate ID of circle
     const uniqueCircleId = d => `circle-${d.index}`
@@ -216,7 +214,7 @@ const MapboxGLMap = ({ setIsLoading, data, selectedNode, setSelectedNode, hovere
 
     return <div ref={el => (mapContainer.current = el)} style={styles}>
         <div className="map-tooltip" style={{ "opacity": 0 }}>
-            <TooltipContents node={hoveredNode} />
+            <TooltipContents node={hoveredNode} isSelected={DataUtils.nodesAreEqual(hoveredNode, selectedNode)} />
         </div>
     </div>
 }
