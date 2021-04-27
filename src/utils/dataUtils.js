@@ -1,3 +1,6 @@
+import { DateTime } from  'luxon'
+import * as DataConstants from './dataConstants'
+
 const DEGREES_TO_MILES = 69
 const LNG_KEY = 'lng'
 const LAT_KEY = 'lat'
@@ -5,7 +8,8 @@ const LAT_KEY = 'lat'
 const processRawSheetsData = (data) => {
     const dataProc = data ? data.map((d, i) => ({
         ...d,
-        index: i
+        index: i,
+        dateTime: DateTime.fromFormat(d[DataConstants.TIMESTAMP_KEY_NAME], DataConstants.TIMESTAMP_FORMAT),
     })) : null
     return dataProc
 }

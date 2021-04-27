@@ -23,7 +23,7 @@ const BIG_RADIUS = 30
 mapboxgl.accessToken = 'pk.eyJ1IjoiY21vcm9uZXkiLCJhIjoiY2tudGNscDJjMDFldDJ3b3pjMTh6ejJyayJ9.YAPmFkdy_Eh9K20cFlIvaQ'
 mapboxgl.workerClass = MapboxWorker;
 
-const MapboxGLMap = ({ setIsLoading, data, selectedNode, setSelectedNode, hoveredNode, setHoveredNode, traceNode, traceList, setTraceList, traceIndex }) => {
+const MapboxGLMap = ({ setIsLoading, data, selectedNode, setSelectedNode, hoveredNode, setHoveredNode, isTracing, traceList, setTraceList, traceIndex, setTraceIndex }) => {
     const [map, setMap] = useState(null)
     const mapContainer = useRef(null)
 
@@ -46,6 +46,33 @@ const MapboxGLMap = ({ setIsLoading, data, selectedNode, setSelectedNode, hovere
         generateLngLatArray(data), 200
     ) : null
 
+    const visitNode = (d) => {
+        MapUtils.resetAllCircleColors()
+            .attr("r", DEFAULT_RADIUS)
+                .style('opacity', 1)
+    
+        // make this circle red
+        const circle = d3.select(`#${uniqueCircleId(d)}`)
+        circle
+            .transition()
+            .duration(500)
+            .style('fill', 'red')
+
+        map.flyTo({
+            center: [
+                d[DataConstants.CENTER_LNG_KEY_NAME],
+                d[DataConstants.CENTER_LAT_KEY_NAME],
+            ],
+            zoom: POINT_ZOOM, // TODO cofigure this zoom amount
+            essential: true // this animation is considered essential with respect to prefers-reduced-motion
+        });
+
+        // set the selected node and callback the parent
+        // TODO potentially clear any tracing if this node is not in the current trace
+        // have to tighten up logic around this...
+        setSelectedNode(d)
+    }
+
     const setAllEventHandlers = () => {
         d3.selectAll(".circle")
             .on('mouseover', (e, d) => {
@@ -59,28 +86,7 @@ const MapboxGLMap = ({ setIsLoading, data, selectedNode, setSelectedNode, hovere
                 MapUtils.hideTooltip(() => setHoveredNode(null))
             })
             .on('click', (e, d) => {
-                MapUtils.resetAllCircleColors()
-    
-                // make this circle red
-                const circle = d3.select(`#${uniqueCircleId(d)}`)
-                circle
-                    .transition()
-                    .duration(500)
-                    .style('fill', 'red')
-    
-                map.flyTo({
-                    center: [
-                        d[DataConstants.CENTER_LNG_KEY_NAME],
-                        d[DataConstants.CENTER_LAT_KEY_NAME],
-                    ],
-                    zoom: POINT_ZOOM, // TODO cofigure this zoom amount
-                    essential: true // this animation is considered essential with respect to prefers-reduced-motion
-                });
-    
-                // set the selected node and callback the parent
-                // TODO potentially clear any tracing if this node is not in the current trace
-                // have to tighten up logic around this...
-                setSelectedNode(d)
+                visitNode(d)
             })
     }
 
@@ -163,13 +169,16 @@ const MapboxGLMap = ({ setIsLoading, data, selectedNode, setSelectedNode, hovere
     }, [map, data, selectedNode])
 
     useEffect(() => {
-        if (traceNode) {
+        if (isTracing) {
             console.log('four')
-            const dataFilt = data.filter(d => d[DataConstants.ID_KEY_NAME] == traceNode[DataConstants.ID_KEY_NAME])
+            // TODO move this to a helper function
+            const dataFilt = data.filter(d => d[DataConstants.ID_KEY_NAME] == selectedNode[DataConstants.ID_KEY_NAME])
+                .sort((a, b) => a.dateTime.toMillis() - b.dateTime.toMillis())
+            console.log(dataFilt)
 
             // Remove all circles that aren't in the given class name, and also disable their events
             const otherCircles = d3.selectAll('.circle')
-                .filter(d => d[DataConstants.ID_KEY_NAME] !== traceNode[DataConstants.ID_KEY_NAME])
+                .filter(d => d[DataConstants.ID_KEY_NAME] !== selectedNode[DataConstants.ID_KEY_NAME])
                 
             otherCircles.transition()
                 .duration(500)
@@ -178,7 +187,7 @@ const MapboxGLMap = ({ setIsLoading, data, selectedNode, setSelectedNode, hovere
             MapUtils.clearAllEventHandlers(otherCircles)
             
             d3.selectAll('.circle')
-                .filter(d => d[DataConstants.ID_KEY_NAME] === traceNode[DataConstants.ID_KEY_NAME])
+                .filter(d => d[DataConstants.ID_KEY_NAME] === selectedNode[DataConstants.ID_KEY_NAME])
                 .transition()
                 .duration(500)
                 .style('fill', 'purple')
@@ -192,14 +201,20 @@ const MapboxGLMap = ({ setIsLoading, data, selectedNode, setSelectedNode, hovere
             )
             MapUtils.zoomMapToBoundingObject(map, boundingObjectFilt)
 
-            // set the trace list
+            // set the trace list and index
             setTraceList(dataFilt)
+            setTraceIndex(0)
+        } else if (selectedNode) {
+            console.log('no longer tracing')
+            visitNode(selectedNode)
+            setAllEventHandlers()
         }
-    }, [traceNode])
+    }, [isTracing, selectedNode])
 
     useEffect(() => {
-        if (map && traceList && traceIndex > -1) {
+        if (map && traceList && traceList.length > 0) {
             console.log('five')
+            console.log(traceIndex, traceList)
             // // get the node at the index and fly there!
             // const currentNode = traceList[traceIndex]
             // map.flyTo({
@@ -213,7 +228,7 @@ const MapboxGLMap = ({ setIsLoading, data, selectedNode, setSelectedNode, hovere
 
             // also make that node bigger and green
             d3.selectAll('.circle')
-                .filter(d => d[DataConstants.ID_KEY_NAME] == traceNode[DataConstants.ID_KEY_NAME])
+                .filter(d => d[DataConstants.ID_KEY_NAME] == selectedNode[DataConstants.ID_KEY_NAME])
                 .transition()
                 .duration(500)
                 .style('fill', 'purple')
@@ -225,7 +240,7 @@ const MapboxGLMap = ({ setIsLoading, data, selectedNode, setSelectedNode, hovere
                 .style('fill', 'green')
                 .attr('r', BIG_RADIUS)
         }
-    }, [traceIndex])
+    }, [traceList, traceIndex])
 
     return <div ref={el => (mapContainer.current = el)} style={styles}>
         <div className="map-tooltip" style={{ "opacity": 0 }}>
@@ -239,7 +254,7 @@ export default React.memo(MapboxGLMap, (prevProps, nextProps) => {
     return prevProps.data === nextProps.data &&
     prevProps.selectedNode === nextProps.selectedNode &&
     prevProps.hoveredNode === nextProps.hoveredNode &&
-    prevProps.traceNode === nextProps.traceNode &&
+    prevProps.isTracing === nextProps.isTracing &&
     prevProps.traceList === nextProps.traceList &&
     prevProps.traceIndex === nextProps.traceIndex
 })

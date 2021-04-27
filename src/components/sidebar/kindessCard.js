@@ -8,8 +8,6 @@ const KindnessCard = ({ node }) => {
         return null;
     }
 
-    console.log(node)
-
     const timestamp = node[DataConstants.TIMESTAMP_KEY_NAME]
     const street = node[DataConstants.STREET_KEY_NAME]
     const city = node[DataConstants.CITY_KEY_NAME]
@@ -18,11 +16,14 @@ const KindnessCard = ({ node }) => {
     const kindness = node[DataConstants.KINDNESS_KEY_NAME]
 
     // apply necessary parsing for date
-    const date = DateTime.fromFormat(timestamp, DataConstants.TIMESTAMP_FORMAT)
-    console.log(date)
+    const date = node.dateTime
+    const dateString = date.toLocaleString(DateTime.DATE_FULL)
+    const timeString = date.toLocaleString(DateTime.TIME_SIMPLE)
 
     return (
         <div className="kindness-card-inner">
+            <p>Date: <b>{dateString}</b></p>
+            <p>Time: <b>{timeString}</b></p>
             <p>Address: <b>{street || 'No street provided.'}</b></p>
             <p>City: <b>{city || 'No city provided.'}</b></p>
             <p>State: <b>{state || 'No state provided.'}</b></p>

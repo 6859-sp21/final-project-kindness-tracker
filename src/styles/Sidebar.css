@@ -14,3 +14,15 @@
 .selected-card-wrapper {
     margin-bottom: 20px;
 }
+
+.trace-stepper-wrapper {
+    margin-top: 20px;
+}
+
+.trace-stepper-button-horizontal {
+    margin-bottom: 20px;
+}
+
+.trace-stepper-button-below {
+    margin-top: 20px;
+}

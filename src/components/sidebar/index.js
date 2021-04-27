@@ -5,7 +5,7 @@ import LoadingSpinner from './loadingSpinner'
 import SidebarInfoCard from './infoCard'
 import TraceStepper from './traceStepper'
 
-const Sidebar = ({ isLoading, selectedNode, setSelectedNode, setTraceNode, traceList, setTraceList, traceIndex, setTraceIndex }) => {
+const Sidebar = ({ isLoading, selectedNode, setSelectedNode, isTracing, setIsTracing, traceList, setTraceList, traceIndex, setTraceIndex }) => {
     console.log('rendering sidebar')
     return (
         <div className="sidebar-flex">
@@ -24,17 +24,19 @@ const Sidebar = ({ isLoading, selectedNode, setSelectedNode, setTraceNode, trace
                     <button onClick={() => {
                         setSelectedNode(null)
                         setTraceList([])
-                        setTraceIndex(-1)
-                        setTraceNode(null)
+                        setTraceIndex(0)
+                        setIsTracing(false)
                     }}>Clear Selected Node</button>
                 ) : null
             }
             {
-                (selectedNode && traceList.length === 0) ? (
-                    <button onClick={() => setTraceNode(selectedNode)}>Trace this Act!</button>
+                (selectedNode && ! isTracing) ? (
+                    <button onClick={() => setIsTracing(true)}>Trace this Act!</button>
                 ) : null
             }
             <TraceStepper
+                isTracing={isTracing}
+                setIsTracing={setIsTracing}
                 traceList={traceList}
                 traceIndex={traceIndex}
                 setTraceIndex={setTraceIndex}
@@ -46,6 +48,7 @@ const Sidebar = ({ isLoading, selectedNode, setSelectedNode, setTraceNode, trace
 export default React.memo(Sidebar, (prevProps, nextProps) => {
     return (prevProps.isLoading === nextProps.isLoading &&
         prevProps.selectedNode === nextProps.selectedNode &&
-        prevProps.traceNode === nextProps.traceNode &&
+        prevProps.isTracing === nextProps.isTracing &&
+        prevProps.traceList === nextProps.traceList &&
         prevProps.traceIndex === nextProps.traceIndex)
 })

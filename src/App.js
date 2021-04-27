@@ -17,9 +17,9 @@ const App = () => {
   const [isLoading, setIsLoading] = useState(true)
   const [selectedNode, setSelectedNode] = useState(null)
   const [hoveredNode, setHoveredNode] = useState(null)
-  const [traceNode, setTraceNode] = useState(null)
+  const [isTracing, setIsTracing] = useState(false)
   const [traceList, setTraceList] = useState([])
-  const [traceIndex, setTraceIndex] = useState(-1)
+  const [traceIndex, setTraceIndex] = useState(0)
 
   useEffect(() => {
     if (data === null) {
@@ -44,7 +44,8 @@ const App = () => {
             isLoading={isLoading}
             selectedNode={selectedNode}
             setSelectedNode={setSelectedNode}
-            setTraceNode={setTraceNode}
+            isTracing={isTracing}
+            setIsTracing={setIsTracing}
             traceList={traceList}
             setTraceList={setTraceList}
             traceIndex={traceIndex}
@@ -60,10 +61,11 @@ const App = () => {
             setSelectedNode={setSelectedNode}
             hoveredNode={hoveredNode}
             setHoveredNode={setHoveredNode}
-            traceNode={traceNode}
+            isTracing={isTracing}
             traceList={traceList}
             setTraceList={setTraceList}
             traceIndex={traceIndex}
+            setTraceIndex={setTraceIndex}
           />
         </div>
       </div>

@@ -11,7 +11,7 @@ const CENTER_LAT_KEY_NAME = 'CenterLat'
 const TEST_DATA_URL = 'https://docs.google.com/spreadsheets/d/1IqEBIcnFZ_BFCrD8jhk11yVoOjfxzZpiZLdL4cL3oK0/pubhtml'
 const SPOOF_DATA_URL = 'https://docs.google.com/spreadsheets/d/1BvBwyy1xYYhdiokMfbyxssu5nlB0arRMvxyuQLCzsH4/pubhtml'
 
-const TIMESTAMP_FORMAT = 'mm/dd/yyyy h:mm:ss a'
+const TIMESTAMP_FORMAT = 'MM/dd/yy h:mm a'
 
 // TOOD add constants for new parsed geo fields when those are avaiable
 // Spoof Data Names
