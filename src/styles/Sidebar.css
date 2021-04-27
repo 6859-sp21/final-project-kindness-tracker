@@ -15,8 +15,14 @@
     margin-bottom: 20px;
 }
 
-.trace-stepper-wrapper {
-    margin-top: 20px;
+.sidebar-clear-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.sidebar-button-below {
+    margin-bottom: 20px;
 }
 
 .trace-stepper-button-horizontal {

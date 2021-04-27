@@ -49,7 +49,7 @@ const MapboxGLMap = ({ setIsLoading, data, selectedNode, setSelectedNode, hovere
     const visitNode = (d) => {
         MapUtils.resetAllCircleColors()
             .attr("r", DEFAULT_RADIUS)
-                .style('opacity', 1)
+            .style('opacity', 1)
     
         // make this circle red
         const circle = d3.select(`#${uniqueCircleId(d)}`)
@@ -57,6 +57,7 @@ const MapboxGLMap = ({ setIsLoading, data, selectedNode, setSelectedNode, hovere
             .transition()
             .duration(500)
             .style('fill', 'red')
+            .attr("r", DEFAULT_RADIUS)
 
         map.flyTo({
             center: [
@@ -201,9 +202,10 @@ const MapboxGLMap = ({ setIsLoading, data, selectedNode, setSelectedNode, hovere
             )
             MapUtils.zoomMapToBoundingObject(map, boundingObjectFilt)
 
-            // set the trace list and index
+            // set the trace list and index accordingly
             setTraceList(dataFilt)
-            setTraceIndex(0)
+            const traceIndexNew = dataFilt.map(d => d.index).indexOf(selectedNode.index)
+            setTraceIndex(traceIndexNew)
         } else if (selectedNode) {
             console.log('no longer tracing')
             visitNode(selectedNode)

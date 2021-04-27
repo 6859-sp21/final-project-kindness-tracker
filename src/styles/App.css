@@ -53,4 +53,6 @@
   z-index: 100;
   background: gray;
   color: white;
+  /* make sidebar scrollable */
+  overflow-y: auto; 
 }

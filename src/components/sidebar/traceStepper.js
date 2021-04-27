@@ -1,4 +1,3 @@
-import * as DataConstants from '../../utils/dataConstants'
 import KindnessCard from './kindessCard'
 
 const TraceStepper = ({ isTracing, setIsTracing, traceList, traceIndex, setTraceIndex }) => {
@@ -7,8 +6,6 @@ const TraceStepper = ({ isTracing, setIsTracing, traceList, traceIndex, setTrace
     if (! isTracing) {
         return null
     }
-
-    console.log(traceIndex, traceList.length)
 
     // get the node at the given trace index
     // TODO update this logic 
@@ -19,6 +16,10 @@ const TraceStepper = ({ isTracing, setIsTracing, traceList, traceIndex, setTrace
             <div className="trace-stepper-button-horizontal">
                 <button disabled={traceIndex === 0} onClick={() => setTraceIndex(traceIndex - 1)}>Previous</button>
                 <button disabled={traceIndex === traceList.length - 1} onClick={() => setTraceIndex(traceIndex + 1)}>Next</button>
+            </div>
+            <div className="trace-stepper-button-horizontal">
+                <button disabled={traceIndex === 0} onClick={() => setTraceIndex(0)}>Earliest</button>
+                <button disabled={traceIndex === traceList.length - 1} onClick={() => setTraceIndex(traceList.length - 1)}>Latest</button>
             </div>
             <p>{`${traceIndex + 1} / ${traceList.length}`}</p>
             <KindnessCard node={node} />

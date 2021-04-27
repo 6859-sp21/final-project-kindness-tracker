@@ -14,26 +14,31 @@ const Sidebar = ({ isLoading, selectedNode, setSelectedNode, isTracing, setIsTra
                 isLoading ? <LoadingSpinner /> : null
             }
             {
-                ! isLoading && ! selectedNode ? <SidebarInfoCard /> : null
+                !isLoading && !selectedNode ? <SidebarInfoCard /> : null
             }
-            <div className="selected-card-wrapper">
-                <KindessCard node={selectedNode} />
+            { !isTracing ? (
+                <div className="selected-card-wrapper">
+                    <KindessCard node={selectedNode} />
+                </div>
+            ) : null
+            }
+            <div className="sidebar-clear-div">
+                {
+                    selectedNode && !isTracing ? (
+                        <button className="sidebar-button-below" onClick={() => {
+                            setSelectedNode(null)
+                            setTraceList([])
+                            setTraceIndex(0)
+                            setIsTracing(false)
+                        }}>Clear Selected Node</button>
+                    ) : null
+                }
+                {
+                    (selectedNode && !isTracing) ? (
+                        <button onClick={() => setIsTracing(true)}>Trace this Act!</button>
+                    ) : null
+                }
             </div>
-            {
-                selectedNode ? (
-                    <button onClick={() => {
-                        setSelectedNode(null)
-                        setTraceList([])
-                        setTraceIndex(0)
-                        setIsTracing(false)
-                    }}>Clear Selected Node</button>
-                ) : null
-            }
-            {
-                (selectedNode && ! isTracing) ? (
-                    <button onClick={() => setIsTracing(true)}>Trace this Act!</button>
-                ) : null
-            }
             <TraceStepper
                 isTracing={isTracing}
                 setIsTracing={setIsTracing}
