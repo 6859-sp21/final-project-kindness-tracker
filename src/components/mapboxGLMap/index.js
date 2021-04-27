@@ -23,7 +23,7 @@ const POINT_ZOOM = 12
 mapboxgl.accessToken = 'pk.eyJ1IjoiY21vcm9uZXkiLCJhIjoiY2tudGNscDJjMDFldDJ3b3pjMTh6ejJyayJ9.YAPmFkdy_Eh9K20cFlIvaQ'
 mapboxgl.workerClass = MapboxWorker;
 
-const MapboxGLMap = ({ data, selectedNode, setSelectedNode, hoveredNode, setHoveredNode, traceNode, traceList, setTraceList, traceIndex }) => {
+const MapboxGLMap = ({ setIsLoading, data, selectedNode, setSelectedNode, hoveredNode, setHoveredNode, traceNode, traceList, setTraceList, traceIndex }) => {
     const [map, setMap] = useState(null)
     const mapContainer = useRef(null)
 
@@ -137,6 +137,9 @@ const MapboxGLMap = ({ data, selectedNode, setSelectedNode, hoveredNode, setHove
             })
 
             mapRender()
+
+            // notify that we are done loading
+            setIsLoading(false)
 
             return () => map.remove()
         }

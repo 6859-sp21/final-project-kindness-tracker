@@ -1,11 +1,15 @@
 import '../../styles/Sidebar.css'
 import * as DataConstants from '../../utils/dataConstants'
 import KindessCard from './kindessCard'
+import LoadingSpinner from './loadingSpinner'
 
-const Sidebar = ({ selectedNode, setSelectedNode, setTraceNode, traceList, setTraceList, traceIndex, setTraceIndex }) => {
+const Sidebar = ({ isLoading, selectedNode, setSelectedNode, setTraceNode, traceList, setTraceList, traceIndex, setTraceIndex }) => {
     return (
         <div className="sidebar-flex">
             <h1>Kindess Tracker</h1>
+            {
+                isLoading ? <LoadingSpinner /> : null
+            }
             <div className="selected-card-wrapper">
                 <KindessCard node={selectedNode} />
             </div>

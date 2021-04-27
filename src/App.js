@@ -18,6 +18,7 @@ import './styles/App.css'
 
 const App = () => {
   const [data, setData] = useState(null)
+  const [isLoading, setIsLoading] = useState(true)
   const [selectedNode, setSelectedNode] = useState(null)
   const [hoveredNode, setHoveredNode] = useState(null)
   const [traceNode, setTraceNode] = useState(null)
@@ -42,6 +43,7 @@ const App = () => {
       <div className="horizontal-stack">
         <div className="left-sidebar">
           <Sidebar
+            isLoading={isLoading}
             selectedNode={selectedNode}
             setSelectedNode={setSelectedNode}
             setTraceNode={setTraceNode}
@@ -55,6 +57,7 @@ const App = () => {
           {/* <MapViewDemo data={data} map={map} selectedNode={selectedNode} setSelectedNode={setSelectedNode}  /> */}
           <MapboxGLMap
             data={data}
+            setIsLoading={setIsLoading}
             selectedNode={selectedNode}
             setSelectedNode={setSelectedNode}
             hoveredNode={hoveredNode}
