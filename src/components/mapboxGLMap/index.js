@@ -87,8 +87,9 @@ const MapboxGLMap = ({ trace, setIsLoading, selectedNode, setSelectedNode, hover
             // update bounding box
             const boundingObjectNew = DataUtils.computeLngLatBoundingBox(
                 MapUtils.generateLngLatArray(trace),
-                0.05,
-                true
+                trace.length > 1 ? 0.05 : POINT_ZOOM_MILES,
+                trace.length > 1 ? true : false,
+                trace.length > 1 ? true : false,
             )
             setBoundingObject(boundingObjectNew)
         }
@@ -114,7 +115,6 @@ const MapboxGLMap = ({ trace, setIsLoading, selectedNode, setSelectedNode, hover
     useEffect(() => {
         if (! isTracing) {
             if (selectedNode) {
-                console.log('yyy')
                 // handle colors
                 // make other circles not red
                 MapUtils.resetAllCircleColors()
@@ -135,7 +135,6 @@ const MapboxGLMap = ({ trace, setIsLoading, selectedNode, setSelectedNode, hover
                 )
                 setBoundingObject(boundingObjectNew)
             } else if (trace) {
-                console.log('zzz')
                 // reset the bounding box to original trace points
                 const boundingObjectNew = DataUtils.computeLngLatBoundingBox(
                     MapUtils.generateLngLatArray(trace),
@@ -150,12 +149,10 @@ const MapboxGLMap = ({ trace, setIsLoading, selectedNode, setSelectedNode, hover
         } else {
             // we are tracing - selected node should NEVER be null
             // reset all nodes to the original color
-            console.log('xxx')
             MapUtils.resetAllCircleColors('purple')
                 .attr('r', DEFAULT_RADIUS)
             
             // make the selected node bigger and green
-            console.log(d3.select(`#${MapUtils.uniqueCircleId(selectedNode)}`))
             d3.select(`#${MapUtils.uniqueCircleId(selectedNode)}`)
                 .transition()
                 .duration(500)
