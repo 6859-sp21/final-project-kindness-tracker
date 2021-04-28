@@ -5,7 +5,7 @@ import LoadingSpinner from './loadingSpinner'
 import SidebarInfoCard from './infoCard'
 import TraceStepper from './traceStepper'
 
-const Sidebar = ({ isLoading, selectedNode, setSelectedNode, isTracing, setIsTracing, traceList, setTraceList, traceIndex, setTraceIndex }) => {
+const Sidebar = ({ isLoading, selectedNode, setSelectedNode, isTracing, setIsTracing, trace }) => {
     console.log('rendering sidebar')
     return (
         <div className="sidebar-flex">
@@ -27,8 +27,6 @@ const Sidebar = ({ isLoading, selectedNode, setSelectedNode, isTracing, setIsTra
                     selectedNode && !isTracing ? (
                         <button className="sidebar-button-below" onClick={() => {
                             setSelectedNode(null)
-                            setTraceList([])
-                            setTraceIndex(0)
                             setIsTracing(false)
                         }}>Clear Selected Node</button>
                     ) : null
@@ -42,9 +40,7 @@ const Sidebar = ({ isLoading, selectedNode, setSelectedNode, isTracing, setIsTra
             <TraceStepper
                 isTracing={isTracing}
                 setIsTracing={setIsTracing}
-                traceList={traceList}
-                traceIndex={traceIndex}
-                setTraceIndex={setTraceIndex}
+                trace={trace}
             />
             <div className="sidebar-bottom-content">
                 <p className="sidebar-small-text">Christian Moroney, Jackson Bernatchez, Kevin Lyons</p>

@@ -14,12 +14,11 @@ import './styles/App.css'
 
 const App = () => {
   const [data, setData] = useState(null)
+  const [trace, setTrace] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
   const [selectedNode, setSelectedNode] = useState(null)
   const [hoveredNode, setHoveredNode] = useState(null)
   const [isTracing, setIsTracing] = useState(false)
-  const [traceList, setTraceList] = useState([])
-  const [traceIndex, setTraceIndex] = useState(0)
 
   useEffect(() => {
     if (data === null) {
@@ -31,6 +30,7 @@ const App = () => {
           // process data right away
           const dataProc = DataUtils.processRawSheetsData(data)
           setData(dataProc)
+          setTrace(dataProc)
         })
         .catch(console.warn)
     }
@@ -46,26 +46,18 @@ const App = () => {
             setSelectedNode={setSelectedNode}
             isTracing={isTracing}
             setIsTracing={setIsTracing}
-            traceList={traceList}
-            setTraceList={setTraceList}
-            traceIndex={traceIndex}
-            setTraceIndex={setTraceIndex}
+            trace={trace}
           />
         </div>
         <div className="map-wrapper">
-          {/* <MapViewDemo data={data} map={map} selectedNode={selectedNode} setSelectedNode={setSelectedNode}  /> */}
           <MapboxGLMap
-            data={data}
+            trace={trace}
             setIsLoading={setIsLoading}
             selectedNode={selectedNode}
             setSelectedNode={setSelectedNode}
             hoveredNode={hoveredNode}
             setHoveredNode={setHoveredNode}
             isTracing={isTracing}
-            traceList={traceList}
-            setTraceList={setTraceList}
-            traceIndex={traceIndex}
-            setTraceIndex={setTraceIndex}
           />
         </div>
       </div>
