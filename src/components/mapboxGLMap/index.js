@@ -53,7 +53,7 @@ const MapboxGLMap = ({ trace, setIsLoading, selectedNode, setSelectedNode, hover
             // do a data join on all the trace points with d3
             d3.select('.map-svg')
                 .selectAll('circle')
-                .data(trace, d => d.index)
+                .data(trace, d => d.hash)
                 .join(
                     enter => enter
                         .append('circle')

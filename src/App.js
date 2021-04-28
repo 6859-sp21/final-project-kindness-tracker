@@ -19,6 +19,7 @@ const App = () => {
   const [selectedNode, setSelectedNode] = useState(null)
   const [hoveredNode, setHoveredNode] = useState(null)
   const [isTracing, setIsTracing] = useState(false)
+  const [dataUrl, setDataUrl] = useState(DataConstants.REAL_DATA_URL)
 
   useEffect(() => {
     // on first render, check the width
@@ -28,22 +29,39 @@ const App = () => {
     }
   }, [])
 
+  const fetchData = () => {
+    console.log('fetching!')
+    Tabletop.init({
+      key: dataUrl,
+      simpleSheet: true,
+    })
+      .then(data => {
+        // process data right away
+        const dataProc = DataUtils.processRawSheetsData(data)
+        console.log(dataProc)
+        setData(dataProc)
+        setTrace(dataProc)
+      })
+      .catch(console.warn)
+  }
+
   useEffect(() => {
     if (data === null) {
-      Tabletop.init({
-        key: DataConstants.REAL_DATA_URL,
-        simpleSheet: true,
-      })
-        .then(data => {
-          // process data right away
-          const dataProc = DataUtils.processRawSheetsData(data)
-          console.log(dataProc)
-          setData(dataProc)
-          setTrace(dataProc)
-        })
-        .catch(console.warn)
+      fetchData()
     }
   }, [data])
+
+  // listen for changes in the data url via a toggle
+  useEffect(() => {
+    if (data !== null) {
+      // reset all required state before re-fetch
+      setIsLoading(true)
+      setSelectedNode(null)
+      setHoveredNode(null)
+      setIsTracing(false)
+      fetchData()
+    }
+  }, [dataUrl])
 
   // define function to set trace back to original data array
   const resetTrace = () => setTrace(data)
@@ -59,6 +77,8 @@ const App = () => {
             isTracing={isTracing}
             setIsTracing={setIsTracing}
             trace={trace}
+            dataUrl={dataUrl}
+            setDataUrl={setDataUrl}
           />
         </div>
         <div className="map-wrapper">

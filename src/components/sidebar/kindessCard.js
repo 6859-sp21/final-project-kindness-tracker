@@ -7,6 +7,8 @@ const KindnessCard = ({ node }) => {
         return null;
     }
 
+    console.log(node)
+
     const {
         kindness,
         dateString,

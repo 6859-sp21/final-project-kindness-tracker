@@ -36,6 +36,15 @@
     align-items: center;
 }
 
+.sidebar-clear-div h1 {
+    margin-block-start: 0;
+    margin-block-end: 0;
+}
+
+.sidebar-clear-div p {
+    margin-block-start: 0.5em;
+}
+
 .sidebar-button-below {
     margin-bottom: 10px !important;
 }
@@ -53,14 +62,11 @@
 }
 
 .sidebar-bottom-content {
-    position: absolute;
-    bottom: 5px;
     display: flex;
-    width: 25%;
+    width: 100%;
     min-width: 315px;
     flex-direction: column;
     left: 0;
-    align-items: left;
 }
 
 .sidebar-small-text {
@@ -126,10 +132,23 @@
         margin-bottom: 0px;
         padding-right: 0px;
     }
+
+    /* don't show toggle row on mobile */
+    .sidebar-info-row-toggle {
+        display: none;
+    }
 }
 
 @media screen and (min-width: 800px) {
     .sidebar-bottom-content {
         display: flex;
+    }
+}
+
+@media screen and (min-height: 850px) {
+    .sidebar-bottom-content {
+        position: absolute;
+        bottom: 5px;
+        width: 25%;
     }
 }

@@ -10,6 +10,7 @@ const processRawSheetsData = (data) => {
         ...d,
         index: i,
         dateTime: DateTime.fromFormat(d[DataConstants.TIMESTAMP_KEY_NAME], DataConstants.TIMESTAMP_FORMAT),
+        hash: `${i}-${d[DataConstants.TIMESTAMP_KEY_NAME]}`
     })) : null
 
     // convert certain fields to numbers
@@ -97,7 +98,7 @@ const formatFieldsForDisplay = (node) => {
     const address = (streetNumber && street) ? `${(streetNumber ? `${streetNumber} ` : null)}${street}` : null
     const city = node[DataConstants.CITY_KEY_NAME]
     const state = node[DataConstants.STATE_KEY_NAME]
-    const cityState = (city || state) ? `${city}${city ? `, ${state}` : null}` : null
+    const cityState = (city || state) ? `${city}${city ? `, ${state}` : state}` : null
     const zip = node[DataConstants.ZIP_KEY_NAME]
     const location = `${address || 'No street address provided'}\n${cityState || 'No city/state provided'}${zip ? `\n${zip}` : ''}`
     const kindness = node[DataConstants.KINDNESS_KEY_NAME]
