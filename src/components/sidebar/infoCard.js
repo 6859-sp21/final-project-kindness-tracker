@@ -11,18 +11,18 @@ const SidebarInfoCard = () => {
             <hr className="sidebar-divider" />
             <div className="sidebar-info-row">
                 <div className="sidebar-info-left">
-                    <MouseIcon />
+                    <MouseIcon fontSize="large" />
                 </div>
                 <div className="sidebar-info-right">
-                    <h3>Click a circle to explore that act of kindness further!</h3>
+                    <p><b>Click</b> a circle to explore that act of kindness further!</p>
                 </div>
             </div>
             <div className="sidebar-info-row">
                 <div className="sidebar-info-left">
-                    <ExploreIcon />
+                    <ExploreIcon fontSize="large" />
                 </div>
                 <div className="sidebar-info-right">
-                    <h3>Then, you can trace that act of kindess to see how may people have paid it forward.</h3>
+                    <p>Then, you can <b>trace</b> that act of kindess to see how may people have paid it forward.</p>
                 </div>
             </div>
         </div >
