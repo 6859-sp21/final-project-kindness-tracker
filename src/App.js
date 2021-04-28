@@ -23,7 +23,7 @@ const App = () => {
   useEffect(() => {
     if (data === null) {
       Tabletop.init({
-        key: DataConstants.TEST_DATA_URL,
+        key: DataConstants.SPOOF_DATA_URL,
         simpleSheet: true,
       })
         .then(data => {
