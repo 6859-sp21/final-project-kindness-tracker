@@ -17,24 +17,10 @@ const BIG_RADIUS = 30
 mapboxgl.accessToken = 'pk.eyJ1IjoiY21vcm9uZXkiLCJhIjoiY2tudGNscDJjMDFldDJ3b3pjMTh6ejJyayJ9.YAPmFkdy_Eh9K20cFlIvaQ'
 mapboxgl.workerClass = MapboxWorker;
 
-const MapboxGLMap = ({ trace, setIsLoading, selectedNode, setSelectedNode, hoveredNode, setHoveredNode, isTracing }) => {
+const MapboxGLMap = ({ trace, setIsLoading, selectedNode, setSelectedNode, hoveredNode, setHoveredNode, isTracing, setTrace, resetTrace }) => {
     const [map, setMap] = useState(null)
     const [boundingObject, setBoundingObject] = useState(null)
     const mapContainer = useRef(null)
-
-    const circleClickHandler = (e, d) => {
-        // make other circles not red
-        MapUtils.resetAllCircleColors()
-        
-        // make this circle red
-        d3.select(`#${MapUtils.uniqueCircleId(d)}`)
-            .transition()
-            .duration(500)
-            .style('fill', 'red')
-        
-        // set this to be the selected node
-        setSelectedNode(d)
-    }
 
     // let's init our map first again
     useEffect(() => {
@@ -69,7 +55,7 @@ const MapboxGLMap = ({ trace, setIsLoading, selectedNode, setSelectedNode, hover
             // do a data join on all the trace points with d3
             d3.select('.map-svg')
                 .selectAll('circle')
-                .data(trace)
+                .data(trace, d => d.index)
                 .join(
                     enter => enter
                         .append('circle')
@@ -77,7 +63,7 @@ const MapboxGLMap = ({ trace, setIsLoading, selectedNode, setSelectedNode, hover
                         .attr('class', MapUtils.circleClass)
                         .attr('r', DEFAULT_RADIUS)
                         .style('fill', 'steelblue')
-                        .on('click', circleClickHandler)
+                        .on('click', (e, d) => setSelectedNode(d))
                         .on('mouseover', (e, d) => {
                             setHoveredNode(d)
                             MapUtils.showTooltip(e, d)
@@ -120,30 +106,79 @@ const MapboxGLMap = ({ trace, setIsLoading, selectedNode, setSelectedNode, hover
     }, [boundingObject])
 
     // listen for changes in the selected node
-    // RIGHT NOW THIS IS ASSUMING GENERAL NON TRACE MODE
+    // IF GENERAL NON TRACE MODE
+    //     IF SELECTED NODE NON NULL, ZOOM TO IT AND MAKE IT RED
+    //     ELSE, RESET TO ALL POINTS AND MAKE ALL POINTS BLUE
+    // IF TRACE MODE
+    //     IF SELECTED NODE NON NULL, 
     useEffect(() => {
-        if (selectedNode) {
-            // update bounding box
-            const boundingObjectNew = DataUtils.computeLngLatBoundingBox(
-                MapUtils.generateLngLatArray([selectedNode]),
-                POINT_ZOOM_MILES,
-                false,
-                false
-            )
-            setBoundingObject(boundingObjectNew)
-        } else if (trace) {
-            // reset the bounding box to original trace points
-            const boundingObjectNew = DataUtils.computeLngLatBoundingBox(
-                MapUtils.generateLngLatArray(trace),
-                0.05,
-                true
-            )
-            setBoundingObject(boundingObjectNew)
-
-            // also clear the color
-            MapUtils.resetAllCircleColors()
+        if (! isTracing) {
+            if (selectedNode) {
+                console.log('yyy')
+                // handle colors
+                // make other circles not red
+                MapUtils.resetAllCircleColors()
+                
+                // make this circle red
+                d3.select(`#${MapUtils.uniqueCircleId(selectedNode)}`)
+                    .transition()
+                    .duration(500)
+                    .style('fill', 'red')
+                    .attr('r', DEFAULT_RADIUS)
+                
+                // update bounding box
+                const boundingObjectNew = DataUtils.computeLngLatBoundingBox(
+                    MapUtils.generateLngLatArray([selectedNode]),
+                    POINT_ZOOM_MILES,
+                    false,
+                    false
+                )
+                setBoundingObject(boundingObjectNew)
+            } else if (trace) {
+                console.log('zzz')
+                // reset the bounding box to original trace points
+                const boundingObjectNew = DataUtils.computeLngLatBoundingBox(
+                    MapUtils.generateLngLatArray(trace),
+                    0.05,
+                    true
+                )
+                setBoundingObject(boundingObjectNew)
+    
+                // also clear the color
+                MapUtils.resetAllCircleColors()
+            }
+        } else {
+            // we are tracing - selected node should NEVER be null
+            // reset all nodes to the original color
+            console.log('xxx')
+            MapUtils.resetAllCircleColors('purple')
+                .attr('r', DEFAULT_RADIUS)
+            
+            // make the selected node bigger and green
+            console.log(d3.select(`#${MapUtils.uniqueCircleId(selectedNode)}`))
+            d3.select(`#${MapUtils.uniqueCircleId(selectedNode)}`)
+                .transition()
+                .duration(500)
+                .style('fill', 'green')
+                .attr('r', BIG_RADIUS)
         }
-    }, [selectedNode])
+        
+    }, [selectedNode, isTracing])
+
+    // listen for changes in the isTracing state
+    // if we become tracing, we want to set the trace to the selectedNode's id set
+    useEffect(() => {
+        if (isTracing) {
+            // filter on the current node id key
+            const traceNew = trace
+                .filter(d => d[DataConstants.ID_KEY_NAME] === selectedNode[DataConstants.ID_KEY_NAME])
+                .sort((a, b) => a.dateTime.toMillis() - b.dateTime.toMillis())
+            setTrace(traceNew)
+        } else {
+            // reset trace back to original data array
+            resetTrace()
+        }
+    }, [isTracing])
 
     return <div ref={el => (mapContainer.current = el)} className='map-container-div'>
         <div className='map-tooltip' style={{ 'opacity': 0 }}>

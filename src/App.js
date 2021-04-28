@@ -36,6 +36,9 @@ const App = () => {
     }
   }, [data])
 
+  // define function to set trace back to original data array
+  const resetTrace = () => setTrace(data)
+
   return (
     <div className="App">
       <div className="horizontal-stack">
@@ -58,6 +61,8 @@ const App = () => {
             hoveredNode={hoveredNode}
             setHoveredNode={setHoveredNode}
             isTracing={isTracing}
+            setTrace={setTrace}
+            resetTrace={resetTrace}
           />
         </div>
       </div>

@@ -41,6 +41,8 @@ const Sidebar = ({ isLoading, selectedNode, setSelectedNode, isTracing, setIsTra
                 isTracing={isTracing}
                 setIsTracing={setIsTracing}
                 trace={trace}
+                selectedNode={selectedNode}
+                setSelectedNode={setSelectedNode}
             />
             <div className="sidebar-bottom-content">
                 <p className="sidebar-small-text">Christian Moroney, Jackson Bernatchez, Kevin Lyons</p>
@@ -55,10 +57,4 @@ const Sidebar = ({ isLoading, selectedNode, setSelectedNode, isTracing, setIsTra
     )
 }
 
-export default React.memo(Sidebar, (prevProps, nextProps) => {
-    return (prevProps.isLoading === nextProps.isLoading &&
-        prevProps.selectedNode === nextProps.selectedNode &&
-        prevProps.isTracing === nextProps.isTracing &&
-        prevProps.traceList === nextProps.traceList &&
-        prevProps.traceIndex === nextProps.traceIndex)
-})
+export default Sidebar

@@ -1,26 +1,28 @@
 import KindnessCard from './kindessCard'
+import * as DataConstants from '../../utils/dataConstants'
 
-const TraceStepper = ({ isTracing, setIsTracing, traceList, traceIndex, setTraceIndex }) => {
+const TraceStepper = ({ isTracing, setIsTracing, trace, selectedNode, setSelectedNode }) => {
     console.log('rendering trace')
 
     if (! isTracing) {
         return null
     }
 
-    // get the node at the given trace index
-    // TODO update this logic 
-    const node = traceList[traceIndex]
+    // find the trace index
+    const traceIndex = trace.indexOf(selectedNode)
+
+    const n = trace.length
 
     return (
         <div className="trace-stepper-wrapper">
             <div className="trace-stepper-button-horizontal">
-            <button disabled={traceIndex === 0} onClick={() => setTraceIndex(0)}>Earliest</button>
-                <button disabled={traceIndex === 0} onClick={() => setTraceIndex(traceIndex - 1)}>Previous</button>
-                <button disabled={traceIndex === traceList.length - 1} onClick={() => setTraceIndex(traceIndex + 1)}>Next</button>
-                <button disabled={traceIndex === traceList.length - 1} onClick={() => setTraceIndex(traceList.length - 1)}>Latest</button>
+            <button disabled={traceIndex === 0} onClick={() => setSelectedNode(trace[0])}>Earliest</button>
+                <button disabled={traceIndex === 0} onClick={() => setSelectedNode(trace[traceIndex - 1])}>Previous</button>
+                <button disabled={traceIndex === n - 1} onClick={() => setSelectedNode(trace[traceIndex + 1])}>Next</button>
+                <button disabled={traceIndex === n - 1} onClick={() => setSelectedNode(trace[n - 1])}>Latest</button>
             </div>
-            <p>{`${traceIndex + 1} / ${traceList.length}`}</p>
-            <KindnessCard node={node} />
+            <p>{`${traceIndex + 1} / ${trace.length}`}</p>
+            <KindnessCard node={selectedNode} />
             <div className="trace-stepper-button-below">
                 <button onClick={() => {
                     setIsTracing(false)

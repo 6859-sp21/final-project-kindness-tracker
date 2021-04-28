@@ -50,11 +50,11 @@ const hideTooltip = (callback) => {
         .on('end', callback)
 }
 
-const resetAllCircleColors = () => {
+const resetAllCircleColors = (fill = 'steelblue') => {
     return d3.selectAll('.circle')
         .transition()
         .duration(500)
-        .style('fill', 'steelblue')
+        .style('fill', fill)
 }
 
 const clearAllEventHandlers = (selection) => {
