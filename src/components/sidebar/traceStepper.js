@@ -1,10 +1,12 @@
 import KindnessCard from './kindessCard'
-import * as DataConstants from '../../utils/dataConstants'
+import { Button } from '@material-ui/core'
+import ArrowBackIcon from '@material-ui/icons/ArrowBack'
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward'
 
 const TraceStepper = ({ isTracing, setIsTracing, trace, selectedNode, setSelectedNode }) => {
     console.log('rendering trace')
 
-    if (! isTracing) {
+    if (!isTracing) {
         return null
     }
 
@@ -16,19 +18,51 @@ const TraceStepper = ({ isTracing, setIsTracing, trace, selectedNode, setSelecte
     return (
         <div className="trace-stepper-wrapper">
             <div className="trace-stepper-button-horizontal">
-            <button disabled={traceIndex === 0} onClick={() => setSelectedNode(trace[0])}>Earliest</button>
-                <button disabled={traceIndex === 0} onClick={() => setSelectedNode(trace[traceIndex - 1])}>Previous</button>
-                <button disabled={traceIndex === n - 1} onClick={() => setSelectedNode(trace[traceIndex + 1])}>Next</button>
-                <button disabled={traceIndex === n - 1} onClick={() => setSelectedNode(trace[n - 1])}>Latest</button>
+                <Button
+                    className="trace-stepper-button"
+                    variant="contained"
+                    color="primary"
+                    disabled={traceIndex === 0}
+                    onClick={() => setSelectedNode(trace[0])}
+                >
+                    First
+                </Button>
+                <Button
+                    className="trace-stepper-button"
+                    variant="contained"
+                    color="primary"
+                    disabled={traceIndex === 0}
+                    onClick={() => setSelectedNode(trace[traceIndex - 1])}
+                >
+                    <ArrowBackIcon />
+                </Button>
+                <Button
+                    className="trace-stepper-button"
+                    variant="contained"
+                    color="primary"
+                    disabled={traceIndex === n - 1}
+                    onClick={() => setSelectedNode(trace[traceIndex + 1])}
+                >
+                    <ArrowForwardIcon />
+                </Button>
+                <Button
+                    className="trace-stepper-button"
+                    variant="contained"
+                    color="primary"
+                    disabled={traceIndex === n - 1}
+                    onClick={() => setSelectedNode(trace[n - 1])}
+                >
+                    Last
+                </Button>
             </div>
             <p>{`${traceIndex + 1} / ${trace.length}`}</p>
             <KindnessCard node={selectedNode} />
             <div className="trace-stepper-button-below">
-                <button onClick={() => {
+                <Button variant="contained" style={{ backgroundColor: 'red' }} onClick={() => {
                     setIsTracing(false)
                 }}>
                     Exit Trace Mode
-                </button>
+                </Button>
             </div>
 
         </div>

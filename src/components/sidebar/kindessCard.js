@@ -4,17 +4,18 @@ import { DateTime } from 'luxon'
 const KindnessCard = ({ node }) => {
     console.log('rendering card')
     // handle null node case
-    if (!node) {
+    if (! node) {
         return null;
     }
 
     const streetNumber = node[DataConstants.STREET_NUMBER_KEY_NAME]
     const street = node[DataConstants.STREET_KEY_NAME]
-    const address = (streetNumber && street) ? `${(streetNumber ? `${streetNumber} ` : null)} ${street}` : null
+    const address = (streetNumber && street) ? `${(streetNumber ? `${streetNumber} ` : null)}${street}` : null
     const city = node[DataConstants.CITY_KEY_NAME]
     const state = node[DataConstants.STATE_KEY_NAME]
     const cityState = (city || state) ? `${city}${city ? `, ${state}` : null}` : null
-    const location = `${address || 'No address provided.'}\n${cityState || 'No city/state provided.'}`
+    const zip = node[DataConstants.ZIP_KEY_NAME]
+    const location = `${address || 'No street address provided'}\n${cityState || 'No city/state provided'}${zip ? `\n${zip}` : ''}`
     const kindness = node[DataConstants.KINDNESS_KEY_NAME]
 
     // apply necessary parsing for date
@@ -25,7 +26,7 @@ const KindnessCard = ({ node }) => {
         <div className="kindness-card-inner">
             <p>Act of Kindness:</p>
             <div className="kindess-card-description">
-                <p><b>{kindness || 'No kindess description provided.'}</b></p>
+                <p><b>{kindness || 'No kindess description provided!'}</b></p>
             </div>
             <p>Location:</p>
             <p><b>{location}</b></p>

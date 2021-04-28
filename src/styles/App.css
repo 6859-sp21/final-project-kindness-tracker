@@ -49,6 +49,7 @@
 
 .left-sidebar {
   width: 25%;
+  min-width: 315px;
   opacity: 0.9;
   z-index: 100;
   background: gray;
@@ -62,5 +63,10 @@
 @media screen and (max-width: 800px) {
   .left-sidebar {
     width: 33%;
+    min-width: initial;
+  }
+
+  h1 {
+    font-size: 1.5em;
   }
 }

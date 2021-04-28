@@ -37,11 +37,15 @@
 }
 
 .sidebar-button-below {
-    margin-bottom: 10px;
+    margin-bottom: 10px !important;
 }
 
 .trace-stepper-button-horizontal {
     margin-bottom: 20px;
+}
+
+.trace-stepper-button {
+    margin-right: 5px !important;
 }
 
 .trace-stepper-button-below {
@@ -53,6 +57,7 @@
     bottom: 5px;
     display: flex;
     width: 25%;
+    min-width: 315px;
     flex-direction: column;
     left: 0;
     align-items: left;
@@ -79,6 +84,22 @@
     width: 40px;
 }
 
+.sidebar-info-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-right: 10px;
+}
+
+.sidebar-info-left {
+    width: 20%
+}
+
+.sidebar-info-right {
+    width: 80%;
+    text-align: left;
+}
+
 /* add conditional rendering for mobile views */
 
 @media screen and (max-width: 800px) {
@@ -89,6 +110,17 @@
     /* remove max height on mobile to avoid double scroll */
     .kindess-card-description {
         max-height: none;
+    }
+
+    /* don't show left sidebar icons on mobile */
+    .sidebar-info-left {
+        display: none;
+    }
+
+    /* reduce sidebar row margin on mobile */
+    .sidebar-info-row {
+        margin-bottom: 0px;
+        padding-right: 0px;
     }
 }
 
