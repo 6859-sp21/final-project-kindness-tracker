@@ -58,7 +58,7 @@ const TraceStepper = ({ isTracing, setIsTracing, trace, selectedNode, setSelecte
             <p>{`${traceIndex + 1} / ${trace.length}`}</p>
             <KindnessCard node={selectedNode} />
             <div className="trace-stepper-button-below">
-                <Button variant="contained" style={{ backgroundColor: 'red' }} onClick={() => {
+                <Button variant="contained" style={{ backgroundColor: 'red', color: 'white' }} onClick={() => {
                     setIsTracing(false)
                 }}>
                     Exit Trace Mode

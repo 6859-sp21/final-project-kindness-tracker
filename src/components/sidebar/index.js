@@ -29,7 +29,7 @@ const Sidebar = ({ isLoading, selectedNode, setSelectedNode, isTracing, setIsTra
             {
                 selectedNode && !isTracing ? (
                     <div className="sidebar-clear-div">
-                        <Button variant="contained" style={{ backgroundColor: 'red' }} className="sidebar-button-below" onClick={() => {
+                        <Button variant="contained" style={{ backgroundColor: 'red', color: 'white' }} className="sidebar-button-below" onClick={() => {
                             setSelectedNode(null)
                             setIsTracing(false)
                         }}>Clear Selection</Button>
