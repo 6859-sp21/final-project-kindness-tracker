@@ -24,6 +24,7 @@ const nodesAreEqual = (one, two) => {
 const computeLngLatBoundingBox = (lngLatPoints, paddingMiles, isRatioPadding = false) => {
     // compute top right and bottom left
     // then, add some padding amount in miles
+    console.log('points', lngLatPoints)
     var paddingDegreesLng = 0
     var paddingDegreesLat = 0
     if (! isRatioPadding)

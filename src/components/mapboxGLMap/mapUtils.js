@@ -1,7 +1,7 @@
 import * as d3 from 'd3'
 import mapboxgl from "mapbox-gl"
 
-const initializeMap = ({ setMap, mapContainer, boundingObject }) => {
+const initializeMap = ({ setMap, setBoundingObject, mapContainer, boundingObject }) => {
     const myMap = new mapboxgl.Map({
         container: mapContainer.current,
         style: 'mapbox://styles/mapbox/light-v10',
@@ -12,6 +12,7 @@ const initializeMap = ({ setMap, mapContainer, boundingObject }) => {
 
     myMap.on("load", () => {
         setMap(myMap)
+        setBoundingObject(boundingObject)
     })
 }
 
@@ -46,6 +47,7 @@ const resetAllCircleColors = () => {
         .transition()
         .duration(500)
         .style('fill', 'steelblue')
+        .style('z-index', 0)
 }
 
 const clearAllEventHandlers = (selection) => {

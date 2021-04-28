@@ -10,12 +10,6 @@ import * as DataUtils from '../../utils/dataUtils'
 
 import '../../styles/Map.css'
 
-const styles = {
-    width: "100vw",
-    height: "100vh",
-    position: "absolute"
-}
-
 const POINT_ZOOM = 12
 const DEFAULT_RADIUS = 10
 const BIG_RADIUS = 30
@@ -26,6 +20,7 @@ mapboxgl.workerClass = MapboxWorker;
 const MapboxGLMap = ({ setIsLoading, data, selectedNode, setSelectedNode, hoveredNode, setHoveredNode, isTracing, traceList, setTraceList, traceIndex, setTraceIndex }) => {
     const [map, setMap] = useState(null)
     const mapContainer = useRef(null)
+    const [boundingObject, setBoundingObject] = useState(null)
 
     console.log('rendering map')
 
@@ -41,15 +36,11 @@ const MapboxGLMap = ({ setIsLoading, data, selectedNode, setSelectedNode, hovere
         lat: d[DataConstants.CENTER_LAT_KEY_NAME],
     }))
 
-    // get the bounds of our data
-    const boundingObject = data ? DataUtils.computeLngLatBoundingBox(
-        generateLngLatArray(data), 200
-    ) : null
-
     const visitNode = (d) => {
         MapUtils.resetAllCircleColors()
             .attr("r", DEFAULT_RADIUS)
             .style('opacity', 1)
+            .style('z-index', 0)
     
         // make this circle red
         const circle = d3.select(`#${uniqueCircleId(d)}`)
@@ -94,7 +85,13 @@ const MapboxGLMap = ({ setIsLoading, data, selectedNode, setSelectedNode, hovere
     useEffect(() => {
         if (!map && data) {
             console.log('one')
-            MapUtils.initializeMap({ setMap, mapContainer, boundingObject })
+            // compute bounding object of data for first time
+            // get the bounds of our data
+            const boundingObjectAll = DataUtils.computeLngLatBoundingBox(
+                generateLngLatArray(data), 200
+            )
+            console.log('obj', boundingObjectAll)
+            MapUtils.initializeMap({ setMap, setBoundingObject, mapContainer, boundingObject: boundingObjectAll })
         }
     }, [map, data])
 
@@ -159,12 +156,13 @@ const MapboxGLMap = ({ setIsLoading, data, selectedNode, setSelectedNode, hovere
 
     useEffect(() => {
         // re-fly to center on selectedNode update, as long as we are not tracing
-        if (map && data && !selectedNode) {
+        if (map && data && !selectedNode && boundingObject) {
             console.log('three')
             MapUtils.zoomMapToBoundingObject(map, boundingObject)
             MapUtils.resetAllCircleColors()
                 .attr("r", DEFAULT_RADIUS)
                 .style('opacity', 1)
+                .style('z-index', 0)
             setAllEventHandlers()
         }
     }, [map, data, selectedNode])
@@ -184,6 +182,7 @@ const MapboxGLMap = ({ setIsLoading, data, selectedNode, setSelectedNode, hovere
             otherCircles.transition()
                 .duration(500)
                 .style('opacity', '0')
+                .style('z-index', 0)
             
             MapUtils.clearAllEventHandlers(otherCircles)
             
@@ -192,9 +191,9 @@ const MapboxGLMap = ({ setIsLoading, data, selectedNode, setSelectedNode, hovere
                 .transition()
                 .duration(500)
                 .style('fill', 'purple')
+                .style('z-index', 1)
             
             // re-compute bounding box
-            // TODO write logic for ratio-based padding
             const boundingObjectFilt = DataUtils.computeLngLatBoundingBox(
                 generateLngLatArray(dataFilt),
                 0.05,
@@ -216,17 +215,6 @@ const MapboxGLMap = ({ setIsLoading, data, selectedNode, setSelectedNode, hovere
     useEffect(() => {
         if (map && traceList && traceList.length > 0) {
             console.log('five')
-            console.log(traceIndex, traceList)
-            // // get the node at the index and fly there!
-            // const currentNode = traceList[traceIndex]
-            // map.flyTo({
-            //     center: [
-            //         currentNode[DataConstants.CENTER_LNG_KEY_NAME],
-            //         currentNode[DataConstants.CENTER_LAT_KEY_NAME],
-            //     ],
-            //     zoom: POINT_ZOOM,
-            //     essential: true,
-            // })
 
             // also make that node bigger and green
             d3.selectAll('.circle')
@@ -244,7 +232,7 @@ const MapboxGLMap = ({ setIsLoading, data, selectedNode, setSelectedNode, hovere
         }
     }, [traceList, traceIndex])
 
-    return <div ref={el => (mapContainer.current = el)} style={styles}>
+    return <div ref={el => (mapContainer.current = el)} className="map-container-div">
         <div className="map-tooltip" style={{ "opacity": 0 }}>
             <TooltipContents node={hoveredNode} isSelected={DataUtils.nodesAreEqual(hoveredNode, selectedNode)} />
         </div>
@@ -252,7 +240,6 @@ const MapboxGLMap = ({ setIsLoading, data, selectedNode, setSelectedNode, hovere
 }
 
 export default React.memo(MapboxGLMap, (prevProps, nextProps) => {
-    // { setIsLoading, data, selectedNode, setSelectedNode, hoveredNode, setHoveredNode, traceNode, traceList, setTraceList, traceIndex }
     return prevProps.data === nextProps.data &&
     prevProps.selectedNode === nextProps.selectedNode &&
     prevProps.hoveredNode === nextProps.hoveredNode &&
