@@ -1,0 +1,75 @@
+.sidebar-flex {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.sidebar-divider {
+    width: 100%;
+}
+
+.kindness-card-inner {
+    text-align: left;
+    border: 1px solid white;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.kindess-card-description {
+    max-height: 200px;
+    overflow-y: scroll;
+    white-space: pre-wrap;
+}
+
+.selected-card-wrapper {
+    margin-bottom: 20px;
+}
+
+.sidebar-clear-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.sidebar-button-below {
+    margin-bottom: 20px;
+}
+
+.trace-stepper-button-horizontal {
+    margin-bottom: 20px;
+}
+
+.trace-stepper-button-below {
+    margin-top: 20px;
+}
+
+.sidebar-bottom-content {
+    position: absolute;
+    bottom: 5px;
+    display: flex;
+    width: 25%;
+    flex-direction: column;
+    left: 0;
+    align-items: left;
+}
+
+.sidebar-small-text {
+    font-size: 12px;
+    margin-block-start: 0;
+    margin-block-end: 0.3em;
+}
+
+::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 7px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, .5);
+    box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+  }
+
+.sidebar-git-image {
+    width: 40px;
+}
