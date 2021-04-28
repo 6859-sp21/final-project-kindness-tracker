@@ -43,7 +43,7 @@ const MapboxGLMap = ({ trace, setIsLoading, selectedNode, setSelectedNode, hover
             MapUtils.initializeMap({ setMap, mapContainer })
         } else {
             // also append an svg to the map for later use
-            // TODO put this in csss
+            // TODO put this in css
             var container = map.getCanvasContainer()
             d3.select(container)
                 .append('svg')
@@ -77,7 +77,17 @@ const MapboxGLMap = ({ trace, setIsLoading, selectedNode, setSelectedNode, hover
                         .attr('class', MapUtils.circleClass)
                         .attr('r', DEFAULT_RADIUS)
                         .style('fill', 'steelblue')
-                        .on('click', circleClickHandler),
+                        .on('click', circleClickHandler)
+                        .on('mouseover', (e, d) => {
+                            setHoveredNode(d)
+                            MapUtils.showTooltip(e, d)
+                        })
+                        .on('mousemove', (e, d) => {
+                            MapUtils.showTooltip(e, d)
+                        })
+                        .on('mouseout', (e, d) => {
+                            MapUtils.hideTooltip(() => setHoveredNode(null))
+                        }),
                     update => update,
                     exit => exit.remove()
                 )
@@ -129,6 +139,9 @@ const MapboxGLMap = ({ trace, setIsLoading, selectedNode, setSelectedNode, hover
                 true
             )
             setBoundingObject(boundingObjectNew)
+
+            // also clear the color
+            MapUtils.resetAllCircleColors()
         }
     }, [selectedNode])
 
