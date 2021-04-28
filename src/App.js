@@ -23,12 +23,13 @@ const App = () => {
   useEffect(() => {
     if (data === null) {
       Tabletop.init({
-        key: DataConstants.SPOOF_DATA_URL,
+        key: DataConstants.REAL_DATA_URL,
         simpleSheet: true,
       })
         .then(data => {
           // process data right away
           const dataProc = DataUtils.processRawSheetsData(data)
+          console.log(dataProc)
           setData(dataProc)
           setTrace(dataProc)
         })

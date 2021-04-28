@@ -8,8 +8,9 @@ const KindnessCard = ({ node }) => {
         return null;
     }
 
-    const timestamp = node[DataConstants.TIMESTAMP_KEY_NAME]
+    const streetNumber = node[DataConstants.STREET_NUMBER_KEY_NAME]
     const street = node[DataConstants.STREET_KEY_NAME]
+    const address = (streetNumber && street) ? `${(streetNumber ? `${streetNumber} ` : null)} ${street}` : null
     const city = node[DataConstants.CITY_KEY_NAME]
     const state = node[DataConstants.STATE_KEY_NAME]
     const zip = node[DataConstants.ZIP_KEY_NAME]
@@ -24,7 +25,7 @@ const KindnessCard = ({ node }) => {
         <div className="kindness-card-inner">
             <p>Date: <b>{dateString}</b></p>
             <p>Time: <b>{timeString}</b></p>
-            <p>Address: <b>{street || 'No street provided.'}</b></p>
+            <p>Address: <b>{address || 'No address provided.'}</b></p>
             <p>City: <b>{city || 'No city provided.'}</b></p>
             <p>State: <b>{state || 'No state provided.'}</b></p>
             <p>Zip Code: <b>{zip || 'No zip code provided.'}</b></p>

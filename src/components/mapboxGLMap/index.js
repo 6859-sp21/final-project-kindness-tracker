@@ -9,8 +9,6 @@ import * as DataUtils from '../../utils/dataUtils'
 
 import '../../styles/Map.css'
 
-const POINT_ZOOM = 12
-const POINT_ZOOM_MILES = 1
 const DEFAULT_RADIUS = 10
 const BIG_RADIUS = 30
 
@@ -84,13 +82,8 @@ const MapboxGLMap = ({ trace, setIsLoading, selectedNode, setSelectedNode, hover
             // also complete loading
             setIsLoading(false)
 
-            // update bounding box
-            const boundingObjectNew = DataUtils.computeLngLatBoundingBox(
-                MapUtils.generateLngLatArray(trace),
-                trace.length > 1 ? 0.05 : POINT_ZOOM_MILES,
-                trace.length > 1 ? true : false,
-                trace.length > 1 ? true : false,
-            )
+            // update bounding box with the initial view
+            const boundingObjectNew = MapUtils.getBoudingObjectForTraceList(trace)
             setBoundingObject(boundingObjectNew)
         }
     }, [map, trace])
@@ -111,7 +104,7 @@ const MapboxGLMap = ({ trace, setIsLoading, selectedNode, setSelectedNode, hover
     //     IF SELECTED NODE NON NULL, ZOOM TO IT AND MAKE IT RED
     //     ELSE, RESET TO ALL POINTS AND MAKE ALL POINTS BLUE
     // IF TRACE MODE
-    //     IF SELECTED NODE NON NULL, 
+    //     MAKE IT GREEN, ALL OTHERS PURPLE
     useEffect(() => {
         if (! isTracing) {
             if (selectedNode) {
@@ -127,26 +120,23 @@ const MapboxGLMap = ({ trace, setIsLoading, selectedNode, setSelectedNode, hover
                     .attr('r', DEFAULT_RADIUS)
                 
                 // update bounding box
-                const boundingObjectNew = DataUtils.computeLngLatBoundingBox(
-                    MapUtils.generateLngLatArray([selectedNode]),
-                    POINT_ZOOM_MILES,
-                    false,
-                    false
-                )
+                const boundingObjectNew = MapUtils.getBoudingObjectForTraceList([selectedNode])
                 setBoundingObject(boundingObjectNew)
             } else if (trace) {
                 // reset the bounding box to original trace points
-                const boundingObjectNew = DataUtils.computeLngLatBoundingBox(
-                    MapUtils.generateLngLatArray(trace),
-                    0.05,
-                    true
-                )
+                const boundingObjectNew = MapUtils.getBoudingObjectForTraceList(trace)
                 setBoundingObject(boundingObjectNew)
     
                 // also clear the color
                 MapUtils.resetAllCircleColors()
             }
         } else {
+            // if we have selected the root node, we need to be sure to zoom to original trace
+            if (selectedNode[DataConstants.ID_KEY_NAME] === DataConstants.ROOT_ACT_ID) {
+                const boundingObjectNew = MapUtils.getBoudingObjectForTraceList(trace)
+                setBoundingObject(boundingObjectNew)
+            }
+
             // we are tracing - selected node should NEVER be null
             // reset all nodes to the original color
             MapUtils.resetAllCircleColors('purple')
@@ -166,10 +156,8 @@ const MapboxGLMap = ({ trace, setIsLoading, selectedNode, setSelectedNode, hover
     // if we become tracing, we want to set the trace to the selectedNode's id set
     useEffect(() => {
         if (isTracing) {
-            // filter on the current node id key
-            const traceNew = trace
-                .filter(d => d[DataConstants.ID_KEY_NAME] === selectedNode[DataConstants.ID_KEY_NAME])
-                .sort((a, b) => a.dateTime.toMillis() - b.dateTime.toMillis())
+            // filter on the current node
+            const traceNew = DataUtils.filterTraceListForNode(trace, selectedNode)
             setTrace(traceNew)
         } else {
             // reset trace back to original data array

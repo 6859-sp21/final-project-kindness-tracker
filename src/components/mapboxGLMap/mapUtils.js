@@ -1,9 +1,12 @@
 import * as d3 from 'd3'
 import mapboxgl from "mapbox-gl"
 import * as DataConstants from '../../utils/dataConstants'
+import * as DataUtils from '../../utils/dataUtils'
 
 const POINT_ZOOM = 12
 const ZOOM_EASE_MILLIS = 3000
+const POINT_ZOOM_MILES = 1
+const RATIO_PAD = 0.1
 
 const initializeMap = ({ setMap, mapContainer }) => {
     const myMap = new mapboxgl.Map({
@@ -101,6 +104,15 @@ const mapRender = (map) => {
         .attr('cy', d => projectLngLatToXY(map, d).y)
 }
 
+const getBoudingObjectForTraceList = (trace) => {
+    return DataUtils.computeLngLatBoundingBox(
+        generateLngLatArray(trace),
+        trace.length > 1 ? RATIO_PAD : POINT_ZOOM_MILES,
+        trace.length > 1 ? true : false,
+        trace.length > 1 ? true : false,
+    )
+}
+
 export {
     initializeMap,
     zoomMapToBoundingObject,
@@ -114,4 +126,5 @@ export {
     projectLngLatToXY,
     zoomToDataPoint,
     mapRender,
+    getBoudingObjectForTraceList,
 }

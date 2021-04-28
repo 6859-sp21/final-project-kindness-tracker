@@ -11,7 +11,21 @@ const processRawSheetsData = (data) => {
         index: i,
         dateTime: DateTime.fromFormat(d[DataConstants.TIMESTAMP_KEY_NAME], DataConstants.TIMESTAMP_FORMAT),
     })) : null
-    return dataProc
+
+    // convert certain fields to numbers
+    const numericalFields = [
+        DataConstants.ID_KEY_NAME,
+        DataConstants.CENTER_LNG_KEY_NAME,
+        DataConstants.CENTER_LAT_KEY_NAME,
+    ]
+
+    const dataProcNumerical = dataProc.map(d => {
+        numericalFields.forEach(f => {
+            d[f] = +d[f]
+        })
+        return d
+    })
+    return dataProcNumerical
 }
 
 const nodesAreEqual = (one, two) => {
@@ -30,7 +44,8 @@ const computeLngLatBoundingBox = (lngLatPoints, paddingMiles, isRatioPadding = f
         paddingDegreesLng = paddingMiles / DEGREES_TO_MILES
         paddingDegreesLat = paddingDegreesLng
     
-    const leftPadConstant = padLeft ? 8 : 1
+    // TODO fix hard coding here
+    const leftPadConstant = padLeft ? 5 : 1
 
     const extractKey = key => lngLatPoints.map((d => d[key]))
 
@@ -56,8 +71,29 @@ const computeLngLatBoundingBox = (lngLatPoints, paddingMiles, isRatioPadding = f
     }
 }
 
+const filterTraceListForNode = (data, node) => {
+    let dataFilt;
+    const id = node[DataConstants.ID_KEY_NAME]
+    if (id === DataConstants.ROOT_ACT_ID) {
+        // if the id is the root note, just select all of data
+        dataFilt = data
+    } else {
+        // select this id, and the root
+        dataFilt = data
+            .filter(d => 
+                (d[DataConstants.ID_KEY_NAME] === id) ||
+                (d[DataConstants.ID_KEY_NAME] === DataConstants.ROOT_ACT_ID)
+            )
+    }
+
+    // apply sorting by date
+    const traceNew = dataFilt.sort((a, b) => a.dateTime.toMillis() - b.dateTime.toMillis())
+    return traceNew
+}
+
 export {
     processRawSheetsData,
     nodesAreEqual,
     computeLngLatBoundingBox,
+    filterTraceListForNode,
 }
