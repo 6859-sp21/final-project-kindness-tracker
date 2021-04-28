@@ -13,12 +13,17 @@
     border: 1px solid white;
     border-radius: 5px;
     padding: 5px;
+    white-space: pre-wrap;
+}
+
+/* reduce line height in kindness card */
+.kindness-card-inner p {
+    margin-block-start: 0em;
 }
 
 .kindess-card-description {
     max-height: 200px;
     overflow-y: scroll;
-    white-space: pre-wrap;
 }
 
 .selected-card-wrapper {
@@ -32,7 +37,7 @@
 }
 
 .sidebar-button-below {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .trace-stepper-button-horizontal {
@@ -62,14 +67,33 @@
 ::-webkit-scrollbar {
     -webkit-appearance: none;
     width: 7px;
-  }
+}
   
-  ::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
     border-radius: 4px;
     background-color: rgba(0, 0, 0, .5);
     box-shadow: 0 0 1px rgba(255, 255, 255, .5);
-  }
+}
 
 .sidebar-git-image {
     width: 40px;
+}
+
+/* add conditional rendering for mobile views */
+
+@media screen and (max-width: 800px) {
+    .sidebar-bottom-content {
+        display: none;
+    }
+
+    /* remove max height on mobile to avoid double scroll */
+    .kindess-card-description {
+        max-height: none;
+    }
+}
+
+@media screen and (min-width: 800px) {
+    .sidebar-bottom-content {
+        display: flex;
+    }
 }

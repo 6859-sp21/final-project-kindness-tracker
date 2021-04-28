@@ -13,26 +13,24 @@ const KindnessCard = ({ node }) => {
     const address = (streetNumber && street) ? `${(streetNumber ? `${streetNumber} ` : null)} ${street}` : null
     const city = node[DataConstants.CITY_KEY_NAME]
     const state = node[DataConstants.STATE_KEY_NAME]
-    const zip = node[DataConstants.ZIP_KEY_NAME]
+    const cityState = (city || state) ? `${city}${city ? `, ${state}` : null}` : null
+    const location = `${address || 'No address provided.'}\n${cityState || 'No city/state provided.'}`
     const kindness = node[DataConstants.KINDNESS_KEY_NAME]
 
     // apply necessary parsing for date
     const date = node.dateTime
-    const dateString = date.toLocaleString(DateTime.DATE_FULL)
-    const timeString = date.toLocaleString(DateTime.TIME_SIMPLE)
+    const dateString = date.toLocaleString(DateTime.DATETIME_SHORT)
 
     return (
         <div className="kindness-card-inner">
-            <p>Date: <b>{dateString}</b></p>
-            <p>Time: <b>{timeString}</b></p>
-            <p>Address: <b>{address || 'No address provided.'}</b></p>
-            <p>City: <b>{city || 'No city provided.'}</b></p>
-            <p>State: <b>{state || 'No state provided.'}</b></p>
-            <p>Zip Code: <b>{zip || 'No zip code provided.'}</b></p>
-            <p>Act of Kindness Description:</p>
+            <p>Act of Kindness:</p>
             <div className="kindess-card-description">
                 <p><b>{kindness || 'No kindess description provided.'}</b></p>
             </div>
+            <p>Location:</p>
+            <p><b>{location}</b></p>
+            <p>Date & Time:</p>
+            <p><b>{dateString}</b></p>
         </div>
     )
 }

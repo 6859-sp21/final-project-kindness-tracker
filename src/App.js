@@ -21,6 +21,14 @@ const App = () => {
   const [isTracing, setIsTracing] = useState(false)
 
   useEffect(() => {
+    // on first render, check the width
+    // if less than 800, provide alert about screen size
+    if (window.innerWidth < 800) {
+      alert('We see you\'re on mobile! Rotate your phone sideways for the best experience. Check out our app on your computer too!')
+    }
+  }, [])
+
+  useEffect(() => {
     if (data === null) {
       Tabletop.init({
         key: DataConstants.REAL_DATA_URL,

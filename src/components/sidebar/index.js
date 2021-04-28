@@ -9,18 +9,12 @@ const Sidebar = ({ isLoading, selectedNode, setSelectedNode, isTracing, setIsTra
     console.log('rendering sidebar')
     return (
         <div className="sidebar-flex">
-            <h1>Kindess Tracker</h1>
+            <h2>Kindess Tracker</h2>
             {
                 isLoading ? <LoadingSpinner /> : null
             }
             {
                 !isLoading && !selectedNode ? <SidebarInfoCard /> : null
-            }
-            { !isTracing ? (
-                <div className="selected-card-wrapper">
-                    <KindessCard node={selectedNode} />
-                </div>
-            ) : null
             }
             <div className="sidebar-clear-div">
                 {
@@ -33,10 +27,16 @@ const Sidebar = ({ isLoading, selectedNode, setSelectedNode, isTracing, setIsTra
                 }
                 {
                     (selectedNode && !isTracing) ? (
-                        <button onClick={() => setIsTracing(true)}>Trace this Act!</button>
+                        <button className="sidebar-button-below" onClick={() => setIsTracing(true)}>Trace this Act!</button>
                     ) : null
                 }
             </div>
+            { !isTracing ? (
+                <div className="selected-card-wrapper">
+                    <KindessCard node={selectedNode} />
+                </div>
+            ) : null
+            }
             <TraceStepper
                 isTracing={isTracing}
                 setIsTracing={setIsTracing}

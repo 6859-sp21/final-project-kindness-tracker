@@ -56,3 +56,11 @@
   /* make sidebar scrollable */
   overflow-y: auto; 
 }
+
+/* add conditional rendering for mobile views */
+
+@media screen and (max-width: 800px) {
+  .left-sidebar {
+    width: 33%;
+  }
+}
