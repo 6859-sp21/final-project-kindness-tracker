@@ -21,15 +21,16 @@ const nodesAreEqual = (one, two) => {
     return one.index == two.index
 }
 
-const computeLngLatBoundingBox = (lngLatPoints, paddingMiles, isRatioPadding = false) => {
+const computeLngLatBoundingBox = (lngLatPoints, paddingMiles, isRatioPadding = false, padLeft = true) => {
     // compute top right and bottom left
     // then, add some padding amount in miles
-    console.log('points', lngLatPoints)
     var paddingDegreesLng = 0
     var paddingDegreesLat = 0
     if (! isRatioPadding)
         paddingDegreesLng = paddingMiles / DEGREES_TO_MILES
         paddingDegreesLat = paddingDegreesLng
+    
+    const leftPadConstant = padLeft ? 8 : 1
 
     const extractKey = key => lngLatPoints.map((d => d[key]))
 
@@ -49,7 +50,7 @@ const computeLngLatBoundingBox = (lngLatPoints, paddingMiles, isRatioPadding = f
             lat: minLat + paddingDegreesLat,
         },
         bottomLeft: {
-            lng: minLng - paddingDegreesLng * 8,
+            lng: minLng - paddingDegreesLng * leftPadConstant,
             lat: maxLat - paddingDegreesLat,
         }
     }

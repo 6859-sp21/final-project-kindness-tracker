@@ -2,6 +2,9 @@ import * as d3 from 'd3'
 import mapboxgl from "mapbox-gl"
 import * as DataConstants from '../../utils/dataConstants'
 
+const POINT_ZOOM = 12
+const ZOOM_EASE_MILLIS = 3000
+
 const initializeMap = ({ setMap, mapContainer }) => {
     const myMap = new mapboxgl.Map({
         container: mapContainer.current,
@@ -24,7 +27,9 @@ const zoomMapToBoundingObject = (map, boundingObject) => {
     map.fitBounds([
         [bottomLeft.lng, bottomLeft.lat],
         [topRight.lng, topRight.lat]
-    ]);
+    ], {
+        duration: ZOOM_EASE_MILLIS,
+    })
 }
 
 const showTooltip = (e, d) => {
@@ -50,7 +55,6 @@ const resetAllCircleColors = () => {
         .transition()
         .duration(500)
         .style('fill', 'steelblue')
-        .style('z-index', 0)
 }
 
 const clearAllEventHandlers = (selection) => {
@@ -80,6 +84,23 @@ const projectLngLatToXY = (map, d) => {
     )
 }
 
+const zoomToDataPoint = (map, d) => {
+    map.flyTo({
+        center: [
+            d[DataConstants.CENTER_LNG_KEY_NAME],
+            d[DataConstants.CENTER_LAT_KEY_NAME],
+        ],
+        zoom: POINT_ZOOM,
+        essential: true
+    })
+}
+
+const mapRender = (map) => {
+    d3.selectAll('.circle')
+        .attr('cx', d => projectLngLatToXY(map, d).x)
+        .attr('cy', d => projectLngLatToXY(map, d).y)
+}
+
 export {
     initializeMap,
     zoomMapToBoundingObject,
@@ -91,4 +112,6 @@ export {
     circleClass,
     generateLngLatArray,
     projectLngLatToXY,
+    zoomToDataPoint,
+    mapRender,
 }

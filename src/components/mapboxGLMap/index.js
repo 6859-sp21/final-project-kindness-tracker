@@ -10,6 +10,7 @@ import * as DataUtils from '../../utils/dataUtils'
 import '../../styles/Map.css'
 
 const POINT_ZOOM = 12
+const POINT_ZOOM_MILES = 1
 const DEFAULT_RADIUS = 10
 const BIG_RADIUS = 30
 
@@ -18,7 +19,22 @@ mapboxgl.workerClass = MapboxWorker;
 
 const MapboxGLMap = ({ trace, setIsLoading, selectedNode, setSelectedNode, hoveredNode, setHoveredNode, isTracing }) => {
     const [map, setMap] = useState(null)
+    const [boundingObject, setBoundingObject] = useState(null)
     const mapContainer = useRef(null)
+
+    const circleClickHandler = (e, d) => {
+        // make other circles not red
+        MapUtils.resetAllCircleColors()
+        
+        // make this circle red
+        d3.select(`#${MapUtils.uniqueCircleId(d)}`)
+            .transition()
+            .duration(500)
+            .style('fill', 'red')
+        
+        // set this to be the selected node
+        setSelectedNode(d)
+    }
 
     // let's init our map first again
     useEffect(() => {
@@ -27,6 +43,7 @@ const MapboxGLMap = ({ trace, setIsLoading, selectedNode, setSelectedNode, hover
             MapUtils.initializeMap({ setMap, mapContainer })
         } else {
             // also append an svg to the map for later use
+            // TODO put this in csss
             var container = map.getCanvasContainer()
             d3.select(container)
                 .append('svg')
@@ -37,14 +54,19 @@ const MapboxGLMap = ({ trace, setIsLoading, selectedNode, setSelectedNode, hover
                 .style('z-index', 2)
                 .style('top', 0)
                 .style('left', 0)
+            
+            // also set up map events for re-render
+            map.on('viewreset', () => MapUtils.mapRender(map))
+            map.on('move', () => MapUtils.mapRender(map))
+            map.on('moveend', () => MapUtils.mapRender(map))
+            map.on('load', () => map.resize())
         }
     }, [map])
 
     // here is where we do our data join for trace points
     useEffect(() => {
-        if (map) {
+        if (map && trace) {
             // do a data join on all the trace points with d3
-            console.log(trace)
             d3.select('.map-svg')
                 .selectAll('circle')
                 .data(trace)
@@ -54,30 +76,61 @@ const MapboxGLMap = ({ trace, setIsLoading, selectedNode, setSelectedNode, hover
                         .attr('id', MapUtils.uniqueCircleId)
                         .attr('class', MapUtils.circleClass)
                         .attr('r', DEFAULT_RADIUS)
-                        .style('fill', 'steelblue'),
+                        .style('fill', 'steelblue')
+                        .on('click', circleClickHandler),
                     update => update,
                     exit => exit.remove()
                 )
-            
-            // done loading map - set render function
-            const mapRender = () => {
-                // project dots
-                d3.selectAll('.circle')
-                    .attr('cx', d => MapUtils.projectLngLatToXY(map, d).x)
-                    .attr('cy', d => MapUtils.projectLngLatToXY(map, d).y)
-            }
 
-            map.on('viewreset', mapRender)
-            map.on('move', mapRender)
-            map.on('moveend', mapRender)
+            // perform initial render
+            MapUtils.mapRender(map)
 
-            map.on('load', () => {
-                map.resize()
-            })
+            // also complete loading
+            setIsLoading(false)
 
-            mapRender()
+            // update bounding box
+            const boundingObjectNew = DataUtils.computeLngLatBoundingBox(
+                MapUtils.generateLngLatArray(trace),
+                0.05,
+                true
+            )
+            setBoundingObject(boundingObjectNew)
         }
     }, [map, trace])
+
+    // THE PURPOSE OF THIS EFFECT IS TO ZOOM ON THE MAP
+    // WE RE-ZOOM WHEN:
+    // 1. BOUNDING BOX CHANGES
+    // 2. SELECTED NODE BECOMES NULL 
+    // listen for changes in the bounding box
+    useEffect(() => {
+        if (boundingObject) {
+            MapUtils.zoomMapToBoundingObject(map, boundingObject)
+        }
+    }, [boundingObject])
+
+    // listen for changes in the selected node
+    // RIGHT NOW THIS IS ASSUMING GENERAL NON TRACE MODE
+    useEffect(() => {
+        if (selectedNode) {
+            // update bounding box
+            const boundingObjectNew = DataUtils.computeLngLatBoundingBox(
+                MapUtils.generateLngLatArray([selectedNode]),
+                POINT_ZOOM_MILES,
+                false,
+                false
+            )
+            setBoundingObject(boundingObjectNew)
+        } else if (trace) {
+            // reset the bounding box to original trace points
+            const boundingObjectNew = DataUtils.computeLngLatBoundingBox(
+                MapUtils.generateLngLatArray(trace),
+                0.05,
+                true
+            )
+            setBoundingObject(boundingObjectNew)
+        }
+    }, [selectedNode])
 
     return <div ref={el => (mapContainer.current = el)} className='map-container-div'>
         <div className='map-tooltip' style={{ 'opacity': 0 }}>
