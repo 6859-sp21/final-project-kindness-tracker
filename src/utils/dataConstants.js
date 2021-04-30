@@ -9,7 +9,14 @@
 // const CENTER_LAT_KEY_NAME = 'CenterLat'
 
 const REAL_DATA_URL = 'https://docs.google.com/spreadsheets/d/1IqEBIcnFZ_BFCrD8jhk11yVoOjfxzZpiZLdL4cL3oK0/pubhtml'
-const SPOOF_DATA_URL = 'https://docs.google.com/spreadsheets/d/1BvBwyy1xYYhdiokMfbyxssu5nlB0arRMvxyuQLCzsH4/pubhtml'
+
+// Massachusetts spoof data
+const MASS_SPOOF_DATA_URL = 'https://docs.google.com/spreadsheets/d/1ILNeaJC675bNSCWHgAK-2hD6MNZB38PYh7Y90MncF50/pubhtml'
+
+// USA spoof data
+const USA_SPOOF_DATA_URL = 'https://docs.google.com/spreadsheets/d/1BvBwyy1xYYhdiokMfbyxssu5nlB0arRMvxyuQLCzsH4/pubhtml'
+
+const SPOOF_DATA_URL = MASS_SPOOF_DATA_URL
 
 // this is the format used by Google sheets
 const TIMESTAMP_FORMAT = 'M/d/yyyy H:mm:ss'
