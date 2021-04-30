@@ -20,13 +20,13 @@ const TIMESTAMP_FORMAT = 'M/d/yyyy H:mm:ss'
 
 // TOOD add constants for new parsed geo fields when those are avaiable
 const TIMESTAMP_KEY_NAME = 'Timestamp'
-const ID_KEY_NAME = 'ID Number on kindness card'
+const ID_KEY_NAME = 'What is the ID Number on your kindness card? (We need this to track the spread of kindness!)'
 const STREET_NUMBER_KEY_NAME = 'street_number'
 const STREET_KEY_NAME = 'street_name'
 const CITY_KEY_NAME = 'admin_level_3'
 const STATE_KEY_NAME = 'admin_level_1'
 const ZIP_KEY_NAME = 'zip_code'
-const KINDNESS_KEY_NAME = '(Optional) Tell us about the act of kindness you received!'
+const KINDNESS_KEY_NAME = 'Tell us about the act of kindness you received!'
 const CENTER_LNG_KEY_NAME = 'center_lng'
 const CENTER_LAT_KEY_NAME = 'center_lat'
 
