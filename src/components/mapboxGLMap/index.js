@@ -109,15 +109,26 @@ const MapboxGLMap = ({ trace, setIsLoading, selectedNode, setSelectedNode, hover
         if (! isTracing) {
             if (selectedNode) {
                 // handle colors
-                // make other circles not red
+                // make other circles not red, and less opaque
                 MapUtils.resetAllCircleColors()
+                    .style('opacity', 0.5)
                 
                 // make this circle red
-                d3.select(`#${MapUtils.uniqueCircleId(selectedNode)}`)
+                const id = `#${MapUtils.uniqueCircleId(selectedNode)}`
+                d3.select(id)
                     .transition()
                     .duration(500)
                     .style('fill', 'red')
                     .attr('r', DEFAULT_RADIUS)
+
+                // draw it over all other circles
+                // <use xlink:href="#one"/>
+                d3.select('.map-svg').selectAll('use')
+                    .remove()
+
+                d3.select('.map-svg')
+                    .append('use')
+                    .attr('xlink:href', id)
                 
                 // update bounding box
                 const boundingObjectNew = MapUtils.getBoudingObjectForTraceList([selectedNode])

@@ -58,6 +58,7 @@ const resetAllCircleColors = (fill = 'steelblue') => {
         .transition()
         .duration(500)
         .style('fill', fill)
+        .style('opacity', 1)
 }
 
 const clearAllEventHandlers = (selection) => {
