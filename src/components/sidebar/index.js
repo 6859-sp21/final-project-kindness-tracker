@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button } from '@material-ui/core'
 import '../../styles/Sidebar.css'
-import KindessCard from './kindessCard'
+import KindnessCard from './kindnessCard'
 import LoadingSpinner from './loadingSpinner'
 import SidebarInfoCard from './infoCard'
 import TraceStepper from './traceStepper'
@@ -19,7 +19,7 @@ const Sidebar = ({ isLoading, selectedNode, setSelectedNode, isTracing, setIsTra
     }
     return (
         <div className="sidebar-flex">
-            <h1>Kindess Tracker</h1>
+            <h1>Kindness Tracker</h1>
             {
                 isLoading ? <LoadingSpinner /> : null
             }
@@ -35,13 +35,13 @@ const Sidebar = ({ isLoading, selectedNode, setSelectedNode, isTracing, setIsTra
                         }}>Clear Selection</Button>
                         <Button variant="contained" style={{ backgroundColor: 'green', color: 'white' }} className="sidebar-button-below" onClick={() => setIsTracing(true)}>Trace this Act!</Button>
                         <h1>{traceCount}</h1>
-                        <p>acts of kindess are connected</p>
+                        <p>acts of kindness are connected</p>
                     </div>
                 ) : null
             }
             { !isTracing ? (
                 <div className="selected-card-wrapper">
-                    <KindessCard node={selectedNode} />
+                    <KindnessCard node={selectedNode} />
                 </div>
             ) : null
             }

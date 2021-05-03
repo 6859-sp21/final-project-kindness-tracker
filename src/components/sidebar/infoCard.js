@@ -23,7 +23,7 @@ const SidebarInfoCard = () => {
                     <ExploreIcon fontSize="large" />
                 </div>
                 <div className="sidebar-info-right">
-                    <p>Then, you can <b>trace</b> that act of kindess to see how may people have paid it forward.</p>
+                    <p>Then, you can <b>trace</b> that act of kindness to see how may people have paid it forward.</p>
                 </div>
             </div>
             <div className="sidebar-info-row sidebar-info-row-toggle">

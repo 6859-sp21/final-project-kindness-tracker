@@ -18,8 +18,8 @@ const KindnessCard = ({ node }) => {
     return (
         <div className="kindness-card-inner">
             <p>Act of Kindness:</p>
-            <div className="kindess-card-description">
-                <p><b>{kindness || 'No kindess description provided!'}</b></p>
+            <div className="kindness-card-description">
+                <p><b>{kindness || 'No kindness description provided!'}</b></p>
             </div>
             <p>Location:</p>
             <p><b>{location}</b></p>

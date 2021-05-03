@@ -21,7 +21,7 @@
     margin-block-start: 0em;
 }
 
-.kindess-card-description {
+.kindness-card-description {
     max-height: 200px;
     overflow-y: scroll;
 }
@@ -118,7 +118,7 @@
     }
 
     /* remove max height on mobile to avoid double scroll */
-    .kindess-card-description {
+    .kindness-card-description {
         max-height: none;
     }
 

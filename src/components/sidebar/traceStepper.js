@@ -1,4 +1,4 @@
-import KindnessCard from './kindessCard'
+import KindnessCard from './kindnessCard'
 import { Button } from '@material-ui/core'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward'
