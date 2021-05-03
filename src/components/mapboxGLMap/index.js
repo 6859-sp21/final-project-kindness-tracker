@@ -96,6 +96,9 @@ const MapboxGLMap = ({ trace, setIsLoading, selectedNode, setSelectedNode, hover
     useEffect(() => {
         if (boundingObject) {
             MapUtils.zoomMapToBoundingObject(map, boundingObject)
+
+            // always clear the tooltip and hovered node in this case
+            setTimeout(() => MapUtils.hideTooltip(() => setHoveredNode(null)), 500)
         }
     }, [boundingObject])
 
@@ -171,7 +174,6 @@ const MapboxGLMap = ({ trace, setIsLoading, selectedNode, setSelectedNode, hover
                 .append('use')
                 .attr('xlink:href', id)
         }
-        
     }, [selectedNode, isTracing])
 
     // listen for changes in the isTracing state
