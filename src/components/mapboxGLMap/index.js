@@ -51,6 +51,7 @@ const MapboxGLMap = ({ trace, setIsLoading, selectedNode, setSelectedNode, hover
     useEffect(() => {
         if (map && trace) {
             // do a data join on all the trace points with d3
+            console.log('>>> JOINING')
             d3.select('.map-svg')
                 .selectAll('circle')
                 .data(trace, d => d.hash)
@@ -61,6 +62,15 @@ const MapboxGLMap = ({ trace, setIsLoading, selectedNode, setSelectedNode, hover
                         .attr('class', MapUtils.circleClass)
                         .attr('r', DEFAULT_RADIUS)
                         .style('fill', 'steelblue')
+                        .style('opacity', d => {
+                            if (selectedNode && DataUtils.nodesAreEqual(d, selectedNode)) {
+                                return 1
+                            } else if (selectedNode && !DataUtils.nodesAreEqual(d, selectedNode)) {
+                                return 0.5
+                            } else {
+                                return 1
+                            }
+                        })
                         .on('click', (e, d) => setSelectedNode(d))
                         .on('mouseover', (e, d) => {
                             setHoveredNode(d)
@@ -126,13 +136,7 @@ const MapboxGLMap = ({ trace, setIsLoading, selectedNode, setSelectedNode, hover
                     .attr('r', DEFAULT_RADIUS)
 
                 // draw it over all other circles
-                d3.select('.map-svg')
-                    .selectAll('use')
-                    .remove()
-
-                d3.select('.map-svg')
-                    .append('use')
-                    .attr('xlink:href', id)
+                MapUtils.bringCircleWithIdToFront(id)
                 
                 // update bounding box
                 const boundingObjectNew = MapUtils.getBoudingObjectForTraceList([selectedNode])
@@ -156,6 +160,7 @@ const MapboxGLMap = ({ trace, setIsLoading, selectedNode, setSelectedNode, hover
             // reset all nodes to the original color
             MapUtils.resetAllCircleColors('purple')
                 .attr('r', DEFAULT_RADIUS)
+                .style('opacity', 0.5)
             
             // make the selected node bigger and green
             const id = `#${MapUtils.uniqueCircleId(selectedNode)}`
@@ -164,15 +169,10 @@ const MapboxGLMap = ({ trace, setIsLoading, selectedNode, setSelectedNode, hover
                 .duration(500)
                 .style('fill', 'green')
                 .attr('r', BIG_RADIUS)
+                .style('opacity', 1)
 
             // draw it over all other circles
-            d3.select('.map-svg')
-                .selectAll('use')
-                .remove()
-
-            d3.select('.map-svg')
-                .append('use')
-                .attr('xlink:href', id)
+            MapUtils.bringCircleWithIdToFront(id)
         }
     }, [selectedNode, isTracing])
 

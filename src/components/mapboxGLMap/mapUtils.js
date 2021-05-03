@@ -114,6 +114,18 @@ const getBoudingObjectForTraceList = (trace) => {
     )
 }
 
+const bringCircleWithIdToFront = (id) => {
+    setTimeout(() => {
+        d3.select('.map-svg')
+            .selectAll('use')
+            .remove()
+
+        d3.select('.map-svg')
+            .append('use')
+            .attr('xlink:href', id)
+    }, 500)
+}
+
 export {
     initializeMap,
     zoomMapToBoundingObject,
@@ -128,4 +140,5 @@ export {
     zoomToDataPoint,
     mapRender,
     getBoudingObjectForTraceList,
+    bringCircleWithIdToFront,
 }
