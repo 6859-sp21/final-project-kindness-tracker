@@ -123,8 +123,8 @@ const MapboxGLMap = ({ trace, setIsLoading, selectedNode, setSelectedNode, hover
                     .attr('r', DEFAULT_RADIUS)
 
                 // draw it over all other circles
-                // <use xlink:href="#one"/>
-                d3.select('.map-svg').selectAll('use')
+                d3.select('.map-svg')
+                    .selectAll('use')
                     .remove()
 
                 d3.select('.map-svg')
@@ -155,11 +155,21 @@ const MapboxGLMap = ({ trace, setIsLoading, selectedNode, setSelectedNode, hover
                 .attr('r', DEFAULT_RADIUS)
             
             // make the selected node bigger and green
-            d3.select(`#${MapUtils.uniqueCircleId(selectedNode)}`)
+            const id = `#${MapUtils.uniqueCircleId(selectedNode)}`
+            d3.select(id)
                 .transition()
                 .duration(500)
                 .style('fill', 'green')
                 .attr('r', BIG_RADIUS)
+
+            // draw it over all other circles
+            d3.select('.map-svg')
+                .selectAll('use')
+                .remove()
+
+            d3.select('.map-svg')
+                .append('use')
+                .attr('xlink:href', id)
         }
         
     }, [selectedNode, isTracing])
