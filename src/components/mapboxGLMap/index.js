@@ -113,12 +113,13 @@ const MapboxGLMap = ({ trace, setIsLoading, selectedNode, setSelectedNode, hover
                 MapUtils.resetAllCircleColors()
                     .style('opacity', 0.5)
                 
-                // make this circle red
+                // make this circle red and dark
                 const id = `#${MapUtils.uniqueCircleId(selectedNode)}`
                 d3.select(id)
                     .transition()
                     .duration(500)
                     .style('fill', 'red')
+                    .style('opacity', 1)
                     .attr('r', DEFAULT_RADIUS)
 
                 // draw it over all other circles
