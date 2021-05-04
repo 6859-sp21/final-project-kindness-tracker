@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import Tabletop from 'tabletop'
-import { Sidebar, MapboxGLMap } from './components'
+import { Sidebar, KindnessSearchBar, MapboxGLMap } from './components'
 import mapboxgl from 'mapbox-gl/dist/mapbox-gl-csp'
 import MapboxWorker from 'worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker'
+import TrieSearch from 'trie-search'
 import * as DataConstants from './utils/dataConstants'
 import * as DataUtils from './utils/dataUtils'
 
@@ -20,6 +21,7 @@ const App = () => {
   const [hoveredNode, setHoveredNode] = useState(null)
   const [isTracing, setIsTracing] = useState(false)
   const [dataUrl, setDataUrl] = useState(DataConstants.REAL_DATA_URL)
+  const [trie, setTrie] = useState(null)
 
   useEffect(() => {
     // on first render, check the width
@@ -38,9 +40,20 @@ const App = () => {
       .then(data => {
         // process data right away
         const dataProc = DataUtils.processRawSheetsData(data)
-        console.log(dataProc)
         setData(dataProc)
         setTrace(dataProc)
+
+        // set up our search object
+        const ts = new TrieSearch([
+          DataConstants.ID_KEY_NAME,
+          DataConstants.KINDNESS_KEY_NAME,
+          DataConstants.STREET_KEY_NAME,
+          DataConstants.CITY_KEY_NAME,
+          DataConstants.STATE_KEY_NAME,
+          DataConstants.ZIP_KEY_NAME,
+        ])
+        ts.addAll(dataProc)
+        setTrie(ts)
       })
       .catch(console.warn)
   }
@@ -66,6 +79,35 @@ const App = () => {
   // define function to set trace back to original data array
   const resetTrace = () => setTrace(data)
 
+  // define function to filter nodes based on a query string
+  const filterNodes = (text) => {
+    // update state
+    setIsLoading(true)
+    
+    // handle no filter
+    if (! text) {
+      // reset to all data
+      setTrace(data)
+      setIsLoading(false)
+      return
+    }
+
+    const dataFiltSearch = trie.get(text)
+
+    // handle empty data case
+    if (dataFiltSearch.length === 0) {
+      // TODO clean this up
+      alert('No results found! Try another search query.')
+      setIsLoading(false)
+      return
+    }
+
+    setSelectedNode(null)
+    setHoveredNode(null)
+    setIsTracing(false)
+    setTrace(dataFiltSearch)
+  }
+
   return (
     <div className="App">
       <div className="horizontal-stack">
@@ -81,21 +123,27 @@ const App = () => {
             setDataUrl={setDataUrl}
           />
         </div>
-        <div className="map-wrapper">
-          <MapboxGLMap
-            trace={trace}
-            setIsLoading={setIsLoading}
-            selectedNode={selectedNode}
-            setSelectedNode={setSelectedNode}
-            hoveredNode={hoveredNode}
-            setHoveredNode={setHoveredNode}
-            isTracing={isTracing}
-            setTrace={setTrace}
-            resetTrace={resetTrace}
-          />
+        <div className="vertical-stack">
+          <div className="search-bar-wrapper">
+            <KindnessSearchBar
+              filterNodes={filterNodes}
+            />
+          </div>
+          <div className="map-wrapper">
+            <MapboxGLMap
+              trace={trace}
+              setIsLoading={setIsLoading}
+              selectedNode={selectedNode}
+              setSelectedNode={setSelectedNode}
+              hoveredNode={hoveredNode}
+              setHoveredNode={setHoveredNode}
+              isTracing={isTracing}
+              setTrace={setTrace}
+              resetTrace={resetTrace}
+            />
+          </div>
         </div>
       </div>
-
     </div>
   );
 }

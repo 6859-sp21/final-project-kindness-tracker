@@ -58,6 +58,24 @@
   overflow-y: auto; 
 }
 
+.vertical-stack {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.search-bar-wrapper {
+  z-index: 100;
+  left: 25%;
+  position: relative;
+  width: 71%;
+  margin: 2%;
+}
+
 /* add conditional rendering for mobile views */
 
 @media screen and (max-width: 800px) {

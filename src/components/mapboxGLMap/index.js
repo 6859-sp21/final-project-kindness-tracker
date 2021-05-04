@@ -76,9 +76,6 @@ const MapboxGLMap = ({ trace, setIsLoading, selectedNode, setSelectedNode, hover
                             setHoveredNode(d)
                             MapUtils.showTooltip(e, d)
                         })
-                        .on('mousemove', (e, d) => {
-                            MapUtils.showTooltip(e, d)
-                        })
                         .on('mouseout', (e, d) => {
                             MapUtils.hideTooltip(() => setHoveredNode(null))
                         }),
