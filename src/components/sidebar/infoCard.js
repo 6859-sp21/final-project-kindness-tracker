@@ -1,6 +1,7 @@
 import MouseIcon from '@material-ui/icons/Mouse'
 import ExploreIcon from '@material-ui/icons/Explore'
-import ToggleOffIcon from '@material-ui/icons/ToggleOff';
+import ToggleOffIcon from '@material-ui/icons/ToggleOff'
+import SearchIcon from '@material-ui/icons/Search'
 
 /*
     Simple component to render some useful info when no node is selected.
@@ -34,8 +35,18 @@ const SidebarInfoCard = () => {
                     <p>Switch between <b>real-time</b> and <b>generated</b> data using the toggle below.</p>
                 </div>
             </div>
+            <div className="sidebar-info-row sidebar-info-row-search">
+                <div className="sidebar-info-left">
+                    <SearchIcon fontSize="large" />
+                </div>
+                <div className="sidebar-info-right">
+                    <p><b>Search</b> for acts of kindness by description, location, or ID.</p>
+                </div>
+            </div>
         </div >
     )
 }
+
+// Search for acts of kindness by description, location, or ID
 
 export default SidebarInfoCard

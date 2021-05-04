@@ -93,7 +93,7 @@
 .sidebar-info-row {
     display: flex;
     align-items: center;
-    margin-bottom: 30px;
+    margin-bottom: 15px;
     padding-right: 10px;
 }
 
@@ -133,8 +133,8 @@
         padding-right: 0px;
     }
 
-    /* don't show toggle row on mobile */
-    .sidebar-info-row-toggle {
+    /* don't show toggle, search rows on mobile */
+    .sidebar-info-row-toggle, .sidebar-info-row-search {
         display: none;
     }
 }
