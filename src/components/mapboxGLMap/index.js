@@ -26,13 +26,10 @@ const MapboxGLMap = ({ trace, setIsLoading, selectedNode, setSelectedNode, hover
 
     // todo refactor
     const drawAndZoomLines = () => {
-        console.log('trace.length!!!', trace)
         const {
             prevNode,
             nextNode,
         } = MapUtils.getPrevAndNextNodes(trace, selectedNode)
-
-        console.log('prevnext', prevNode, nextNode)
 
         let newPrevLineId, newNextLineId
 
@@ -65,13 +62,18 @@ const MapboxGLMap = ({ trace, setIsLoading, selectedNode, setSelectedNode, hover
         }
         const boundingObjectNew = MapUtils.getBoudingObjectForTraceList(nodes)
         setBoundingObject(boundingObjectNew)
+
+        // return the prev and next for reference
+        return {
+            nodes,
+        }
     }
 
     const clearAllLines = () => {
-        if (! map)
+        if (!map)
             return
-        
-            // clear any previous ids
+
+        // clear any previous ids
         LineUtils.clearArcsForId(map, prevLineId)
         LineUtils.clearArcsForId(map, nextLineId)
 
@@ -210,14 +212,33 @@ const MapboxGLMap = ({ trace, setIsLoading, selectedNode, setSelectedNode, hover
                 setBoundingObject(boundingObjectNew)
             }
 
-            // we are tracing - selected node should NEVER be null
-            // reset all nodes to the original color
-            MapUtils.resetAllCircleColors('purple')
+            // set up our lines
+            const {
+                nodes,
+            } = drawAndZoomLines()
+
+            console.log(nodes, 'jaflfjljfjslfjks')
+
+            // update circle colors
+            d3.selectAll('.circle')
+                .filter(d => nodes.indexOf(d) === -1)
+                .transition()
+                .duration(500)
+                .style('fill', 'purple')
+                .style('opacity', 0)
                 .attr('r', DEFAULT_RADIUS)
-                .style('opacity', 0.5)
+
+            d3.selectAll('.circle')
+                .filter(d => (nodes.indexOf(d) > -1 && d.hash !== selectedNode.hash))
+                .transition()
+                .duration(500)
+                .style('fill', 'purple')
+                .style('opacity', 1)
+                .attr('r', DEFAULT_RADIUS)
 
             // make the selected node bigger and green
             const id = `#${MapUtils.uniqueCircleId(selectedNode)}`
+
             d3.select(id)
                 .transition()
                 .duration(500)
@@ -228,8 +249,6 @@ const MapboxGLMap = ({ trace, setIsLoading, selectedNode, setSelectedNode, hover
             // draw it over all other circles
             MapUtils.bringCircleWithIdToFront(id)
 
-            // set up our lines
-            drawAndZoomLines()
         }
     }, [mode, selectedNode, trace])
 
@@ -257,25 +276,14 @@ const MapboxGLMap = ({ trace, setIsLoading, selectedNode, setSelectedNode, hover
         }
     }, [mode])
 
-    // // handle line updates when in trace mode
-    // useEffect(() => {
-    //     if (mode === AppMode.TRACING) {
-    //         updateLines()
-    //     } else {
-    //         // clear any previous ids
-    //         LineUtils.clearArcsForId(map, prevLineId)
-    //         LineUtils.clearArcsForId(map, nextLineId)
-
-    //         // clear the ids
-    //         setPrevLineId(null)
-    //         setNextLineId(null)
-    //     }
-    // }, [mode, selectedNode])
-
     return <div ref={el => (mapContainer.current = el)} className='map-container-div'>
-        <div className='map-tooltip' style={{ 'opacity': 0 }}>
-            <TooltipContents node={hoveredNode} isSelected={DataUtils.nodesAreEqual(hoveredNode, selectedNode)} />
-        </div>
+        {
+            mode !== AppMode.TRACING ? (
+                <div className='map-tooltip' style={{ 'opacity': 0 }}>
+                    <TooltipContents node={hoveredNode} isSelected={DataUtils.nodesAreEqual(hoveredNode, selectedNode)} />
+                </div>
+            ) : null
+        }
     </div>
 }
 
