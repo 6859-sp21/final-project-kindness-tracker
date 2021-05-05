@@ -8,8 +8,8 @@ Here we go!
 
 ## links
 
-- [deployed app](bit.ly/kindness-tracker-app)
-- [Google form](bit.ly/kindness-form)
+- [deployed app](http://bit.ly/kindness-tracker-app)
+- [Google form](http://bit.ly/kindness-form)
 - [demo video](https://www.dropbox.com/s/5whse10x4ziqafc/6859%20-%20Kindness%20Tracker.mp4?dl=0)
 
 ## install dependencies
