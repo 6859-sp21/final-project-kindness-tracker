@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import SearchBar from 'material-ui-search-bar'
 
-const KindnessSearchBar = ({ filterNodes }) => {
-    const [filterText, setFilterText] = useState(null)
-
+const KindnessSearchBar = ({ filterNodes, filterText, setFilterText }) => {
     return (
         <SearchBar
           value={filterText || ''}

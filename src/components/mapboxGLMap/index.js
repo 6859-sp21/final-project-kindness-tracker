@@ -6,6 +6,7 @@ import * as DataConstants from '../../utils/dataConstants'
 import MapboxWorker from 'worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker';
 import TooltipContents from '../tooltip'
 import * as DataUtils from '../../utils/dataUtils'
+import * as AppMode from '../../utils/appMode'
 
 import '../../styles/Map.css'
 
@@ -15,7 +16,7 @@ const BIG_RADIUS = 30
 mapboxgl.accessToken = 'pk.eyJ1IjoiY21vcm9uZXkiLCJhIjoiY2tudGNscDJjMDFldDJ3b3pjMTh6ejJyayJ9.YAPmFkdy_Eh9K20cFlIvaQ'
 mapboxgl.workerClass = MapboxWorker;
 
-const MapboxGLMap = ({ trace, setIsLoading, selectedNode, setSelectedNode, hoveredNode, setHoveredNode, isTracing, setTrace, resetTrace }) => {
+const MapboxGLMap = ({ trace, setIsLoading, selectedNode, setSelectedNode, hoveredNode, setHoveredNode, mode, setTrace, resetTrace }) => {
     const [map, setMap] = useState(null)
     const [boundingObject, setBoundingObject] = useState(null)
     const mapContainer = useRef(null)
@@ -101,13 +102,13 @@ const MapboxGLMap = ({ trace, setIsLoading, selectedNode, setSelectedNode, hover
     // 2. SELECTED NODE BECOMES NULL 
     // listen for changes in the bounding box
     useEffect(() => {
-        if (boundingObject) {
+        if (map && boundingObject) {
             MapUtils.zoomMapToBoundingObject(map, boundingObject)
 
             // always clear the tooltip and hovered node in this case
             setTimeout(() => MapUtils.hideTooltip(() => setHoveredNode(null)), 500)
         }
-    }, [boundingObject])
+    }, [map, boundingObject])
 
     // listen for changes in the selected node
     // IF GENERAL NON TRACE MODE
@@ -116,37 +117,35 @@ const MapboxGLMap = ({ trace, setIsLoading, selectedNode, setSelectedNode, hover
     // IF TRACE MODE
     //     MAKE IT GREEN, ALL OTHERS PURPLE
     useEffect(() => {
-        if (! isTracing) {
-            if (selectedNode) {
-                // handle colors
-                // make other circles not red, and less opaque
-                MapUtils.resetAllCircleColors()
-                    .style('opacity', 0.5)
-                
-                // make this circle red and dark
-                const id = `#${MapUtils.uniqueCircleId(selectedNode)}`
-                d3.select(id)
-                    .transition()
-                    .duration(500)
-                    .style('fill', 'red')
-                    .style('opacity', 1)
-                    .attr('r', DEFAULT_RADIUS)
+        if (mode === AppMode.SELECTED && selectedNode) {
+            // handle colors
+            // make other circles not red, and less opaque
+            MapUtils.resetAllCircleColors()
+                .style('opacity', 0.5)
+            
+            // make this circle red and dark
+            const id = `#${MapUtils.uniqueCircleId(selectedNode)}`
+            d3.select(id)
+                .transition()
+                .duration(500)
+                .style('fill', 'red')
+                .style('opacity', 1)
+                .attr('r', DEFAULT_RADIUS)
 
-                // draw it over all other circles
-                MapUtils.bringCircleWithIdToFront(id)
-                
-                // update bounding box
-                const boundingObjectNew = MapUtils.getBoudingObjectForTraceList([selectedNode])
-                setBoundingObject(boundingObjectNew)
-            } else if (trace) {
-                // reset the bounding box to original trace points
-                const boundingObjectNew = MapUtils.getBoudingObjectForTraceList(trace)
-                setBoundingObject(boundingObjectNew)
-    
-                // also clear the color
-                MapUtils.resetAllCircleColors()
-            }
-        } else {
+            // draw it over all other circles
+            MapUtils.bringCircleWithIdToFront(id)
+            
+            // update bounding box
+            const boundingObjectNew = MapUtils.getBoudingObjectForTraceList([selectedNode])
+            setBoundingObject(boundingObjectNew)
+        } else if ((mode === AppMode.DEFAULT || mode === AppMode.SEARCHING) && trace) {
+            // reset the bounding box to original trace points
+            const boundingObjectNew = MapUtils.getBoudingObjectForTraceList(trace)
+            setBoundingObject(boundingObjectNew)
+
+            // also clear the color
+            MapUtils.resetAllCircleColors()
+        } else if (mode === AppMode.TRACING) {
             // if we have selected the root node, we need to be sure to zoom to original trace
             if (selectedNode[DataConstants.ID_KEY_NAME] === DataConstants.ROOT_ACT_ID) {
                 const boundingObjectNew = MapUtils.getBoudingObjectForTraceList(trace)
@@ -171,20 +170,23 @@ const MapboxGLMap = ({ trace, setIsLoading, selectedNode, setSelectedNode, hover
             // draw it over all other circles
             MapUtils.bringCircleWithIdToFront(id)
         }
-    }, [selectedNode, isTracing])
+    }, [mode, selectedNode, trace])
 
-    // listen for changes in the isTracing state
-    // if we become tracing, we want to set the trace to the selectedNode's id set
+    // listen for changes in the mode state
     useEffect(() => {
-        if (isTracing) {
+        if (mode === AppMode.TRACING) {
             // filter on the current node
             const traceNew = DataUtils.filterTraceListForNode(trace, selectedNode)
             setTrace(traceNew)
-        } else {
+        } else if (mode === AppMode.DEFAULT) {
             // reset trace back to original data array
             resetTrace()
+        } else if (mode === AppMode.SEARCHING) {
+            // do nothing, this should be handled by the search bar
+        } else if (mode === AppMode.SELECTED) {
+            // do nothing, this sould be handled by other handlers
         }
-    }, [isTracing])
+    }, [mode])
 
     return <div ref={el => (mapContainer.current = el)} className='map-container-div'>
         <div className='map-tooltip' style={{ 'opacity': 0 }}>

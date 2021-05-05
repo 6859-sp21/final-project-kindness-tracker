@@ -7,8 +7,9 @@ import SidebarInfoCard from './infoCard'
 import TraceStepper from './traceStepper'
 import DataToggle from './dataToggle'
 import * as DataUtils from '../../utils/dataUtils'
+import * as AppMode from '../../utils/appMode'
 
-const Sidebar = ({ isLoading, selectedNode, setSelectedNode, isTracing, setIsTracing, trace, dataUrl, setDataUrl }) => {
+const Sidebar = ({ isLoading, selectedNode, setSelectedNode, mode, setMode, trace, dataUrl, setDataUrl, filterText }) => {
     console.log('rendering sidebar')
 
     // get a trace count
@@ -24,34 +25,46 @@ const Sidebar = ({ isLoading, selectedNode, setSelectedNode, isTracing, setIsTra
                 isLoading ? <LoadingSpinner /> : null
             }
             {
-                !isLoading && !selectedNode ? <SidebarInfoCard /> : null
+                !isLoading && mode === AppMode.DEFAULT ? <SidebarInfoCard /> : null
             }
             {
-                selectedNode && !isTracing ? (
+                mode === AppMode.SELECTED ? (
                     <div className="sidebar-clear-div">
                         <Button variant="contained" style={{ backgroundColor: 'red', color: 'white' }} className="sidebar-button-below" onClick={() => {
                             setSelectedNode(null)
-                            setIsTracing(false)
+                            setMode(AppMode.DEFAULT)
                         }}>Clear Selection</Button>
-                        <Button variant="contained" style={{ backgroundColor: 'green', color: 'white' }} className="sidebar-button-below" onClick={() => setIsTracing(true)}>Trace this Act!</Button>
+                        <Button variant="contained" style={{ backgroundColor: 'green', color: 'white' }} className="sidebar-button-below" onClick={() => setMode(AppMode.TRACING)}>Trace this Act!</Button>
                         <h1>{traceCount}</h1>
                         <p>acts of kindness are connected</p>
                     </div>
                 ) : null
             }
-            { !isTracing ? (
+            { mode === AppMode.SELECTED ? (
                 <div className="selected-card-wrapper">
                     <KindnessCard node={selectedNode} />
                 </div>
             ) : null
             }
-            <TraceStepper
-                isTracing={isTracing}
-                setIsTracing={setIsTracing}
-                trace={trace}
-                selectedNode={selectedNode}
-                setSelectedNode={setSelectedNode}
-            />
+            {
+                mode === AppMode.TRACING ? (
+                    <TraceStepper
+                        exitTraceMode={() => setMode(AppMode.SELECTED)}
+                        trace={trace}
+                        selectedNode={selectedNode}
+                        setSelectedNode={setSelectedNode}
+                    />
+                ) : null
+            }
+            {
+                mode === AppMode.SEARCHING && trace.length > 0 ? (
+                    <div className="sidebar-clear-div">
+                        <h1>{trace.length}</h1>
+                        <p>{trace.length > 1 ? 'acts' : 'act'} found for search query "{filterText}".</p>
+                        <p>Press Esc to clear.</p>
+                    </div>
+                ) : null
+            }
             <div className="sidebar-bottom-content">
                 <div className="data-toggle-outer">
                     <DataToggle

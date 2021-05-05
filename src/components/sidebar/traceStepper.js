@@ -3,12 +3,8 @@ import { Button } from '@material-ui/core'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward'
 
-const TraceStepper = ({ isTracing, setIsTracing, trace, selectedNode, setSelectedNode }) => {
+const TraceStepper = ({ exitTraceMode, trace, selectedNode, setSelectedNode }) => {
     console.log('rendering trace')
-
-    if (!isTracing) {
-        return null
-    }
 
     // find the trace index
     const traceIndex = trace.indexOf(selectedNode)
@@ -18,9 +14,7 @@ const TraceStepper = ({ isTracing, setIsTracing, trace, selectedNode, setSelecte
     return (
         <div className="trace-stepper-wrapper">
             <div className="trace-stepper-button-exit">
-                <Button variant="contained" style={{ backgroundColor: 'red', color: 'white' }} onClick={() => {
-                    setIsTracing(false)
-                }}>
+                <Button variant="contained" style={{ backgroundColor: 'red', color: 'white' }} onClick={exitTraceMode}>
                     Exit Trace Mode
                 </Button>
             </div>
