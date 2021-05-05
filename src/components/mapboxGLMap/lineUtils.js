@@ -1,6 +1,6 @@
 import * as turf from '@turf/turf'
 import * as DataConstants from '../../utils/dataConstants'
-import arrowImage from '../../arrow.png'
+import triangleImage from '../../triangle.png'
 
 const MILES_PER_STEP = 10
 const MIN_NUM_STEPS = 100
@@ -98,7 +98,7 @@ const drawArcBetweenNodes = (map, origin, destination) => {
         'type': 'line',
         'paint': {
             'line-width': 5,
-            'line-color': '#007cbf'
+            'line-color': 'black'
         },
         'layout': {
             'line-cap': 'round',
@@ -106,19 +106,17 @@ const drawArcBetweenNodes = (map, origin, destination) => {
         },
     })
 
-    map.loadImage(
-        arrowImage,
-        function (error, image) {
-            if (error) throw error;
+    if (!map.hasImage('triangle')) {
+        map.loadImage(
+            triangleImage,
+            function (error, image) {
+                if (error) throw error;
 
-            // Add the image to the map style.
-            map.addImage('arrow', image)
-
-            
-
-
-        }
-    );
+                // Add the image to the map style.
+                map.addImage('triangle', image)
+            }
+        )
+    }
 
     map.addSource(idPoint, {
         'type': 'geojson',
@@ -135,13 +133,13 @@ const drawArcBetweenNodes = (map, origin, destination) => {
             // the style in Mapbox Studio and click the "Images" tab.
             // To add a new image to the style at runtime see
             // https://docs.mapbox.com/mapbox-gl-js/example/add-image/
-            'icon-image': 'arrow', // works: heliport-15
+            'icon-image': 'triangle', // works: heliport-15
             // doesn't work: rectangle-blue-2
             'icon-rotate': ['get', 'bearing'],
             'icon-rotation-alignment': 'map',
             'icon-allow-overlap': true,
             'icon-ignore-placement': true,
-            'icon-size': .1,
+            'icon-size': .02,
         }
     })
 
@@ -182,13 +180,13 @@ const drawArcBetweenNodes = (map, origin, destination) => {
 
         // Request the next frame of animation as long as the end has not been reached
         if (counter < numSteps) {
-            requestAnimationFrame(animatePoint)
+            setTimeout(() => requestAnimationFrame(animatePoint), 500)
         } else {
-            counter = -1
-            requestAnimationFrame(animatePoint)
+            counter = 0
+            setTimeout(() => requestAnimationFrame(animatePoint), 500)
         }
 
-        counter = counter + 1
+        counter = counter + 10
     }
 
     // start the animation
