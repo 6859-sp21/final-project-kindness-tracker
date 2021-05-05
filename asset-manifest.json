@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/final-project-kindness-tracker/static/css/main.39d3e8f5.chunk.css",
-    "main.js": "/final-project-kindness-tracker/static/js/main.6ddc2b36.chunk.js",
-    "main.js.map": "/final-project-kindness-tracker/static/js/main.6ddc2b36.chunk.js.map",
+    "main.js": "/final-project-kindness-tracker/static/js/main.d5c1516e.chunk.js",
+    "main.js.map": "/final-project-kindness-tracker/static/js/main.d5c1516e.chunk.js.map",
     "runtime-main.js": "/final-project-kindness-tracker/static/js/runtime-main.8a6058d7.js",
     "runtime-main.js.map": "/final-project-kindness-tracker/static/js/runtime-main.8a6058d7.js.map",
     "static/js/2.3c3dcb96.chunk.js": "/final-project-kindness-tracker/static/js/2.3c3dcb96.chunk.js",
@@ -13,12 +13,13 @@
     "static/css/main.39d3e8f5.chunk.css.map": "/final-project-kindness-tracker/static/css/main.39d3e8f5.chunk.css.map",
     "static/js/2.3c3dcb96.chunk.js.LICENSE.txt": "/final-project-kindness-tracker/static/js/2.3c3dcb96.chunk.js.LICENSE.txt",
     "static/js/mapbox-gl-csp-worker.decd147c.worker.js": "/final-project-kindness-tracker/static/js/mapbox-gl-csp-worker.decd147c.worker.js",
-    "static/js/mapbox-gl-csp-worker.decd147c.worker.js.map": "/final-project-kindness-tracker/static/js/mapbox-gl-csp-worker.decd147c.worker.js.map"
+    "static/js/mapbox-gl-csp-worker.decd147c.worker.js.map": "/final-project-kindness-tracker/static/js/mapbox-gl-csp-worker.decd147c.worker.js.map",
+    "static/media/triangle.c5a97129.png": "/final-project-kindness-tracker/static/media/triangle.c5a97129.png"
   },
   "entrypoints": [
     "static/js/runtime-main.8a6058d7.js",
     "static/js/2.3c3dcb96.chunk.js",
     "static/css/main.39d3e8f5.chunk.css",
-    "static/js/main.6ddc2b36.chunk.js"
+    "static/js/main.d5c1516e.chunk.js"
   ]
 }
