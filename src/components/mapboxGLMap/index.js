@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import mapboxgl from 'mapbox-gl'
 import * as d3 from 'd3'
 import * as MapUtils from './mapUtils'
+import * as LineUtils from './lineUtils'
 import * as DataConstants from '../../utils/dataConstants'
 import MapboxWorker from 'worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker'
 import TooltipContents from '../tooltip'
@@ -11,7 +12,7 @@ import * as AppMode from '../../utils/appMode'
 import '../../styles/Map.css'
 
 const DEFAULT_RADIUS = 10
-const BIG_RADIUS = 30
+const BIG_RADIUS = 20
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiY21vcm9uZXkiLCJhIjoiY2tudGNscDJjMDFldDJ3b3pjMTh6ejJyayJ9.YAPmFkdy_Eh9K20cFlIvaQ'
 mapboxgl.workerClass = MapboxWorker
@@ -20,6 +21,64 @@ const MapboxGLMap = ({ trace, setIsLoading, selectedNode, setSelectedNode, hover
     const [map, setMap] = useState(null)
     const [boundingObject, setBoundingObject] = useState(null)
     const mapContainer = useRef(null)
+    const [prevLineId, setPrevLineId] = useState(null)
+    const [nextLineId, setNextLineId] = useState(null)
+
+    // todo refactor
+    const drawAndZoomLines = () => {
+        console.log('trace.length!!!', trace)
+        const {
+            prevNode,
+            nextNode,
+        } = MapUtils.getPrevAndNextNodes(trace, selectedNode)
+
+        console.log('prevnext', prevNode, nextNode)
+
+        let newPrevLineId, newNextLineId
+
+        if (prevNode) {
+            newPrevLineId = LineUtils.drawArcBetweenNodes(map, prevNode, selectedNode)
+        }
+        if (nextNode) {
+            newNextLineId = LineUtils.drawArcBetweenNodes(map, selectedNode, nextNode)
+        }
+
+        // delete any arcs that are not currently drawn
+        if (prevLineId !== newPrevLineId && prevLineId !== newNextLineId) {
+            LineUtils.clearArcsForId(map, prevLineId)
+        }
+        if (nextLineId !== newPrevLineId && nextLineId !== newNextLineId) {
+            LineUtils.clearArcsForId(map, nextLineId)
+        }
+
+        // update our ids
+        setPrevLineId(newPrevLineId)
+        setNextLineId(newNextLineId)
+
+        // update the bounding box to include current, prev and next
+        const nodes = [selectedNode]
+        if (prevNode) {
+            nodes.push(prevNode)
+        }
+        if (nextNode) {
+            nodes.push(nextNode)
+        }
+        const boundingObjectNew = MapUtils.getBoudingObjectForTraceList(nodes)
+        setBoundingObject(boundingObjectNew)
+    }
+
+    const clearAllLines = () => {
+        if (! map)
+            return
+        
+            // clear any previous ids
+        LineUtils.clearArcsForId(map, prevLineId)
+        LineUtils.clearArcsForId(map, nextLineId)
+
+        // clear the ids
+        setPrevLineId(null)
+        setNextLineId(null)
+    }
 
     // let's init our map first again
     useEffect(() => {
@@ -163,29 +222,55 @@ const MapboxGLMap = ({ trace, setIsLoading, selectedNode, setSelectedNode, hover
                 .transition()
                 .duration(500)
                 .style('fill', 'green')
-                .attr('r', BIG_RADIUS)
+                .attr('r', BIG_RADIUS) // TODO add this back if we want
                 .style('opacity', 1)
 
             // draw it over all other circles
             MapUtils.bringCircleWithIdToFront(id)
+
+            // set up our lines
+            drawAndZoomLines()
         }
     }, [mode, selectedNode, trace])
 
     // listen for changes in the mode state
+    // re-filter the trace list as needed
     useEffect(() => {
         if (mode === AppMode.TRACING) {
             // filter on the current node
             const traceNew = DataUtils.filterTraceListForNode(trace, selectedNode)
             setTrace(traceNew)
-        } else if (mode === AppMode.DEFAULT) {
+            return
+        }
+
+        // non-trace mode - clear all lines
+        clearAllLines()
+
+        if (mode === AppMode.DEFAULT) {
             // reset trace back to original data array
             resetTrace()
         } else if (mode === AppMode.SEARCHING) {
             // do nothing, this should be handled by the search bar
         } else if (mode === AppMode.SELECTED) {
-            // do nothing, this sould be handled by other handlers
+            // reset trace back to original data array
+            resetTrace()
         }
     }, [mode])
+
+    // // handle line updates when in trace mode
+    // useEffect(() => {
+    //     if (mode === AppMode.TRACING) {
+    //         updateLines()
+    //     } else {
+    //         // clear any previous ids
+    //         LineUtils.clearArcsForId(map, prevLineId)
+    //         LineUtils.clearArcsForId(map, nextLineId)
+
+    //         // clear the ids
+    //         setPrevLineId(null)
+    //         setNextLineId(null)
+    //     }
+    // }, [mode, selectedNode])
 
     return <div ref={el => (mapContainer.current = el)} className='map-container-div'>
         <div className='map-tooltip' style={{ 'opacity': 0 }}>
