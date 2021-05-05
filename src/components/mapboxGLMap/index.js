@@ -3,7 +3,7 @@ import mapboxgl from 'mapbox-gl'
 import * as d3 from 'd3'
 import * as MapUtils from './mapUtils'
 import * as DataConstants from '../../utils/dataConstants'
-import MapboxWorker from 'worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker';
+import MapboxWorker from 'worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker'
 import TooltipContents from '../tooltip'
 import * as DataUtils from '../../utils/dataUtils'
 import * as AppMode from '../../utils/appMode'
@@ -14,7 +14,7 @@ const DEFAULT_RADIUS = 10
 const BIG_RADIUS = 30
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiY21vcm9uZXkiLCJhIjoiY2tudGNscDJjMDFldDJ3b3pjMTh6ejJyayJ9.YAPmFkdy_Eh9K20cFlIvaQ'
-mapboxgl.workerClass = MapboxWorker;
+mapboxgl.workerClass = MapboxWorker
 
 const MapboxGLMap = ({ trace, setIsLoading, selectedNode, setSelectedNode, hoveredNode, setHoveredNode, mode, setTrace, resetTrace }) => {
     const [map, setMap] = useState(null)
@@ -39,12 +39,11 @@ const MapboxGLMap = ({ trace, setIsLoading, selectedNode, setSelectedNode, hover
                 .style('z-index', 2)
                 .style('top', 0)
                 .style('left', 0)
-            
+
             // also set up map events for re-render
             map.on('viewreset', () => MapUtils.mapRender(map))
             map.on('move', () => MapUtils.mapRender(map))
             map.on('moveend', () => MapUtils.mapRender(map))
-            map.on('load', () => map.resize())
         }
     }, [map])
 
@@ -122,7 +121,7 @@ const MapboxGLMap = ({ trace, setIsLoading, selectedNode, setSelectedNode, hover
             // make other circles not red, and less opaque
             MapUtils.resetAllCircleColors()
                 .style('opacity', 0.5)
-            
+
             // make this circle red and dark
             const id = `#${MapUtils.uniqueCircleId(selectedNode)}`
             d3.select(id)
@@ -134,7 +133,7 @@ const MapboxGLMap = ({ trace, setIsLoading, selectedNode, setSelectedNode, hover
 
             // draw it over all other circles
             MapUtils.bringCircleWithIdToFront(id)
-            
+
             // update bounding box
             const boundingObjectNew = MapUtils.getBoudingObjectForTraceList([selectedNode])
             setBoundingObject(boundingObjectNew)
@@ -157,7 +156,7 @@ const MapboxGLMap = ({ trace, setIsLoading, selectedNode, setSelectedNode, hover
             MapUtils.resetAllCircleColors('purple')
                 .attr('r', DEFAULT_RADIUS)
                 .style('opacity', 0.5)
-            
+
             // make the selected node bigger and green
             const id = `#${MapUtils.uniqueCircleId(selectedNode)}`
             d3.select(id)
