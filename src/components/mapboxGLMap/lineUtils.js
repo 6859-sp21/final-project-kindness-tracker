@@ -1,10 +1,16 @@
 import * as turf from '@turf/turf'
 import * as DataConstants from '../../utils/dataConstants'
+import arrowImage from '../../arrow.png'
+
+const MILES_PER_STEP = 10
+const MIN_NUM_STEPS = 100
 
 const convertDatumToLngLatArray = d => [
     d[DataConstants.CENTER_LNG_KEY_NAME],
     d[DataConstants.CENTER_LAT_KEY_NAME],
 ]
+
+const computePointId = (id) => `${id}-point`
 
 const constructFeatureCollection = (origin, destination) => ({
     'type': 'FeatureCollection',
@@ -26,16 +32,12 @@ const arcifyFeatureCollection = (route) => {
     // src: https://docs.mapbox.com/mapbox-gl-js/example/animate-point-along-route/
     // Calculate the distance in kilometers between route start/end point.
     const lineDistance = turf.length(route.features[0])
+    const numSteps = Math.max(Math.floor(lineDistance / MILES_PER_STEP), MIN_NUM_STEPS)
 
     const arc = []
 
-    // Number of steps to use in the arc and animation, more steps means
-    // a smoother arc and animation, but too many steps will result in a
-    // low frame rate
-    const steps = 500
-
     // Draw an arc between the `origin` & `destination` of the two points
-    for (var i = 0; i < lineDistance; i += lineDistance / steps) {
+    for (var i = 0; i < lineDistance; i += lineDistance / numSteps) {
         const segment = turf.along(route.features[0], i)
         arc.push(segment.geometry.coordinates)
     }
@@ -46,11 +48,15 @@ const arcifyFeatureCollection = (route) => {
 
     // Update the route with calculated arc coordinates
     route.features[0].geometry.coordinates = arc
-    return route
+    return {
+        route,
+        numSteps,
+    }
 }
 
 const drawArcBetweenNodes = (map, origin, destination) => {
     const id = `${origin.hash} -> ${destination.hash}`
+    const idPoint = computePointId(id)
 
     // if already exists, just return
     if (map.getSource(id)) {
@@ -58,7 +64,28 @@ const drawArcBetweenNodes = (map, origin, destination) => {
     }
 
     const route = constructFeatureCollection(origin, destination)
-    const routeProc = arcifyFeatureCollection(route)
+    const arcifyResult = arcifyFeatureCollection(route)
+    const routeProc = arcifyResult.route
+    const { numSteps } = arcifyResult
+
+    console.log(numSteps, '!!!!!!')
+
+    // set up point to animate
+    // A single point that animates along the route.
+    // Coordinates are initially set to origin.
+    const point = {
+        'type': 'FeatureCollection',
+        'features': [
+            {
+                'type': 'Feature',
+                'properties': {},
+                'geometry': {
+                    'type': 'Point',
+                    'coordinates': convertDatumToLngLatArray(origin),
+                },
+            },
+        ],
+    }
 
     map.addSource(id, {
         'type': 'geojson',
@@ -79,6 +106,94 @@ const drawArcBetweenNodes = (map, origin, destination) => {
         },
     })
 
+    map.loadImage(
+        arrowImage,
+        function (error, image) {
+            if (error) throw error;
+
+            // Add the image to the map style.
+            map.addImage('arrow', image)
+
+            
+
+
+        }
+    );
+
+    map.addSource(idPoint, {
+        'type': 'geojson',
+        'data': point
+    })
+
+    map.addLayer({
+        'id': idPoint,
+        'source': idPoint,
+        'type': 'symbol',
+        'layout': {
+            // This icon is a part of the Mapbox Streets style.
+            // To view all images available in a Mapbox style, open
+            // the style in Mapbox Studio and click the "Images" tab.
+            // To add a new image to the style at runtime see
+            // https://docs.mapbox.com/mapbox-gl-js/example/add-image/
+            'icon-image': 'arrow', // works: heliport-15
+            // doesn't work: rectangle-blue-2
+            'icon-rotate': ['get', 'bearing'],
+            'icon-rotation-alignment': 'map',
+            'icon-allow-overlap': true,
+            'icon-ignore-placement': true,
+            'icon-size': .1,
+        }
+    })
+
+    let counter = 0
+
+    const animatePoint = () => {
+        var start =
+            route.features[0].geometry.coordinates[
+            counter >= numSteps ? counter - 1 : counter
+            ]
+        var end =
+            route.features[0].geometry.coordinates[
+            counter >= numSteps ? counter : counter + 1
+            ]
+        if (!start || !end) return;
+
+        // Update point geometry to a new position based on counter denoting
+        // the index to access the arc
+        point.features[0].geometry.coordinates =
+            route.features[0].geometry.coordinates[counter]
+
+        // Calculate the bearing to ensure the icon is rotated to match the route arc
+        // The bearing is calculated between the current point and the next point, except
+        // at the end of the arc, which uses the previous point and the current point
+        point.features[0].properties.bearing = turf.bearing(
+            turf.point(start),
+            turf.point(end)
+        )
+
+        // Update the source with this new data
+        const source = map.getSource(idPoint)
+        if (!source) {
+            // this has been removed - stop the animation
+            return
+        }
+
+        source.setData(point)
+
+        // Request the next frame of animation as long as the end has not been reached
+        if (counter < numSteps) {
+            requestAnimationFrame(animatePoint)
+        } else {
+            counter = -1
+            requestAnimationFrame(animatePoint)
+        }
+
+        counter = counter + 1
+    }
+
+    // start the animation
+    animatePoint()
+
     return id
 }
 
@@ -89,6 +204,11 @@ const clearArcsForId = (map, id) => {
 
     map.removeLayer(id)
     map.removeSource(id)
+
+    // also clear the associated point
+    const idPoint = computePointId(id)
+    map.removeLayer(idPoint)
+    map.removeSource(idPoint)
 }
 
 export {
