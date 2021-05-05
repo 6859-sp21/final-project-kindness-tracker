@@ -72,6 +72,7 @@ const App = () => {
       // reset all required state before re-fetch
       setIsLoading(true)
       setSelectedNode(null)
+      setFilterText(null)
       setHoveredNode(null)
       setMode(AppMode.DEFAULT)
       fetchData()
@@ -81,13 +82,20 @@ const App = () => {
   // define function to set trace back to original data array
   const resetTrace = () => setTrace(data)
 
+  // function to clear selected node
+  const clearSelectedNode = () => {
+    setSelectedNode(null)
+    setMode(AppMode.DEFAULT)
+    setFilterText(null)
+  }
+
   // define function to filter nodes based on a query string
   const filterNodes = (text) => {
     // update state
     setIsLoading(true)
-    
+
     // handle no filter
-    if (! text) {
+    if (!text) {
       // reset to all data
       setTrace(data)
       setIsLoading(false)
@@ -131,6 +139,7 @@ const App = () => {
             isLoading={isLoading}
             selectedNode={selectedNode}
             setSelectedNode={setSelectedNode}
+            clearSelectedNode={clearSelectedNode}
             mode={mode}
             setMode={setMode}
             trace={trace}
