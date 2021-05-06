@@ -131,6 +131,14 @@ const App = () => {
     setSelectedNode(node)
   }
 
+  const handleSetFilterText = (text) => {
+    // get out of search mode and go back to default
+    setMode(AppMode.DEFAULT)
+
+    // still update our filter text so we have it
+    setFilterText(text)
+  }
+
   return (
     <div className="App">
       <div className="horizontal-stack">
@@ -154,7 +162,7 @@ const App = () => {
               <div className="search-bar-wrapper">
                 <KindnessSearchBar
                   filterText={filterText}
-                  setFilterText={setFilterText}
+                  setFilterText={handleSetFilterText}
                   filterNodes={filterNodes}
                 />
               </div>
