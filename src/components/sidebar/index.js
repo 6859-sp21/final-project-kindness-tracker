@@ -6,6 +6,7 @@ import LoadingSpinner from './loadingSpinner'
 import SidebarInfoCard from './infoCard'
 import TraceStepper from './traceStepper'
 import DataToggle from './dataToggle'
+import TraceStatistics from './traceStatistics'
 import * as DataUtils from '../../utils/dataUtils'
 import * as AppMode from '../../utils/appMode'
 
@@ -16,7 +17,7 @@ const Sidebar = ({ isLoading, selectedNode, setSelectedNode, clearSelectedNode, 
     let traceCount = 0
     if (selectedNode) {
         const traceFilterList = DataUtils.filterTraceListForNode(trace, selectedNode)
-        traceCount = traceFilterList.length
+        traceCount = traceFilterList.length - 1
     }
     return (
         <div className="sidebar-flex">
@@ -33,7 +34,7 @@ const Sidebar = ({ isLoading, selectedNode, setSelectedNode, clearSelectedNode, 
                         <Button variant="contained" style={{ backgroundColor: 'red', color: 'white' }} className="sidebar-button-below" onClick={clearSelectedNode}>Clear Selection</Button>
                         <Button variant="contained" style={{ backgroundColor: 'green', color: 'white' }} className="sidebar-button-below" onClick={() => setMode(AppMode.TRACING)}>Trace this Act!</Button>
                         <h1>{traceCount}</h1>
-                        <p>acts of kindness are connected</p>
+                        <p>{traceCount > 1 ? 'acts' : 'act'} of kindness are connected</p>
                     </div>
                 ) : null
             }
@@ -45,12 +46,38 @@ const Sidebar = ({ isLoading, selectedNode, setSelectedNode, clearSelectedNode, 
             }
             {
                 mode === AppMode.TRACING ? (
-                    <TraceStepper
-                        exitTraceMode={() => setMode(AppMode.SELECTED)}
-                        trace={trace}
-                        selectedNode={selectedNode}
-                        setSelectedNode={setSelectedNode}
-                    />
+                    <div className="trace-stepper-button-exit">
+                        <Button variant="contained" style={{ backgroundColor: 'red', color: 'white' }} onClick={() => setMode(AppMode.SELECTED)}>
+                            Exit Trace Mode
+                        </Button>
+                    </div>
+                ) : null
+            }
+            {
+                mode === AppMode.TRACE_STATS ? (
+                    <div className="trace-stepper-button-exit">
+                        <Button variant="contained" style={{ backgroundColor: 'red', color: 'white' }} onClick={() => setMode(AppMode.TRACING)}>
+                            Back to Trace Mode
+                        </Button>
+                    </div>
+                ) : null
+            }
+            {
+                mode === AppMode.TRACING ? (
+                    <div>
+                        <TraceStepper
+                            exitTraceMode={() => setMode(AppMode.SELECTED)}
+                            trace={trace}
+                            selectedNode={selectedNode}
+                            setSelectedNode={setSelectedNode}
+                        />
+                        <Button variant="contained" style={{ backgroundColor: 'green', color: 'white' }} className="sidebar-button-above" onClick={() => setMode(AppMode.TRACE_STATS)}>View Trace Statistics</Button>
+                    </div>
+                ) : null
+            }
+            {
+                mode === AppMode.TRACE_STATS ? (
+                    <TraceStatistics trace={trace} />
                 ) : null
             }
             {

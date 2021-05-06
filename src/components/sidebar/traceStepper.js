@@ -13,11 +13,6 @@ const TraceStepper = ({ exitTraceMode, trace, selectedNode, setSelectedNode }) =
 
     return (
         <div className="trace-stepper-wrapper">
-            <div className="trace-stepper-button-exit">
-                <Button variant="contained" style={{ backgroundColor: 'red', color: 'white' }} onClick={exitTraceMode}>
-                    Exit Trace Mode
-                </Button>
-            </div>
             <div className="trace-stepper-button-horizontal">
                 <Button
                     className="trace-stepper-button"

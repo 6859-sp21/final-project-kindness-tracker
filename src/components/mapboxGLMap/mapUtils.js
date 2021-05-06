@@ -71,12 +71,6 @@ const uniqueCircleId = d => `circle-${d.index}`
 // write function to generate class of circle based off id key
 const circleClass = d => `circle circle-${d[DataConstants.ID_KEY_NAME]}`
 
-// write function to quickly convert a data array to the fomat for lat lng
-const generateLngLatArray = data => data.map(d => ({
-    lng: d[DataConstants.CENTER_LNG_KEY_NAME],
-    lat: d[DataConstants.CENTER_LAT_KEY_NAME],
-}))
-
 // write projection function for map
 const projectLngLatToXY = (map, d) => {
     return map.project(
@@ -103,7 +97,7 @@ const mapRender = (map) => {
 
 const getBoudingObjectForTraceList = (trace) => {
     return DataUtils.computeLngLatBoundingBox(
-        generateLngLatArray(trace),
+        DataUtils.generateLngLatArray(trace),
         trace.length > 1 ? RATIO_PAD : POINT_ZOOM_MILES,
         trace.length > 1 ? true : false,
         trace.length > 1 ? true : false,
@@ -141,7 +135,6 @@ export {
     clearAllEventHandlers,
     uniqueCircleId,
     circleClass,
-    generateLngLatArray,
     projectLngLatToXY,
     zoomToDataPoint,
     mapRender,

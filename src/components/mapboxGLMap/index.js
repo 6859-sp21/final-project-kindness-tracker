@@ -198,13 +198,14 @@ const MapboxGLMap = ({ trace, setIsLoading, selectedNode, setSelectedNode, hover
             // update bounding box
             const boundingObjectNew = MapUtils.getBoudingObjectForTraceList([selectedNode])
             setBoundingObject(boundingObjectNew)
-        } else if ((mode === AppMode.DEFAULT || mode === AppMode.SEARCHING) && trace) {
+        } else if ((mode === AppMode.DEFAULT || mode === AppMode.SEARCHING || mode === AppMode.TRACE_STATS) && trace) {
             // reset the bounding box to original trace points
             const boundingObjectNew = MapUtils.getBoudingObjectForTraceList(trace)
             setBoundingObject(boundingObjectNew)
 
             // also clear the color
             MapUtils.resetAllCircleColors()
+                .attr('r', DEFAULT_RADIUS)
         } else if (mode === AppMode.TRACING) {
             // if we have selected the root node, we need to be sure to zoom to original trace
             if (selectedNode[DataConstants.ID_KEY_NAME] === DataConstants.ROOT_ACT_ID) {
@@ -273,6 +274,8 @@ const MapboxGLMap = ({ trace, setIsLoading, selectedNode, setSelectedNode, hover
         } else if (mode === AppMode.SELECTED) {
             // reset trace back to original data array
             resetTrace()
+        } else if (mode === AppMode.TRACE_STATS) {
+            // do nothing
         }
     }, [mode])
 

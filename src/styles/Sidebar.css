@@ -8,7 +8,7 @@
     width: 100%;
 }
 
-.kindness-card-inner {
+.kindness-card-inner, .trace-statistics-inner {
     text-align: left;
     border: 1px solid white;
     border-radius: 5px;
@@ -47,6 +47,10 @@
 
 .sidebar-button-below {
     margin-bottom: 10px !important;
+}
+
+.sidebar-button-above {
+    margin-top: 10px !important;
 }
 
 .trace-stepper-button-horizontal {

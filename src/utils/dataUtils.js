@@ -115,10 +115,17 @@ const formatFieldsForDisplay = (node) => {
     }
 }
 
+// write function to quickly convert a data array to the fomat for lat lng
+const generateLngLatArray = data => data.map(d => ({
+    lng: d[DataConstants.CENTER_LNG_KEY_NAME],
+    lat: d[DataConstants.CENTER_LAT_KEY_NAME],
+}))
+
 export {
     processRawSheetsData,
     nodesAreEqual,
     computeLngLatBoundingBox,
     filterTraceListForNode,
     formatFieldsForDisplay,
+    generateLngLatArray,
 }
