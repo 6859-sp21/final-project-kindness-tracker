@@ -53,7 +53,9 @@ const App = () => {
           DataConstants.CITY_KEY_NAME,
           DataConstants.STATE_KEY_NAME,
           DataConstants.ZIP_KEY_NAME,
-        ])
+        ], {
+          idFieldOrFunction: 'index',
+        })
         ts.addAll(dataProc)
         setTrie(ts)
       })
@@ -103,7 +105,8 @@ const App = () => {
       return
     }
 
-    const dataFiltSearch = trie.get(text)
+    // TrieSearch.UNION_REDUCER gives us an AND over the text
+    const dataFiltSearch = trie.get(text.split(' '), TrieSearch.UNION_REDUCER)
 
     // handle empty data case
     if (dataFiltSearch.length === 0) {
