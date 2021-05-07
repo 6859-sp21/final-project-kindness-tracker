@@ -34,7 +34,7 @@ const Sidebar = ({ isLoading, selectedNode, setSelectedNode, clearSelectedNode, 
                         <Button variant="contained" style={{ backgroundColor: 'red', color: 'white' }} className="sidebar-button-below" onClick={clearSelectedNode}>Clear Selection</Button>
                         <Button variant="contained" style={{ backgroundColor: 'green', color: 'white' }} className="sidebar-button-below" onClick={() => setMode(AppMode.TRACING)}>Trace this Act!</Button>
                         <h1>{traceCount}</h1>
-                        <p>{traceCount > 1 ? 'acts' : 'act'} of kindness are connected</p>
+                        <p>{traceCount > 1 ? 'acts' : 'act'} of kindness {traceCount > 1 ? 'are' : 'is'} connected</p>
                     </div>
                 ) : null
             }
