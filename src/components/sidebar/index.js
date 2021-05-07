@@ -21,7 +21,7 @@ const Sidebar = ({ isLoading, selectedNode, setSelectedNode, clearSelectedNode, 
     }
     return (
         <div className="sidebar-flex">
-            <h1>Kindness Tracker</h1>
+            <h1>😊 Kindness Tracker</h1>
             {
                 isLoading ? <LoadingSpinner /> : null
             }

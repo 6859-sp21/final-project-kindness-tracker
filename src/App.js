@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import Tabletop from 'tabletop'
-import { Sidebar, KindnessSearchBar, MapboxGLMap } from './components'
+import { Sidebar, KindnessSearchBar, MapboxGLMap, HelpDialog } from './components'
 import mapboxgl from 'mapbox-gl/dist/mapbox-gl-csp'
 import MapboxWorker from 'worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker'
 import TrieSearch from 'trie-search'
 import * as DataConstants from './utils/dataConstants'
 import * as DataUtils from './utils/dataUtils'
 import * as AppMode from './utils/appMode'
+import { Button } from '@material-ui/core'
+import HelpIcon from '@material-ui/icons/Help'
 
 const MAPBOX_ACCESS_TOKEN = 'pk.eyJ1IjoiY21vcm9uZXkiLCJhIjoiY2tudGNscDJjMDFldDJ3b3pjMTh6ejJyayJ9.YAPmFkdy_Eh9K20cFlIvaQ'
 mapboxgl.workerClass = MapboxWorker
@@ -24,6 +26,7 @@ const App = () => {
   const [trie, setTrie] = useState(null)
   const [filterText, setFilterText] = useState(null)
   const [mode, setMode] = useState(AppMode.DEFAULT)
+  const [openDialog, setOpenDialog] = useState(false)
 
   useEffect(() => {
     // on first render, check the width
@@ -160,17 +163,27 @@ const App = () => {
           />
         </div>
         <div className="vertical-stack">
-          {
-            mode === AppMode.DEFAULT || mode === AppMode.SEARCHING ? (
-              <div className="search-bar-wrapper">
-                <KindnessSearchBar
-                  filterText={filterText}
-                  setFilterText={handleSetFilterText}
-                  filterNodes={filterNodes}
+          <div className="top-bar-wrapper">
+            <div className="search-bar-wrapper">
+              {
+                mode === AppMode.DEFAULT || mode === AppMode.SEARCHING ? (
+                  <KindnessSearchBar
+                    filterText={filterText}
+                    setFilterText={handleSetFilterText}
+                    filterNodes={filterNodes}
+                  />
+                ) : null
+              }
+            </div>
+            <div className="icon-wrapper">
+              <Button onClick={() => setOpenDialog(true)}>
+                <HelpIcon
+                  fontSize="large"
                 />
-              </div>
-            ) : null
-          }
+              </Button>
+            </div>
+          </div>
+
           <div className="map-wrapper">
             <MapboxGLMap
               trace={trace}
@@ -186,6 +199,7 @@ const App = () => {
           </div>
         </div>
       </div>
+      <HelpDialog open={openDialog} setOpen={setOpenDialog} />
     </div>
   );
 }

@@ -68,12 +68,26 @@
   left: 0;
 }
 
-.search-bar-wrapper {
+.top-bar-wrapper {
+  display: flex;
+  flex-direction: row;
   z-index: 100;
   left: 25%;
   position: relative;
   width: 71%;
   margin: 2%;
+}
+
+.search-bar-wrapper {
+  width: 93%;
+}
+
+.icon-wrapper {
+  width: 5%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 2%;
 }
 
 /* add conditional rendering for mobile views */
@@ -86,5 +100,17 @@
 
   h1 {
     font-size: 1.5em;
+  }
+
+  /* don't show search at all */
+  .top-bar-wrapper {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 1260px) {
+  .top-bar-wrapper {
+    left: 315px;
+    width: calc(96vw - 315px);
   }
 }
