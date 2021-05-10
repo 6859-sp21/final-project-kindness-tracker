@@ -126,11 +126,16 @@ const App = () => {
   }
 
   const handleSetSelectedNode = (node) => {
-    // change to selection mode
-    setMode(AppMode.SELECTED)
+    // if we are in a trace-like mode, don't change mode
+    if (mode === AppMode.TRACING || mode === AppMode.TRACE_STATS) {
+      // do nothing
+    } else {
+      // change to selection mode
+      setMode(AppMode.SELECTED)
 
-    // reset the trace
-    resetTrace()
+      // reset the trace
+      resetTrace()
+    }
 
     // update the selected node as normal
     setSelectedNode(node)

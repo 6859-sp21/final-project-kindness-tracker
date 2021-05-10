@@ -139,7 +139,8 @@ const MapboxGLMap = ({ trace, setIsLoading, selectedNode, setSelectedNode, hover
                         .on('mouseout', (e, d) => {
                             MapUtils.hideTooltip(() => setHoveredNode(null))
                         }),
-                    update => update,
+                    update => update
+                        .on('click', (e, d) => setSelectedNode(d)),
                     exit => exit.remove()
                 )
 
@@ -153,7 +154,7 @@ const MapboxGLMap = ({ trace, setIsLoading, selectedNode, setSelectedNode, hover
             const boundingObjectNew = MapUtils.getBoudingObjectForTraceList(trace)
             setBoundingObject(boundingObjectNew)
         }
-    }, [map, trace])
+    }, [map, trace, mode])
 
     // THE PURPOSE OF THIS EFFECT IS TO ZOOM ON THE MAP
     // WE RE-ZOOM WHEN:
