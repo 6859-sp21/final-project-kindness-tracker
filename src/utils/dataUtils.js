@@ -26,7 +26,54 @@ const processRawSheetsData = (data) => {
         })
         return d
     })
-    return dataProcNumerical
+
+    const dataOverlappingProc = handleOverlappingPoints(dataProcNumerical)
+    console.log(dataOverlappingProc)
+    return dataOverlappingProc
+}
+
+const handleOverlappingPoints = (data) => {
+    // return a new data where any lat long pairs that are overlapping are randomly shifted
+    const lngKey = DataConstants.CENTER_LNG_KEY_NAME
+    const latKey = DataConstants.CENTER_LAT_KEY_NAME
+    const lngLatString = d => `${d[lngKey]} ${d[latKey]}`
+
+    // get set of all unique lng lat strings in data
+    const lngLatsMap = data.map(lngLatString).reduce((map, s) => {
+        map[s] = (map[s] || 0) + 1
+        return map
+    }, {})
+
+    // adjust the data based on this
+    // for each point, handle necessary permuation
+    const dataAdjusted = data.map(d => {
+        const count = lngLatsMap[lngLatString(d)]
+
+        if (count === 1) {
+            return d
+        }
+
+        // permute since there is more than 1 of this point
+        const { lng, lat } = permuteLngLat(
+            d[lngKey],
+            d[latKey]
+        )
+
+        d[lngKey] = lng
+        d[latKey] = lat
+        return d
+    })
+    return dataAdjusted
+}
+
+const permuteLngLat = (lng, lat, permutationMiles = 0.1) => {
+    // get random deltas in the range [-permutationMiles, permutationMiles]
+    const permutationDegrees = permutationMiles / DEGREES_TO_MILES
+    const random = () => Math.random() * (2 * permutationDegrees) - permutationDegrees
+    return {
+        lng: lng + random(),
+        lat: lat + random(),
+    }
 }
 
 const nodesAreEqual = (one, two) => {
