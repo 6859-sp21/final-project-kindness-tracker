@@ -2,7 +2,7 @@ import BarChartDemo from './barChartDemo'
 import MapboxGLMap from './mapboxGLMap'
 import Sidebar from './sidebar'
 import KindnessSearchBar from './search'
-import HelpDialog from './dialog'
+import { HelpDialog, AddDialog } from './dialog'
 
 export {
     BarChartDemo,
@@ -10,4 +10,5 @@ export {
     Sidebar,
     KindnessSearchBar,
     HelpDialog,
+    AddDialog,
 }

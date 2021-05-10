@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Tabletop from 'tabletop'
-import { Sidebar, KindnessSearchBar, MapboxGLMap, HelpDialog } from './components'
+import { Sidebar, KindnessSearchBar, MapboxGLMap, HelpDialog, AddDialog } from './components'
 import mapboxgl from 'mapbox-gl/dist/mapbox-gl-csp'
 import MapboxWorker from 'worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker'
 import TrieSearch from 'trie-search'
@@ -9,6 +9,7 @@ import * as DataUtils from './utils/dataUtils'
 import * as AppMode from './utils/appMode'
 import { Button } from '@material-ui/core'
 import HelpIcon from '@material-ui/icons/Help'
+import AddCircleIcon from '@material-ui/icons/AddCircle'
 
 const MAPBOX_ACCESS_TOKEN = 'pk.eyJ1IjoiY21vcm9uZXkiLCJhIjoiY2tudGNscDJjMDFldDJ3b3pjMTh6ejJyayJ9.YAPmFkdy_Eh9K20cFlIvaQ'
 mapboxgl.workerClass = MapboxWorker
@@ -27,6 +28,7 @@ const App = () => {
   const [filterText, setFilterText] = useState(null)
   const [mode, setMode] = useState(AppMode.DEFAULT)
   const [openDialog, setOpenDialog] = useState(false)
+  const [openAddDialog, setOpenAddDialog] = useState(false)
 
   useEffect(() => {
     // on first render, check the width
@@ -180,6 +182,11 @@ const App = () => {
               }
             </div>
             <div className="icon-wrapper">
+              <Button onClick={() => setOpenAddDialog(true)}>
+                <AddCircleIcon
+                  fontSize="large"
+                />
+              </Button>
               <Button onClick={() => setOpenDialog(true)}>
                 <HelpIcon
                   fontSize="large"
@@ -204,6 +211,7 @@ const App = () => {
         </div>
       </div>
       <HelpDialog open={openDialog} setOpen={setOpenDialog} />
+      <AddDialog open={openAddDialog} setOpen={setOpenAddDialog} />
     </div>
   );
 }

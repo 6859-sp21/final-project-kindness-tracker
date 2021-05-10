@@ -79,11 +79,11 @@
 }
 
 .search-bar-wrapper {
-  width: 93%;
+  width: 88%;
 }
 
 .icon-wrapper {
-  width: 5%;
+  width: 10%;
   display: flex;
   align-items: center;
   justify-content: center;

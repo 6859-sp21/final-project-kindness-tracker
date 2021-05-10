@@ -53,9 +53,6 @@ const DialogActions = withStyles((theme) => ({
 }))(MuiDialogActions)
 
 const HelpDialog = ({ open, setOpen }) => {
-  const handleClickOpen = () => {
-    setOpen(true)
-  }
   const handleClose = () => {
     setOpen(false)
   }
@@ -108,4 +105,48 @@ const HelpDialog = ({ open, setOpen }) => {
   )
 }
 
-export default HelpDialog
+const AddDialog = ({ open, setOpen }) => {
+  const handleClose = () => {
+    setOpen(false)
+  }
+
+  return (
+    <div>
+      <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
+        <DialogTitle id="customized-dialog-title" onClose={handleClose}>
+          Add a new act of kindness!
+        </DialogTitle>
+        <DialogContent dividers>
+          <Typography gutterBottom>
+            You may be wondering - how can <i>I</i> add an act of kindness to the tracker!
+          </Typography>
+          <Typography gutterBottom>
+            We have reserved the ID number <b>123</b> for any act of kindness that you want to do!
+          </Typography>
+          <Typography gutterBottom>
+            If you want to get involved in the tracker, here are the steps:
+            <ol>
+              <li>😊 &nbsp; Do something kind for someone else!</li>
+              <li>✏️ &nbsp; Fill out our Google form <a href="http://bit.ly/your-kindness" target="_blank"><b>here</b></a> 🔗  &nbsp; to tell us what happened!</li>
+              <li>🗣️ &nbsp; Encourage that person (or anyone else) to check out Kindness Tracker and maybe pay it forward!</li>
+            </ol>
+          </Typography>
+          <Typography gutterBottom>
+            Remember, you should use ID number <b>123</b>, and tell your friends to do the same.
+          </Typography>
+          <Typography gutterBottom>
+            Here is an easy to remember link to our Google form (we already filled in 123 for you here):
+          </Typography>
+          <Typography gutterBottom>
+            <a href="http://bit.ly/your-kindness" target="_blank"><code>bit.ly/your-kindness</code></a>
+          </Typography>
+        </DialogContent>
+      </Dialog>
+    </div>
+  )
+}
+
+export {
+  HelpDialog,
+  AddDialog,
+}

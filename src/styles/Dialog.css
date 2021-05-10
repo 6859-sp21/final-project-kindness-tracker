@@ -5,3 +5,9 @@
     padding-top: 10px;
     padding-bottom: 10px;
 }
+
+/* override material ui dialog width setting */
+
+.MuiDialog-paperWidthSm {
+    max-width: 65% !important;
+}
