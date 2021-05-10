@@ -1,9 +1,12 @@
 import { DateTime } from  'luxon'
+import Filter from 'bad-words'
 import * as DataConstants from './dataConstants'
 
 const DEGREES_TO_MILES = 69
 const LNG_KEY = 'lng'
 const LAT_KEY = 'lat'
+
+const BAD_WORDS_FILTER = new Filter()
 
 const processRawSheetsData = (data) => {
     const dataProc = data ? data.map((d, i) => ({
@@ -28,7 +31,6 @@ const processRawSheetsData = (data) => {
     })
 
     const dataOverlappingProc = handleOverlappingPoints(dataProcNumerical)
-    console.log(dataOverlappingProc)
     return dataOverlappingProc
 }
 
@@ -168,6 +170,10 @@ const generateLngLatArray = data => data.map(d => ({
     lat: d[DataConstants.CENTER_LAT_KEY_NAME],
 }))
 
+const cleanDescription = (text) => {
+    return BAD_WORDS_FILTER.clean(text)
+}
+
 export {
     processRawSheetsData,
     nodesAreEqual,
@@ -175,4 +181,5 @@ export {
     filterTraceListForNode,
     formatFieldsForDisplay,
     generateLngLatArray,
+    cleanDescription,
 }

@@ -15,10 +15,12 @@ const TooltipContents = ({ node, isSelected }) => {
         cityState,
     } = DataUtils.formatFieldsForDisplay(node)
 
+    const kindnessClean = DataUtils.cleanDescription(kindness)
+    const kindnessTrimmed = StringUtils.trimWithElipses(kindnessClean, 140)
 
     return (
         <div>
-            <p><b>{StringUtils.trimWithElipses(kindness, 140)}</b></p>
+            <p><b>{kindnessTrimmed}</b></p>
             <p><i>{cityState}</i></p>
             <p>{! isSelected ? 'Click for more info!' : null}</p>
         </div>
