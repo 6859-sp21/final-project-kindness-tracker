@@ -98,6 +98,7 @@ const Sidebar = ({ isLoading, selectedNode, setSelectedNode, clearSelectedNode, 
                 </div>
                 <p className="sidebar-small-text">Christian Moroney, Jackson Bernatchez, Kevin Lyons</p>
                 <p className="sidebar-small-text">6.859 Final Project Spring 2021</p>
+                <p className="sidebar-small-text"><code><a href="mailto:kindness-tracker@mit.edu">kindness-tracker@mit.edu</a></code></p>
                 <div>
                     <a href="https://github.com/6859-sp21/final-project-kindness-tracker" target="_blank">
                         <img className="sidebar-git-image" src="https://image.flaticon.com/icons/png/512/25/25231.png"></img>

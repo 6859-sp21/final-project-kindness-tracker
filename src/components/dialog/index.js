@@ -140,6 +140,13 @@ const AddDialog = ({ open, setOpen }) => {
           <Typography gutterBottom>
             <a href="http://bit.ly/your-kindness" target="_blank"><code>bit.ly/your-kindness</code></a>
           </Typography>
+          <hr />
+          <Typography gutterBottom>
+            If you want an actual kindness card, or have any further questions, feel free to reach out to the developers at:
+          </Typography>
+          <Typography gutterBottom>
+            <code><a href="mailto:kindness-tracker@mit.edu">kindness-tracker@mit.edu</a></code>
+          </Typography>
         </DialogContent>
       </Dialog>
     </div>
