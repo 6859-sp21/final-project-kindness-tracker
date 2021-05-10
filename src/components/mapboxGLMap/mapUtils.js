@@ -57,14 +57,6 @@ const resetAllCircleColors = (fill = 'steelblue') => {
         .style('opacity', 1)
 }
 
-const clearAllEventHandlers = (selection) => {
-    selection
-        .on('mouseover', null)
-        .on('mousemove', null)
-        .on('mouseout', null)
-        .on('click', null)
-}
-
 // write function to generate ID of circle
 const uniqueCircleId = d => `circle-${d.index}`
 
@@ -132,7 +124,6 @@ export {
     showTooltip,
     hideTooltip,
     resetAllCircleColors,
-    clearAllEventHandlers,
     uniqueCircleId,
     circleClass,
     projectLngLatToXY,
