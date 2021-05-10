@@ -37,7 +37,6 @@ const App = () => {
   }, [])
 
   const fetchData = () => {
-    console.log('fetching!')
     Tabletop.init({
       key: dataUrl,
       simpleSheet: true,

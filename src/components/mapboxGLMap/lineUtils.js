@@ -68,8 +68,6 @@ const drawArcBetweenNodes = (map, origin, destination) => {
     const routeProc = arcifyResult.route
     const { numSteps } = arcifyResult
 
-    console.log(numSteps, '!!!!!!')
-
     // set up point to animate
     // A single point that animates along the route.
     // Coordinates are initially set to origin.

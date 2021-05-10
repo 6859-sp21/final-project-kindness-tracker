@@ -112,7 +112,6 @@ const MapboxGLMap = ({ trace, setIsLoading, selectedNode, setSelectedNode, hover
     useEffect(() => {
         if (map && trace) {
             // do a data join on all the trace points with d3
-            console.log('>>> JOINING')
             d3.select('.map-svg')
                 .selectAll('circle')
                 .data(trace, d => d.hash)
@@ -217,8 +216,6 @@ const MapboxGLMap = ({ trace, setIsLoading, selectedNode, setSelectedNode, hover
             const {
                 nodes,
             } = drawAndZoomLines()
-
-            console.log(nodes, 'jaflfjljfjslfjks')
 
             // update circle colors
             d3.selectAll('.circle')
