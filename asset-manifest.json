@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/final-project-kindness-tracker/static/css/main.d6f44b47.chunk.css",
-    "main.js": "/final-project-kindness-tracker/static/js/main.11ce3901.chunk.js",
-    "main.js.map": "/final-project-kindness-tracker/static/js/main.11ce3901.chunk.js.map",
+    "main.js": "/final-project-kindness-tracker/static/js/main.0e7377b2.chunk.js",
+    "main.js.map": "/final-project-kindness-tracker/static/js/main.0e7377b2.chunk.js.map",
     "runtime-main.js": "/final-project-kindness-tracker/static/js/runtime-main.937ded4c.js",
     "runtime-main.js.map": "/final-project-kindness-tracker/static/js/runtime-main.937ded4c.js.map",
     "static/js/2.c2cef4c2.chunk.js": "/final-project-kindness-tracker/static/js/2.c2cef4c2.chunk.js",
@@ -21,6 +21,6 @@
     "static/js/runtime-main.937ded4c.js",
     "static/js/2.c2cef4c2.chunk.js",
     "static/css/main.d6f44b47.chunk.css",
-    "static/js/main.11ce3901.chunk.js"
+    "static/js/main.0e7377b2.chunk.js"
   ]
 }
