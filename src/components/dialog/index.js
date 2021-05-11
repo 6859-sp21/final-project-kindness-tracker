@@ -90,7 +90,7 @@ const HelpDialog = ({ open, setOpen }) => {
             <b>🙋🏽‍♀️ I want to participate!</b>
           </Typography>
           <Typography gutterBottom>
-            Stay tuned for more information on how you can get involved!
+            Click the ➕ &nbsp;button in the top right of the page to add your own act of kindness and learn more!
           </Typography>
           <Typography gutterBottom variant="h6">
             <b>⚠️ Where did you get the fake data from?</b>

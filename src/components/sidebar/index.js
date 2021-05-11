@@ -9,6 +9,7 @@ import DataToggle from './dataToggle'
 import TraceStatistics from './traceStatistics'
 import * as DataUtils from '../../utils/dataUtils'
 import * as AppMode from '../../utils/appMode'
+import Tooltip from '@material-ui/core/Tooltip'
 
 const Sidebar = ({ isLoading, selectedNode, setSelectedNode, clearSelectedNode, mode, setMode, trace, dataUrl, setDataUrl, filterText }) => {
     console.log('rendering sidebar')
@@ -31,8 +32,13 @@ const Sidebar = ({ isLoading, selectedNode, setSelectedNode, clearSelectedNode, 
             {
                 mode === AppMode.SELECTED ? (
                     <div className="sidebar-clear-div">
-                        <Button variant="contained" style={{ backgroundColor: 'red', color: 'white' }} className="sidebar-button-below" onClick={clearSelectedNode}>Clear Selection</Button>
-                        <Button variant="contained" style={{ backgroundColor: 'green', color: 'white' }} className="sidebar-button-below" onClick={() => setMode(AppMode.TRACING)}>Trace this Act!</Button>
+                        <Tooltip title={<h2>Deselect the currently selected point, and show all points again.</h2>} arrow placement="right">
+                            <Button variant="contained" style={{ backgroundColor: 'red', color: 'white' }} className="sidebar-button-below" onClick={clearSelectedNode}>Clear Selection</Button>
+                        </Tooltip>
+
+                        <Tooltip title={<h2>Track how other people have paid it forward to get to this act of kindness!</h2>} arrow placement="right">
+                            <Button variant="contained" style={{ backgroundColor: 'green', color: 'white' }} className="sidebar-button-below" onClick={() => setMode(AppMode.TRACING)}>Trace this Act!</Button>
+                        </Tooltip>
                         <h1>{traceCount}</h1>
                         <p>{traceCount > 1 ? 'acts' : 'act'} of kindness {traceCount > 1 ? 'are' : 'is'} connected</p>
                     </div>
@@ -71,7 +77,9 @@ const Sidebar = ({ isLoading, selectedNode, setSelectedNode, clearSelectedNode, 
                             selectedNode={selectedNode}
                             setSelectedNode={setSelectedNode}
                         />
-                        <Button variant="contained" style={{ backgroundColor: 'green', color: 'white' }} className="sidebar-button-above" onClick={() => setMode(AppMode.TRACE_STATS)}>View Trace Statistics</Button>
+                        <Tooltip title={<h2>View information about this particular sequence of acts.</h2>} arrow placement="right">
+                            <Button variant="contained" style={{ backgroundColor: 'green', color: 'white' }} className="sidebar-button-above" onClick={() => setMode(AppMode.TRACE_STATS)}>View Trace Statistics</Button>
+                        </Tooltip>
                     </div>
                 ) : null
             }

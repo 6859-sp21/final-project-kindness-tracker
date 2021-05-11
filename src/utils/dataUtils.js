@@ -123,8 +123,12 @@ const computeLngLatBoundingBox = (lngLatPoints, paddingMiles, isRatioPadding = f
 }
 
 const filterTraceListForNode = (data, node) => {
-    let dataFilt;
     const id = node[DataConstants.ID_KEY_NAME]
+    return filterTraceListForId(data, id)
+}
+
+const filterTraceListForId = (data, id) => {
+    let dataFilt;
     if (id === DataConstants.ROOT_ACT_ID) {
         // if the id is the root note, just select all of data
         dataFilt = data
@@ -136,7 +140,7 @@ const filterTraceListForNode = (data, node) => {
                 (d[DataConstants.ID_KEY_NAME] === DataConstants.ROOT_ACT_ID)
             )
     }
-
+    
     // apply sorting by date
     return sortByDate(dataFilt)
 }
@@ -196,6 +200,7 @@ export {
     nodesAreEqual,
     computeLngLatBoundingBox,
     filterTraceListForNode,
+    filterTraceListForId,
     formatFieldsForDisplay,
     generateLngLatArray,
     cleanDescription,

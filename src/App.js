@@ -7,10 +7,11 @@ import TrieSearch from 'trie-search'
 import * as DataConstants from './utils/dataConstants'
 import * as DataUtils from './utils/dataUtils'
 import * as AppMode from './utils/appMode'
-import { Button } from '@material-ui/core'
-import HelpIcon from '@material-ui/icons/Help'
-import AddCircleIcon from '@material-ui/icons/AddCircle'
+import { Button, Fab } from '@material-ui/core'
+import InfoIcon from '@material-ui/icons/Info'
+import AddIcon from '@material-ui/icons/Add'
 import * as d3 from 'd3'
+import Tooltip from '@material-ui/core/Tooltip'
 
 const MAPBOX_ACCESS_TOKEN = 'pk.eyJ1IjoiY21vcm9uZXkiLCJhIjoiY2tudGNscDJjMDFldDJ3b3pjMTh6ejJyayJ9.YAPmFkdy_Eh9K20cFlIvaQ'
 mapboxgl.workerClass = MapboxWorker
@@ -170,6 +171,15 @@ const App = () => {
     setFilterText(text)
   }
 
+  const setTraceForId = (id) => {
+    console.log('THE ID', id)
+    const traceNew = DataUtils.filterTraceListForId(data, id)
+
+    setTrace(traceNew)
+    setMode(AppMode.TRACE_STATS)
+    setSelectedNode(traceNew[traceNew.length - 1])
+  }
+
   return (
     <div className="App">
       <div className="horizontal-stack">
@@ -201,16 +211,28 @@ const App = () => {
               }
             </div>
             <div className="icon-wrapper">
-              <Button onClick={() => setOpenAddDialog(true)}>
-                <AddCircleIcon
-                  fontSize="large"
-                />
-              </Button>
-              <Button onClick={() => setOpenDialog(true)}>
-                <HelpIcon
-                  fontSize="large"
-                />
-              </Button>
+              <Tooltip title={<h2>Add New</h2>} arrow>
+                <Fab
+                  size="small"
+                  color="primary"
+                  aria-label="add"
+                  onClick={() => setOpenAddDialog(true)}
+                  className="icon-wrapper-button"
+                >
+                  <AddIcon />
+                </Fab>
+              </Tooltip>
+              <Tooltip title={<h2>Learn More</h2>} arrow>
+                <Fab
+                  size="small"
+                  color="primary"
+                  aria-label="info"
+                  onClick={() => setOpenDialog(true)}
+                  className="icon-wrapper-button"
+                >
+                  <InfoIcon />
+                </Fab>
+              </Tooltip>
             </div>
           </div>
 
@@ -231,13 +253,15 @@ const App = () => {
         {
           !openSummaryStats && mode === AppMode.DEFAULT ? (
             <div className="right-sidebar-button">
-              <Button
-                onClick={() => setOpenSummaryStats(true)}
-                variant="contained"
-                color="primary"
-              >
-                Summary Stats
-              </Button>
+              <Tooltip title={<h2>View statistics for all acts of kindness.</h2>} placement="left" arrow>
+                <Button
+                  onClick={() => setOpenSummaryStats(true)}
+                  variant="contained"
+                  color="primary"
+                >
+                  Summary Stats
+                </Button>
+              </Tooltip>
             </div>
           ) : null
         }
@@ -258,6 +282,7 @@ const App = () => {
           <StatisticsSidebar
             data={data}
             setSelectedNode={handleSetSelectedNode}
+            traceId={setTraceForId}
           />
         </div>
       </div>

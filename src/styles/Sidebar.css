@@ -168,6 +168,16 @@
     margin: 10px;
 }
 
+.summary-statistics-info-text {
+    display: flex;
+    align-items: center;
+}
+
+.summary-statistics-info-text p {
+    margin-block-end: 0.5em;
+    margin-right: 5px;
+}
+
 @media screen and (min-width: 800px) {
     .sidebar-bottom-content {
         display: flex;
