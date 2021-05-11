@@ -45,7 +45,7 @@ const StatisticsSidebar = ({ data, setSelectedNode, traceId }) => {
     // need a count of acts per day that is cumulative
     const dates = dataSorted.map(d => d.dateTime)
     const firstDate = dates[0]
-    const lastDate = dates[dataSorted.length - 1]
+    const lastDate = DateTime.now()
     const diff = lastDate.diff(firstDate, ['days'])
     const diffDays = Math.ceil(diff.days)
 
@@ -55,7 +55,7 @@ const StatisticsSidebar = ({ data, setSelectedNode, traceId }) => {
       const filt = dates.filter(dt => dt.startOf("day") <= date.startOf("day"))
       const count = filt.length
       return {
-        days: diff,
+        days: diff + 1,
         count,
       }
     })
@@ -75,7 +75,7 @@ const StatisticsSidebar = ({ data, setSelectedNode, traceId }) => {
         "translate(" + margin.left + "," + margin.top + ")")
 
     var x = d3.scaleLinear()
-    .domain([0, d3.max(countPerDay, function (d) { return d.days })])
+    .domain([0, d3.max(countPerDay, d => d.days) + 1])
       .range([0, width])
     svg.append("g")
       .attr("transform", "translate(0," + height + ")")
