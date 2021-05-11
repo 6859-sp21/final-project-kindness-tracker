@@ -37,8 +37,7 @@ const StatisticsSidebar = ({ data, setSelectedNode, traceId }) => {
   const mostRecentNode = dataSorted[dataSorted.length - 1]
 
   useEffect(() => {
-    // clear old first
-    console.log('klsjflkjljls')
+    // clear old svg first
     d3.selectAll('.chart-svg')
       .remove()
 

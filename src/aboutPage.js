@@ -1,16 +1,11 @@
 import { Button } from '@material-ui/core'
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward'
 import summaryImage from './summary_image.png'
-import { useLocation } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 
 import './styles/About.css'
 
 const AboutPage = () => {
-  // testing routing
-  const location = useLocation()
-  console.log(location.pathname, 'PATH NAME TEST')
-
   return (
     <div className="App app-about">
       <div>

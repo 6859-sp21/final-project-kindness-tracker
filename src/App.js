@@ -3,7 +3,7 @@ import {
   HashRouter,
   Switch,
   Route,
-  useLocation,
+  Redirect,
 } from 'react-router-dom'
 import Tabletop from 'tabletop'
 import { Sidebar, KindnessSearchBar, MapboxGLMap, HelpDialog, AddDialog, StatisticsSidebar } from './components'
@@ -44,7 +44,6 @@ const MainPage = () => {
   const [openSummaryStats, setOpenSummaryStats] = useState(false)
 
   // testing routing
-  const location = useLocation()
   console.log(location.pathname, 'PATH NAME TEST')
 
   // listen for summary stat changes
@@ -326,19 +325,19 @@ const App = () => {
   console.log(process.env.PUBLIC_URL)
 
   return (
-      <HashRouter basename={'/'}>
-        <Switch>
-          <Route exact path="/about">
-            <AboutPage />
-          </Route>
-          <Route exact path="/">
-            <MainPage />
-          </Route>
-          <Route>
-            <h1>Test!</h1>
-          </Route>
-        </Switch>
-      </HashRouter>
+    <HashRouter basename={'/'}>
+      <Switch>
+        <Route exact path="/about">
+          <AboutPage />
+        </Route>
+        <Route exact path="/">
+          <MainPage />
+        </Route>
+        <Route>
+          <Redirect to="/" />
+        </Route>
+      </Switch>
+    </HashRouter>
   )
 }
 
