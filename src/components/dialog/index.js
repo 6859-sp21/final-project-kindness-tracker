@@ -100,7 +100,7 @@ const HelpDialog = ({ open, setOpen }) => {
             This data is just a placeholder while the app rolls out and more acts happen in the real world.
           </Typography>
           <Typography gutterBottom variant="h6">
-            <b>⚠️ &nbsp;How can I learn more?</b>
+            <b>❓ &nbsp;How can I learn more?</b>
           </Typography>
           <Typography gutterBottom>
             Check out our project page <Link to='/about'>here</Link> for more information!
