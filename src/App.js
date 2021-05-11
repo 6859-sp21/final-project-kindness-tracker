@@ -12,6 +12,9 @@ import InfoIcon from '@material-ui/icons/Info'
 import AddIcon from '@material-ui/icons/Add'
 import * as d3 from 'd3'
 import Tooltip from '@material-ui/core/Tooltip'
+import TrendingUpIcon from '@material-ui/icons/TrendingUp'
+import CloseIcon from '@material-ui/icons/Close'
+import ClearIcon from '@material-ui/icons/Clear'
 
 const MAPBOX_ACCESS_TOKEN = 'pk.eyJ1IjoiY21vcm9uZXkiLCJhIjoiY2tudGNscDJjMDFldDJ3b3pjMTh6ejJyayJ9.YAPmFkdy_Eh9K20cFlIvaQ'
 mapboxgl.workerClass = MapboxWorker
@@ -211,6 +214,34 @@ const App = () => {
               }
             </div>
             <div className="icon-wrapper">
+              {
+                mode === AppMode.DEFAULT ? (
+                  <Tooltip title={<h2>View Summary Statistics</h2>} arrow>
+                    <Fab
+                      size="small"
+                      color="primary"
+                      aria-label="view"
+                      onClick={() => setOpenSummaryStats(true)}
+                      className="icon-wrapper-button"
+                    >
+                      <TrendingUpIcon />
+                    </Fab>
+                  </Tooltip>
+                ) : (
+                  <Tooltip title={<h2>Reset to Default View</h2>} arrow>
+                    <Fab
+                      size="small"
+                      color="secondary"
+                      aria-label="reset"
+                      onClick={clearSelectedNode}
+                      className="icon-wrapper-button"
+                    >
+                      <ClearIcon />
+                    </Fab>
+                  </Tooltip>
+                )
+              }
+
               <Tooltip title={<h2>Add New</h2>} arrow>
                 <Fab
                   size="small"
@@ -235,7 +266,6 @@ const App = () => {
               </Tooltip>
             </div>
           </div>
-
           <div className="map-wrapper">
             <MapboxGLMap
               trace={trace}
@@ -251,30 +281,19 @@ const App = () => {
           </div>
         </div>
         {
-          !openSummaryStats && mode === AppMode.DEFAULT ? (
-            <div className="right-sidebar-button">
-              <Tooltip title={<h2>View statistics for all acts of kindness.</h2>} placement="left" arrow>
-                <Button
-                  onClick={() => setOpenSummaryStats(true)}
-                  variant="contained"
-                  color="primary"
-                >
-                  Summary Stats
-                </Button>
-              </Tooltip>
-            </div>
-          ) : null
-        }
-        {
           openSummaryStats ? (
-            <div className="right-sidebar-button">
-              <Button
-                onClick={() => setOpenSummaryStats(false)}
-                variant="contained"
-                color="secondary"
-              >
-                Close
-            </Button>
+            <div className="right-sidebar-button-exit">
+              <Tooltip title={<h2>Close</h2>} arrow>
+                <Fab
+                  size="small"
+                  color="secondary"
+                  aria-label="close"
+                  onClick={() => setOpenSummaryStats(false)}
+                  className="icon-wrapper-button"
+                >
+                  <CloseIcon />
+                </Fab>
+              </Tooltip>
             </div>
           ) : null
         }
@@ -289,7 +308,7 @@ const App = () => {
       <HelpDialog open={openDialog} setOpen={setOpenDialog} />
       <AddDialog open={openAddDialog} setOpen={setOpenAddDialog} />
     </div>
-  );
+  )
 }
 
 export default App

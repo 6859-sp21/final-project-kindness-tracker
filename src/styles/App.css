@@ -75,11 +75,11 @@
   height: 100%
 }
 
-.right-sidebar-button {
+.right-sidebar-button-exit {
   z-index: 101;
   position: absolute;
-  bottom: 30px;
   right: 10px;
+  top: 10px;
 }
 
 .vertical-stack {
@@ -103,11 +103,10 @@
 }
 
 .search-bar-wrapper {
-  width: 88%;
+  width: 91%;
 }
 
 .icon-wrapper {
-  width: 10%;
   display: flex;
   align-items: center;
   justify-content: center;
