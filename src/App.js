@@ -319,16 +319,18 @@ const MainPage = () => {
 
 const App = () => {
   return (
-    <Router>
-      <Switch>
-        <Route exact path="/final-project-kindness-tracker/about">
-          <AboutPage />
-        </Route>
-        <Route>
-          <MainPage />
-        </Route>
-      </Switch>
-    </Router>
+    <React.StrictMode>
+      <Router basename={`${process.env.PUBLIC_URL}`}>
+        <Switch>
+          <Route path="/about">
+            <AboutPage />
+          </Route>
+          <Route>
+            <MainPage />
+          </Route>
+        </Switch>
+      </Router>
+    </React.StrictMode>
   )
 }
 
