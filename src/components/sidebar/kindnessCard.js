@@ -1,6 +1,6 @@
 import * as DataUtils from '../../utils/dataUtils'
 
-const KindnessCard = ({ node }) => {
+const KindnessCard = ({ node, shortMode }) => {
     console.log('rendering card')
     // handle null node case
     if (! node) {
@@ -15,7 +15,14 @@ const KindnessCard = ({ node }) => {
 
     const kindnessClean = DataUtils.cleanDescription(kindness)
 
-    return (
+    return shortMode ? (
+        <div className="kindness-card-inner">
+            <p>Most Recent Act of Kindness:</p>
+            <p><b>{kindnessClean || 'No kindness description provided!'}</b></p>
+            <p><b>{location}</b></p>
+            <p><b>{dateString}</b></p>
+        </div>
+        ) : (
         <div className="kindness-card-inner">
             <p>Act of Kindness:</p>
             <div className="kindness-card-description">

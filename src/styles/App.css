@@ -45,6 +45,7 @@
   position: absolute;
   top: 0;
   left: 0;
+  overflow: hidden;
 }
 
 .left-sidebar {
@@ -56,6 +57,29 @@
   color: white;
   /* make sidebar scrollable */
   overflow-y: auto; 
+}
+
+.right-sidebar {
+  max-width: calc(100vw - 315px);
+  opacity: 0.9;
+  z-index: 100;
+  background: gray;
+  color: white;
+  /* make sidebar scrollable */
+  overflow-y: auto;
+  transition: width 0.5s, left 0.5s;
+  position: absolute;
+  top: 0;
+  left: 100%;
+  width: 35%;
+  height: 100%
+}
+
+.right-sidebar-button {
+  z-index: 101;
+  position: absolute;
+  bottom: 30px;
+  right: 10px;
 }
 
 .vertical-stack {
@@ -104,6 +128,11 @@
 
   /* don't show search at all */
   .top-bar-wrapper {
+    display: none;
+  }
+
+  /* same goes for right sidebar */
+  .right-sidebar {
     display: none;
   }
 }

@@ -1,5 +1,6 @@
-import { DateTime } from  'luxon'
+import { DateTime } from 'luxon'
 import Filter from 'bad-words'
+import * as turf from '@turf/turf'
 import * as DataConstants from './dataConstants'
 
 const DEGREES_TO_MILES = 69
@@ -79,9 +80,9 @@ const permuteLngLat = (lng, lat, permutationMiles = 0.1) => {
 }
 
 const nodesAreEqual = (one, two) => {
-    if (! one || ! two)
+    if (!one || !two)
         return false
-        
+
     return one.index == two.index
 }
 
@@ -90,10 +91,10 @@ const computeLngLatBoundingBox = (lngLatPoints, paddingMiles, isRatioPadding = f
     // then, add some padding amount in miles
     var paddingDegreesLng = 0
     var paddingDegreesLat = 0
-    if (! isRatioPadding)
+    if (!isRatioPadding)
         paddingDegreesLng = paddingMiles / DEGREES_TO_MILES
-        paddingDegreesLat = paddingDegreesLng
-    
+    paddingDegreesLat = paddingDegreesLng
+
     // TODO fix hard coding here
     const leftPadConstant = padLeft ? 5 : 1
 
@@ -130,15 +131,14 @@ const filterTraceListForNode = (data, node) => {
     } else {
         // select this id, and the root
         dataFilt = data
-            .filter(d => 
+            .filter(d =>
                 (d[DataConstants.ID_KEY_NAME] === id) ||
                 (d[DataConstants.ID_KEY_NAME] === DataConstants.ROOT_ACT_ID)
             )
     }
 
     // apply sorting by date
-    const traceNew = dataFilt.sort((a, b) => a.dateTime.toMillis() - b.dateTime.toMillis())
-    return traceNew
+    return sortByDate(dataFilt)
 }
 
 const formatFieldsForDisplay = (node) => {
@@ -174,6 +174,23 @@ const cleanDescription = (text) => {
     return BAD_WORDS_FILTER.clean(text)
 }
 
+const pathLengthMiles = (data) => {
+    const lngLatarray = generateLngLatArray(data)
+    let distance = 0
+    for (let i = 0; i < lngLatarray.length - 1; i++) {
+        distance += turf.distance(
+            turf.point([lngLatarray[i].lng, lngLatarray[i].lat]),
+            turf.point([lngLatarray[i + 1].lng, lngLatarray[i + 1].lat]),
+            {
+                'units': 'miles'
+            },
+        )
+    }
+    return distance
+}
+
+const sortByDate = (data) => data.sort((a, b) => a.dateTime.toMillis() - b.dateTime.toMillis())
+
 export {
     processRawSheetsData,
     nodesAreEqual,
@@ -182,4 +199,6 @@ export {
     formatFieldsForDisplay,
     generateLngLatArray,
     cleanDescription,
+    pathLengthMiles,
+    sortByDate,
 }

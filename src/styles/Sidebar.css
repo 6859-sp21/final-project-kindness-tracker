@@ -1,4 +1,4 @@
-.sidebar-flex {
+.sidebar-flex, .summary-stats-flex {
     display: flex;
     flex-direction: column;
     padding: 10px;
@@ -8,7 +8,7 @@
     width: 100%;
 }
 
-.kindness-card-inner, .trace-statistics-inner {
+.kindness-card-inner, .trace-statistics-inner, .summary-statistics-card {
     text-align: left;
     border: 1px solid white;
     border-radius: 5px;
@@ -141,6 +141,31 @@
     .sidebar-info-row-toggle, .sidebar-info-row-search {
         display: none;
     }
+}
+
+.summary-stats-inner {
+    padding-top: 50px;
+}
+
+.summary-stats-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.summary-stats-item-half {
+    width: 50%;
+    margin: 10px;
+}
+
+.summary-stats-item-big {
+    width: 80%;
+    margin: 10px;
+}
+
+.summary-stats-item-small {
+    width: 20%;
+    margin: 10px;
 }
 
 @media screen and (min-width: 800px) {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Tabletop from 'tabletop'
-import { Sidebar, KindnessSearchBar, MapboxGLMap, HelpDialog, AddDialog } from './components'
+import { Sidebar, KindnessSearchBar, MapboxGLMap, HelpDialog, AddDialog, StatisticsSidebar } from './components'
 import mapboxgl from 'mapbox-gl/dist/mapbox-gl-csp'
 import MapboxWorker from 'worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker'
 import TrieSearch from 'trie-search'
@@ -10,6 +10,7 @@ import * as AppMode from './utils/appMode'
 import { Button } from '@material-ui/core'
 import HelpIcon from '@material-ui/icons/Help'
 import AddCircleIcon from '@material-ui/icons/AddCircle'
+import * as d3 from 'd3'
 
 const MAPBOX_ACCESS_TOKEN = 'pk.eyJ1IjoiY21vcm9uZXkiLCJhIjoiY2tudGNscDJjMDFldDJ3b3pjMTh6ejJyayJ9.YAPmFkdy_Eh9K20cFlIvaQ'
 mapboxgl.workerClass = MapboxWorker
@@ -29,6 +30,23 @@ const App = () => {
   const [mode, setMode] = useState(AppMode.DEFAULT)
   const [openDialog, setOpenDialog] = useState(false)
   const [openAddDialog, setOpenAddDialog] = useState(false)
+  const [openSummaryStats, setOpenSummaryStats] = useState(false)
+
+  // listen for summary stat changes
+  useEffect(() => {
+    if (openSummaryStats) {
+      d3.select('.right-sidebar')
+        .style('left', '65%')
+    } else {
+      d3.select('.right-sidebar')
+        .style('left', '100%')
+    }
+  }, [openSummaryStats])
+
+  // close summary stat view if mode ever is not default
+  useEffect(() => {
+    setOpenSummaryStats(false)
+  }, [mode])
 
   useEffect(() => {
     // on first render, check the width
@@ -81,6 +99,7 @@ const App = () => {
       setFilterText(null)
       setHoveredNode(null)
       setMode(AppMode.DEFAULT)
+      setOpenSummaryStats(false)
       fetchData()
     }
   }, [dataUrl])
@@ -208,6 +227,38 @@ const App = () => {
               resetTrace={resetTrace}
             />
           </div>
+        </div>
+        {
+          !openSummaryStats && mode === AppMode.DEFAULT ? (
+            <div className="right-sidebar-button">
+              <Button
+                onClick={() => setOpenSummaryStats(true)}
+                variant="contained"
+                color="primary"
+              >
+                Summary Stats
+              </Button>
+            </div>
+          ) : null
+        }
+        {
+          openSummaryStats ? (
+            <div className="right-sidebar-button">
+              <Button
+                onClick={() => setOpenSummaryStats(false)}
+                variant="contained"
+                color="secondary"
+              >
+                Close
+            </Button>
+            </div>
+          ) : null
+        }
+        <div className="right-sidebar">
+          <StatisticsSidebar
+            data={data}
+            setSelectedNode={handleSetSelectedNode}
+          />
         </div>
       </div>
       <HelpDialog open={openDialog} setOpen={setOpenDialog} />
