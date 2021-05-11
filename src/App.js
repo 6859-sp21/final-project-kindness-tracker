@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import {
-  BrowserRouter as Router,
+  BrowserRouter,
   Switch,
   Route,
+  useLocation,
 } from 'react-router-dom'
 import Tabletop from 'tabletop'
 import { Sidebar, KindnessSearchBar, MapboxGLMap, HelpDialog, AddDialog, StatisticsSidebar } from './components'
@@ -41,6 +42,10 @@ const MainPage = () => {
   const [openDialog, setOpenDialog] = useState(false)
   const [openAddDialog, setOpenAddDialog] = useState(false)
   const [openSummaryStats, setOpenSummaryStats] = useState(false)
+
+  // testing routing
+  const location = useLocation()
+  console.log(location.pathname, 'PATH NAME TEST')
 
   // listen for summary stat changes
   useEffect(() => {
@@ -318,19 +323,19 @@ const MainPage = () => {
 }
 
 const App = () => {
+  console.log(process.env.PUBLIC_URL)
+
   return (
-    <React.StrictMode>
-      <Router basename={`${process.env.PUBLIC_URL}`}>
+      <BrowserRouter basename={process.env.PUBLIC_URL}>
         <Switch>
-          <Route path="/about">
+          <Route exact path="/about">
             <AboutPage />
           </Route>
           <Route>
             <MainPage />
           </Route>
         </Switch>
-      </Router>
-    </React.StrictMode>
+      </BrowserRouter>
   )
 }
 
