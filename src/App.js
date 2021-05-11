@@ -326,7 +326,7 @@ const App = () => {
   console.log(process.env.PUBLIC_URL)
 
   return (
-      <HashRouter basename={process.env.PUBLIC_URL}>
+      <HashRouter basename={'/'}>
         <Switch>
           <Route exact path="/about">
             <AboutPage />
