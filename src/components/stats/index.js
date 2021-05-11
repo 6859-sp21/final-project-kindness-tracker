@@ -3,13 +3,17 @@ import * as DataConstants from '../../utils/dataConstants'
 import * as DataUtils from '../../utils/dataUtils'
 import KindnessCard from '../sidebar/kindnessCard'
 import _ from 'lodash'
+import * as d3 from 'd3'
 import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline'
 import Tooltip from '@material-ui/core/Tooltip'
+import { useEffect } from 'react'
+import { DateTime } from 'luxon'
 
 const StatisticsSidebar = ({ data, setSelectedNode, traceId }) => {
   if (!data) {
     return null
   }
+
   const numPoints = data.length
   const ids = new Set(data.map(d => d[DataConstants.ID_KEY_NAME]))
   const numIds = ids.size
@@ -31,6 +35,86 @@ const StatisticsSidebar = ({ data, setSelectedNode, traceId }) => {
 
   const dataSorted = DataUtils.sortByDate(data)
   const mostRecentNode = dataSorted[dataSorted.length - 1]
+
+  useEffect(() => {
+    // clear old first
+    console.log('klsjflkjljls')
+    d3.selectAll('.chart-svg')
+      .remove()
+
+    // compute data necessary for line chart
+    // need a count of acts per day that is cumulative
+    const dates = dataSorted.map(d => d.dateTime)
+    const firstDate = dates[0]
+    const lastDate = dates[dataSorted.length - 1]
+    const diff = lastDate.diff(firstDate, ['days'])
+    const diffDays = Math.ceil(diff.days)
+
+    // for each day in the difference, add that to firstDate, then count
+    const countPerDay = _.range(diffDays).map(diff => {
+      const date = firstDate.plus({ days: diff })
+      const filt = dates.filter(dt => dt.startOf("day") <= date.startOf("day"))
+      const count = filt.length
+      return {
+        days: diff,
+        count,
+      }
+    })
+
+    var margin = { top: 30, right: 30, bottom: 50, left: 30 },
+      width = 460 - margin.left - margin.right,
+      height = 300 - margin.top - margin.bottom
+
+    // append the svg object to the body of the page
+    var svg = d3.select(".chart-outer")
+      .append('svg')
+      .attr('class', 'chart-svg')
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+      .attr("transform",
+        "translate(" + margin.left + "," + margin.top + ")")
+
+    var x = d3.scaleLinear()
+    .domain([0, d3.max(countPerDay, function (d) { return d.days })])
+      .range([0, width])
+    svg.append("g")
+      .attr("transform", "translate(0," + height + ")")
+      .call(d3.axisBottom(x))
+    
+    svg.append('text')
+      .attr('class', 'axis-label')
+      .text(`Days since first act of kindness (${firstDate.toLocaleString(DateTime.DATE_SHORT)})`)
+      .attr('x', margin.left + (width - margin.left - margin.right) / 2)
+      .attr('text-anchor', 'middle')
+      .attr('fill', 'white')
+      .attr('y', height + 35)
+
+    svg.append('text')
+      .attr('class', 'axis-label')
+      .text('# of cumulative acts of kindness over time')
+      .attr('text-anchor', 'middle')
+      .attr('fill', 'white')
+      .attr('font-size', '20px')
+      .attr('x', margin.left + (width - margin.left - margin.right) / 2)
+      .attr('y', -10)
+
+    var y = d3.scaleLinear()
+      .domain([0, d3.max(countPerDay, function (d) { return d.count })])
+      .range([height, 0])
+    svg.append("g")
+      .call(d3.axisLeft(y))
+
+    svg.append("path")
+      .datum(countPerDay)
+      .attr("fill", "none")
+      .attr("stroke", "green")
+      .attr("stroke-width", 3.5)
+      .attr("d", d3.line()
+        .x(function (d) { return x(d.days) })
+        .y(function (d) { return y(d.count) }))
+
+  }, [data])
 
   return (
     <div className="summary-stats-inner">
@@ -92,6 +176,8 @@ const StatisticsSidebar = ({ data, setSelectedNode, traceId }) => {
               View
             </Button>
           </div>
+        </div>
+        <div className="chart-outer">
         </div>
       </div>
     </div>

@@ -143,10 +143,6 @@
     }
 }
 
-.summary-stats-inner {
-    padding-top: 50px;
-}
-
 .summary-stats-row {
     display: flex;
     justify-content: center;
