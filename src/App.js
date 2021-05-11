@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import {
-  BrowserRouter,
+  HashRouter,
   Switch,
   Route,
   useLocation,
@@ -326,7 +326,7 @@ const App = () => {
   console.log(process.env.PUBLIC_URL)
 
   return (
-      <BrowserRouter basename={process.env.PUBLIC_URL}>
+      <HashRouter basename={process.env.PUBLIC_URL}>
         <Switch>
           <Route exact path="/about">
             <AboutPage />
@@ -338,7 +338,7 @@ const App = () => {
             <h1>Test!</h1>
           </Route>
         </Switch>
-      </BrowserRouter>
+      </HashRouter>
   )
 }
 

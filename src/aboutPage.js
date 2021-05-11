@@ -2,6 +2,7 @@ import { Button } from '@material-ui/core'
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward'
 import summaryImage from './summary_image.png'
 import { useLocation } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import './styles/About.css'
 
@@ -16,15 +17,17 @@ const AboutPage = () => {
         <div className="about-big-text">
           <h1>😊 Kindness Tracker</h1>
         </div>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => window.open('/final-project-kindness-tracker', "_blank")}
-          className="about-launch-button"
-        >
-          Launch App &nbsp;
+        <Link to='/'>
+          <Button
+            variant="contained"
+            color="primary"
+            // onClick={() => window.open('/final-project-kindness-tracker', "_blank")}
+            className="about-launch-button"
+          >
+            Launch App &nbsp;
           <ArrowForwardIcon />
-        </Button>
+          </Button>
+        </Link>
         <div className="about-header-text">
           <p>Christian Moroney (<code>cmoroney</code>)</p>
           <p>Jackson Bernatchez (<code>jrnerbat</code>)</p>
