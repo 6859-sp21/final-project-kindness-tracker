@@ -42,7 +42,7 @@ const AboutPage = () => {
             <p>View the source code for our application on GitHub <a href="https://github.com/6859-sp21/final-project-kindness-tracker" target="_blank">here</a>.</p>
             <div>
               <a href="https://github.com/6859-sp21/final-project-kindness-tracker" target="_blank">
-                <img className="sidebar-git-image" src="https://image.flaticon.com/icons/png/512/25/25231.png"></img>
+                <img className="sidebar-git-image about-git-image" src="https://image.flaticon.com/icons/png/512/25/25231.png"></img>
               </a>
             </div>
           </div>
@@ -52,10 +52,13 @@ const AboutPage = () => {
           <p>You can submit acts of kindness using our Google form here, using ID number <b>123</b>:</p>
           <p><a href="http://bit.ly/your-kindness" target="_blank"><code>bit.ly/your-kindness</code></a></p>
           <h2>Original Demo Video</h2>
-          <video width="80%" controls="controls">
-            <source src="https://www.dropbox.com/s/5whse10x4ziqafc/6859%20-%20Kindness%20Tracker.mp4?raw=1" type="video/mp4" />
-          </video>
-          
+          <div className="about-video-wrapper">
+            <video width="100%" controls="controls">
+              <source src="https://www.dropbox.com/s/5whse10x4ziqafc/6859%20-%20Kindness%20Tracker.mp4?raw=1" type="video/mp4" />
+            </video>
+          </div>
+
+
           <img src={yodaImage} className="yoda-image" />
         </div>
       </div>

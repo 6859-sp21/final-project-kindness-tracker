@@ -143,6 +143,19 @@
     }
 }
 
+.sidebar-info-row-learn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+@media screen and (min-width: 800px) {
+    .sidebar-info-row-learn {
+        display: none;
+    }
+}
+
 .summary-stats-row {
     display: flex;
     justify-content: center;

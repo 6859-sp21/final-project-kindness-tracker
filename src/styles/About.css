@@ -33,8 +33,8 @@
     text-align: left;
 }
 
-.about-content-left video {
-    padding-left: 10%;
+.about-video-wrapper {
+    width: 100%;
 }
 
 .about-summary-image {
@@ -57,7 +57,28 @@
 
 .yoda-image {
     position: absolute;
-    bottom: 0;
-    left: 0;
+    bottom: -5px;
+    left: 5%;
     width: 200px;
+}
+
+/* mobile rendering */
+
+@media screen and (max-width: 800px) {
+    .app-about {
+        width: 90%;
+        padding-left: 5%;
+        padding-right: 5%;
+        position: relative;
+        left: 0;
+        padding-bottom: 150px;
+    }
+
+    .about-git-image {
+        display: none;
+    }
+
+    .about-horizontal-stack {
+        display: block;
+    }
 }

@@ -2,6 +2,8 @@ import MouseIcon from '@material-ui/icons/Mouse'
 import ExploreIcon from '@material-ui/icons/Explore'
 import ToggleOffIcon from '@material-ui/icons/ToggleOff'
 import SearchIcon from '@material-ui/icons/Search'
+import { Button } from '@material-ui/core'
+import { Link } from 'react-router-dom'
 
 /*
     Simple component to render some useful info when no node is selected.
@@ -42,6 +44,13 @@ const SidebarInfoCard = () => {
                 <div className="sidebar-info-right">
                     <p>Switch between <b>real-time</b> and <b>generated</b> data using the toggle below.</p>
                 </div>
+            </div>
+            <div className="sidebar-info-row sidebar-info-row-learn">
+                <Link to='/about'>
+                    <Button variant="contained" color="primary">
+                        Learn More
+                </Button>
+                </Link>
             </div>
         </div >
     )
