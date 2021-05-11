@@ -1,4 +1,9 @@
 import React, { useEffect, useState } from 'react'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from 'react-router-dom'
 import Tabletop from 'tabletop'
 import { Sidebar, KindnessSearchBar, MapboxGLMap, HelpDialog, AddDialog, StatisticsSidebar } from './components'
 import mapboxgl from 'mapbox-gl/dist/mapbox-gl-csp'
@@ -15,6 +20,7 @@ import Tooltip from '@material-ui/core/Tooltip'
 import TrendingUpIcon from '@material-ui/icons/TrendingUp'
 import CloseIcon from '@material-ui/icons/Close'
 import ClearIcon from '@material-ui/icons/Clear'
+import AboutPage from './aboutPage'
 
 const MAPBOX_ACCESS_TOKEN = 'pk.eyJ1IjoiY21vcm9uZXkiLCJhIjoiY2tudGNscDJjMDFldDJ3b3pjMTh6ejJyayJ9.YAPmFkdy_Eh9K20cFlIvaQ'
 mapboxgl.workerClass = MapboxWorker
@@ -22,7 +28,7 @@ mapboxgl.accessToken = MAPBOX_ACCESS_TOKEN
 
 import './styles/App.css'
 
-const App = () => {
+const MainPage = () => {
   const [data, setData] = useState(null)
   const [trace, setTrace] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
@@ -308,6 +314,21 @@ const App = () => {
       <HelpDialog open={openDialog} setOpen={setOpenDialog} />
       <AddDialog open={openAddDialog} setOpen={setOpenAddDialog} />
     </div>
+  )
+}
+
+const App = () => {
+  return (
+    <Router>
+      <Switch>
+        <Route exact path="/final-project-kindness-tracker/about">
+          <AboutPage />
+        </Route>
+        <Route>
+          <MainPage />
+        </Route>
+      </Switch>
+    </Router>
   )
 }
 

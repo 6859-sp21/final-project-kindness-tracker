@@ -65,13 +65,13 @@ const HelpDialog = ({ open, setOpen }) => {
         </DialogTitle>
         <DialogContent dividers>
           <Typography gutterBottom variant="h6">
-            <b>😊 What is Kindness Tracker?</b>
+            <b>😊 &nbsp;What is Kindness Tracker?</b>
           </Typography>
           <Typography gutterBottom>
             The purpose of this app is to track the spread of acts of kindness and encourage people to pay it forward!
           </Typography>
           <Typography gutterBottom variant="h6">
-            <b>🤔 How does it work?</b>
+            <b>🤔 &nbsp;How does it work?</b>
           </Typography>
           <Typography gutterBottom>
             We handed out kindness cards and encouraged people to pay it forward. When you do something nice for someone, you should give
@@ -79,7 +79,7 @@ const HelpDialog = ({ open, setOpen }) => {
             <img src={kindnessCardImage} className="kindness-card-image" />
           </Typography>
           <Typography gutterBottom variant="h6">
-            <b>↔️ What does it mean to "trace" an act of kindness?</b>
+            <b>↔️ &nbsp;What does it mean to "trace" an act of kindness?</b>
           </Typography>
           <Typography gutterBottom>
             We mean that you are <b>tracing</b> the path this act of kindness has travelled as people pay it forward! The ID number on
@@ -87,17 +87,23 @@ const HelpDialog = ({ open, setOpen }) => {
             path of acts it lives on, with each act having the same ID number!
           </Typography>
           <Typography gutterBottom variant="h6">
-            <b>🙋🏽‍♀️ I want to participate!</b>
+            <b>🙋🏽‍♀️ &nbsp;I want to participate!</b>
           </Typography>
           <Typography gutterBottom>
             Click the ➕ &nbsp;button in the top right of the page to add your own act of kindness and learn more!
           </Typography>
           <Typography gutterBottom variant="h6">
-            <b>⚠️ Where did you get the fake data from?</b>
+            <b>⚠️ &nbsp;Where did you get the fake data from?</b>
           </Typography>
           <Typography gutterBottom>
             We just wrote a quick script to generate fake acts of kindness all over the United States, most of which are in Massachusetts.
             This data is just a placeholder while the app rolls out and more acts happen in the real world.
+          </Typography>
+          <Typography gutterBottom variant="h6">
+            <b>⚠️ &nbsp;How can I learn more?</b>
+          </Typography>
+          <Typography gutterBottom>
+            Check out our project page <a href="/final-project-kindness-tracker/about" target="_blank">here</a> for more information!
           </Typography>
         </DialogContent>
       </Dialog>
