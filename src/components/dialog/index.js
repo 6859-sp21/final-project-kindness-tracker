@@ -1,6 +1,5 @@
 import React from 'react'
 import { withStyles } from '@material-ui/core/styles'
-import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'
 import MuiDialogTitle from '@material-ui/core/DialogTitle'
 import MuiDialogContent from '@material-ui/core/DialogContent'
@@ -9,6 +8,7 @@ import IconButton from '@material-ui/core/IconButton'
 import CloseIcon from '@material-ui/icons/Close'
 import Typography from '@material-ui/core/Typography'
 import kindnessCardImage from '../../kindness_card_image.png'
+import { Link } from 'react-router-dom'
 
 import '../../styles/Dialog.css'
 
@@ -103,7 +103,7 @@ const HelpDialog = ({ open, setOpen }) => {
             <b>⚠️ &nbsp;How can I learn more?</b>
           </Typography>
           <Typography gutterBottom>
-            Check out our project page <a href="/final-project-kindness-tracker/about" target="_blank">here</a> for more information!
+            Check out our project page <Link to='/about'>here</Link> for more information!
           </Typography>
         </DialogContent>
       </Dialog>

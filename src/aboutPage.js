@@ -1,6 +1,7 @@
 import { Button } from '@material-ui/core'
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward'
 import summaryImage from './summary_image.png'
+import yodaImage from './yoda_transparent.png'
 import { Link } from 'react-router-dom'
 
 import './styles/About.css'
@@ -16,7 +17,6 @@ const AboutPage = () => {
           <Button
             variant="contained"
             color="primary"
-            // onClick={() => window.open('/final-project-kindness-tracker', "_blank")}
             className="about-launch-button"
           >
             Launch App &nbsp;
@@ -52,7 +52,11 @@ const AboutPage = () => {
           <p>You can submit acts of kindness using our Google form here, using ID number <b>123</b>:</p>
           <p><a href="http://bit.ly/your-kindness" target="_blank"><code>bit.ly/your-kindness</code></a></p>
           <h2>Original Demo Video</h2>
-          <p>TODO insert video here.</p>
+          <video width="80%" controls="controls">
+            <source src="https://www.dropbox.com/s/5whse10x4ziqafc/6859%20-%20Kindness%20Tracker.mp4?raw=1" type="video/mp4" />
+          </video>
+          
+          <img src={yodaImage} className="yoda-image" />
         </div>
       </div>
     </div>

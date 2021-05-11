@@ -43,9 +43,6 @@ const MainPage = () => {
   const [openAddDialog, setOpenAddDialog] = useState(false)
   const [openSummaryStats, setOpenSummaryStats] = useState(false)
 
-  // testing routing
-  console.log(location.pathname, 'PATH NAME TEST')
-
   // listen for summary stat changes
   useEffect(() => {
     if (openSummaryStats) {
@@ -185,7 +182,6 @@ const MainPage = () => {
   }
 
   const setTraceForId = (id) => {
-    console.log('THE ID', id)
     const traceNew = DataUtils.filterTraceListForId(data, id)
 
     setTrace(traceNew)
@@ -322,8 +318,6 @@ const MainPage = () => {
 }
 
 const App = () => {
-  console.log(process.env.PUBLIC_URL)
-
   return (
     <HashRouter basename={'/'}>
       <Switch>

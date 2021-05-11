@@ -4,7 +4,7 @@
     width: 50%;
     left: 25%;
     position: absolute;
-    padding-bottom: 100px;
+    padding-bottom: 150px;
 }
 
 .about-big-text {
@@ -33,6 +33,10 @@
     text-align: left;
 }
 
+.about-content-left video {
+    padding-left: 10%;
+}
+
 .about-summary-image {
     width: 80%;
     margin: 10px;
@@ -49,4 +53,11 @@
 
 .about-horizontal-stack p {
     margin-right: 10px;
+}
+
+.yoda-image {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 200px;
 }
