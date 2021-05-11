@@ -331,8 +331,11 @@ const App = () => {
           <Route exact path="/about">
             <AboutPage />
           </Route>
-          <Route>
+          <Route exact path="/">
             <MainPage />
+          </Route>
+          <Route>
+            <h1>Test!</h1>
           </Route>
         </Switch>
       </BrowserRouter>

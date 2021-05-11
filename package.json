@@ -2,7 +2,7 @@
   "name": "kindness-tracker",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://6859-sp21.github.io/final-project-kindness-tracker/",
+  "homepage": "https://6859-sp21.github.io/final-project-kindness-tracker",
   "dependencies": {
     "@material-ui/core": "^4.11.4",
     "@material-ui/icons": "^4.11.2",
