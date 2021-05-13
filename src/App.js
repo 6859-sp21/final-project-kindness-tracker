@@ -59,12 +59,22 @@ const MainPage = () => {
     setOpenSummaryStats(false)
   }, [mode])
 
+  const escKeyHandler = (event) => {
+    if (event.keyCode === 27) {
+      // close the summary stats view
+      setOpenSummaryStats(false)
+    }
+  }
+
   useEffect(() => {
     // on first render, check the width
     // if less than 800, provide alert about screen size
     if (window.innerWidth < 800) {
       alert('We see you\'re on mobile! Rotate your phone sideways for the best experience. Check out our app on your computer too!')
     }
+
+    // also add handler for esc key
+    document.addEventListener('keydown', escKeyHandler, false)
   }, [])
 
   const fetchData = () => {
@@ -289,7 +299,7 @@ const MainPage = () => {
         {
           openSummaryStats ? (
             <div className="right-sidebar-button-exit">
-              <Tooltip title={<h2>Close</h2>} arrow>
+              <Tooltip title={<h2>Close (Or Press Esc)</h2>} arrow>
                 <Fab
                   size="small"
                   color="secondary"
