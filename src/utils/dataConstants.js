@@ -16,7 +16,7 @@ const STREET_KEY_NAME = 'street_name'
 const CITY_KEY_NAME = 'admin_level_3'
 const STATE_KEY_NAME = 'admin_level_1'
 const ZIP_KEY_NAME = 'zip_code'
-const KINDNESS_KEY_NAME = 'Tell us about the act of kindness you received!'
+const KINDNESS_KEY_NAME = 'Tell us about the act of kindness you gave/received!'
 const CENTER_LNG_KEY_NAME = 'center_lng'
 const CENTER_LAT_KEY_NAME = 'center_lat'
 
