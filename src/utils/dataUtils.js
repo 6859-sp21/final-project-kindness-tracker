@@ -128,7 +128,7 @@ const filterTraceListForNode = (data, node) => {
 }
 
 const filterTraceListForId = (data, id) => {
-    let dataFilt;
+    let dataFilt
     if (id === DataConstants.ROOT_ACT_ID) {
         // if the id is the root note, just select all of data
         dataFilt = data

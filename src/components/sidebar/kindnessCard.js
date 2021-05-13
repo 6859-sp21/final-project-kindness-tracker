@@ -1,10 +1,9 @@
 import * as DataUtils from '../../utils/dataUtils'
 
 const KindnessCard = ({ node, shortMode }) => {
-    console.log('rendering card')
     // handle null node case
     if (! node) {
-        return null;
+        return null
     }
 
     const {

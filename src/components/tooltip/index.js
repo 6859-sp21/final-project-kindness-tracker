@@ -1,14 +1,11 @@
-import * as DataConstants from '../../utils/dataConstants'
 import * as StringUtils from '../../utils/stringUtils'
 import * as DataUtils from '../../utils/dataUtils'
 
 const TooltipContents = ({ node, isSelected }) => {
     // handle null node case
     if (! node) {
-        return null;
+        return null
     }
-
-    console.log('rendering tooltip')
 
     const {
         kindness,

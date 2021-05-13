@@ -1,8 +1,6 @@
 import * as DataUtils from '../../utils/dataUtils'
 
 const TraceStatistics = ({ trace }) => {
-    console.log('rendering trace stats')
-
     const traceCount = trace.length
     
     // compute total distance travelled in miles

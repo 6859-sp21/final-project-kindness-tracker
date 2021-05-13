@@ -11,16 +11,16 @@ const kDescription = 'Tell us about the act of kindness you received!'
 function onFormSubmit(e) {
   // sleep for 5 seconds to avoid any race conditions
   Utilities.sleep(5 * 1000)
-  var items = e.response.getItemResponses();
+  var items = e.response.getItemResponses()
   var itemValues = {}
   for (i in items) {
-    itemValues[items[i].getItem().getTitle()] = items[i].getResponse();
+    itemValues[items[i].getItem().getTitle()] = items[i].getResponse()
   }
   updateSpreadsheet(itemValues)
 }
 
 function rowOfEntry(sheet, itemValues) {
-  const data = sheet.getDataRange().getValues();
+  const data = sheet.getDataRange().getValues()
   const id = itemValues[kId]
   const address = itemValues[kAddress]
   const description = itemValues[kDescription]
@@ -52,14 +52,14 @@ function updateSpreadsheet(itemValues) {
 
   // TODO: add logic handling issues with this url fetch not working/address not able to return an actual location
   console.log("Address Supplied to Google Maps API -->", address)
-  var response = UrlFetchApp.fetch("https://maps.googleapis.com/maps/api/geocode/json?address=" + address + '&key=' + API_KEY);
-  console.log("\n\nGoogle Maps API URL Fetch Response Context Text -->", response.getContentText());
-  const rawGeoText = response.getContentText();
-  var geoData = JSON.parse(rawGeoText);
+  var response = UrlFetchApp.fetch("https://maps.googleapis.com/maps/api/geocode/json?address=" + address + '&key=' + API_KEY)
+  console.log("\n\nGoogle Maps API URL Fetch Response Context Text -->", response.getContentText())
+  const rawGeoText = response.getContentText()
+  var geoData = JSON.parse(rawGeoText)
 
   // Center of the Geographic Location
-  const latitude = geoData.results[0].geometry.location.lat;
-  const longitude = geoData.results[0].geometry.location.lng;
+  const latitude = geoData.results[0].geometry.location.lat
+  const longitude = geoData.results[0].geometry.location.lng
 
   // Geocoded Data for Location
   var formatted_address = geoData.results[0].formatted_address
@@ -114,7 +114,7 @@ function updateSpreadsheet(itemValues) {
 
 
 
-  var sheet = SpreadsheetApp.openById(SHEET_ID);
+  var sheet = SpreadsheetApp.openById(SHEET_ID)
   var lastRow = sheet.getLastRow()
   var lastRowNew = rowOfEntry(sheet, itemValues)
   if (lastRow !== lastRowNew) {
@@ -275,8 +275,8 @@ function debugGeoCode() {
   }
 
   // Center of the Geographic Location
-  const latitude = geoData.results[0].geometry.location.lat;
-  const longitude = geoData.results[0].geometry.location.lng;
+  const latitude = geoData.results[0].geometry.location.lat
+  const longitude = geoData.results[0].geometry.location.lng
 
   // Geocoded Data for Location
   var formatted_address = geoData.results[0].formatted_address

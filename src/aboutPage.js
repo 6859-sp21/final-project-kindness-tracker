@@ -19,8 +19,7 @@ const AboutPage = () => {
             color="primary"
             className="about-launch-button"
           >
-            Launch App &nbsp;
-          <ArrowForwardIcon />
+            Launch App &nbsp; <ArrowForwardIcon />
           </Button>
         </Link>
         <div className="about-header-text">

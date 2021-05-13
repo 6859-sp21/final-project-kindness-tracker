@@ -9,7 +9,6 @@ import { Link } from 'react-router-dom'
     Simple component to render some useful info when no node is selected.
 */
 const SidebarInfoCard = () => {
-    console.log('rendering side info card')
     return (
         <div>
             <hr className="sidebar-divider" />

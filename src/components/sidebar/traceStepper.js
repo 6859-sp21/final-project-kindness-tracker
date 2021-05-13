@@ -5,8 +5,6 @@ import ArrowForwardIcon from '@material-ui/icons/ArrowForward'
 import Tooltip from '@material-ui/core/Tooltip'
 
 const TraceStepper = ({ exitTraceMode, trace, selectedNode, setSelectedNode }) => {
-    console.log('rendering trace')
-
     // find the trace index
     const traceIndex = trace.indexOf(selectedNode)
 

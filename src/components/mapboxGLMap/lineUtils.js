@@ -108,7 +108,7 @@ const drawArcBetweenNodes = (map, origin, destination) => {
         map.loadImage(
             triangleImage,
             function (error, image) {
-                if (error) throw error;
+                if (error) throw error
 
                 // Add the image to the map style.
                 map.addImage('triangle', image)
@@ -152,7 +152,7 @@ const drawArcBetweenNodes = (map, origin, destination) => {
             route.features[0].geometry.coordinates[
             counter >= numSteps ? counter : counter + 1
             ]
-        if (!start || !end) return;
+        if (!start || !end) return
 
         // Update point geometry to a new position based on counter denoting
         // the index to access the arc
