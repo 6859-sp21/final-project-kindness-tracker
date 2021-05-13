@@ -10,7 +10,13 @@ const LAT_KEY = 'lat'
 const BAD_WORDS_FILTER = new Filter()
 
 const processRawSheetsData = (data) => {
-    const dataProc = data ? data.map((d, i) => ({
+    // filter any rows that don't have center lng and lat
+    const dataFilt = data ? data.filter(d => {
+        return d[DataConstants.CENTER_LNG_KEY_NAME] && d[DataConstants.CENTER_LAT_KEY_NAME]
+    }) : null
+
+    // add index, dateTime, and has fields for later use
+    const dataProc = dataFilt ? dataFilt.map((d, i) => ({
         ...d,
         index: i,
         dateTime: DateTime.fromFormat(d[DataConstants.TIMESTAMP_KEY_NAME], DataConstants.TIMESTAMP_FORMAT),
