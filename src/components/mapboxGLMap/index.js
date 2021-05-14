@@ -17,7 +17,7 @@ const BIG_RADIUS = 20
 mapboxgl.accessToken = 'pk.eyJ1IjoiY21vcm9uZXkiLCJhIjoiY2tudGNscDJjMDFldDJ3b3pjMTh6ejJyayJ9.YAPmFkdy_Eh9K20cFlIvaQ'
 mapboxgl.workerClass = MapboxWorker
 
-const MapboxGLMap = ({ trace, setIsLoading, selectedNode, setSelectedNode, hoveredNode, setHoveredNode, mode, setTrace, resetTrace }) => {
+const MapboxGLMap = ({ trace, setIsLoading, selectedNode, setSelectedNode, hoveredNode, setHoveredNode, mode, setTrace, resetTrace, setTraceFilterId }) => {
     const [map, setMap] = useState(null)
     const [boundingObject, setBoundingObject] = useState(null)
     const mapContainer = useRef(null)
@@ -258,6 +258,7 @@ const MapboxGLMap = ({ trace, setIsLoading, selectedNode, setSelectedNode, hover
             // filter on the current node
             const traceNew = DataUtils.filterTraceListForNode(trace, selectedNode)
             setTrace(traceNew)
+            setTraceFilterId(selectedNode[DataConstants.ID_KEY_NAME])
             return
         }
 

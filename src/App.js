@@ -42,6 +42,8 @@ const MainPage = () => {
   const [openDialog, setOpenDialog] = useState(false)
   const [openAddDialog, setOpenAddDialog] = useState(false)
   const [openSummaryStats, setOpenSummaryStats] = useState(false)
+  const [traceFilterId, setTraceFilterId] = useState(null)
+  const [showTraceWarning, setShowTraceWarning] = useState(true)
 
   // listen for summary stat changes
   useEffect(() => {
@@ -57,7 +59,25 @@ const MainPage = () => {
   // close summary stat view if mode ever is not default
   useEffect(() => {
     setOpenSummaryStats(false)
-  }, [mode])
+
+    // also check if we need to adjust the alert popup
+    if ((mode === AppMode.TRACING || mode === AppMode.TRACE_STATS) &&
+      (traceFilterId === DataConstants.ROOT_ACT_ID || traceFilterId === DataConstants.PUBLIC_ACT_ID) &&
+      showTraceWarning) {
+      d3.select('.trace-alert-popup')
+        .style('left', '70%')
+    } else {
+      d3.select('.trace-alert-popup')
+        .style('left', '100%')
+    }
+  }, [mode, traceFilterId, showTraceWarning])
+
+  // when trace filter id goes back to null, reset trace warning to true
+  useEffect(() => {
+    if (traceFilterId === null) {
+      setShowTraceWarning(true)
+    }
+  }, [traceFilterId])
 
   const escKeyHandler = (event) => {
     if (event.keyCode === 27) {
@@ -117,6 +137,7 @@ const MainPage = () => {
       // reset all required state before re-fetch
       setIsLoading(true)
       setSelectedNode(null)
+      setTraceFilterId(null)
       setFilterText(null)
       setHoveredNode(null)
       setMode(AppMode.DEFAULT)
@@ -126,11 +147,15 @@ const MainPage = () => {
   }, [dataUrl])
 
   // define function to set trace back to original data array
-  const resetTrace = () => setTrace(data)
+  const resetTrace = () => {
+    setTrace(data)
+    setTraceFilterId(null)
+  }
 
   // function to clear selected node
   const clearSelectedNode = () => {
     setSelectedNode(null)
+    setTraceFilterId(null)
     setMode(AppMode.DEFAULT)
     setFilterText(null)
   }
@@ -144,6 +169,7 @@ const MainPage = () => {
     if (!text) {
       // reset to all data
       setTrace(data)
+      setTraceFilterId(null)
       setIsLoading(false)
       setMode(AppMode.DEFAULT)
       return
@@ -162,6 +188,7 @@ const MainPage = () => {
     }
 
     setSelectedNode(null)
+    setTraceFilterId(null)
     setHoveredNode(null)
     setMode(AppMode.SEARCHING)
     setTrace(dataFiltSearch)
@@ -197,6 +224,7 @@ const MainPage = () => {
     setTrace(traceNew)
     setMode(AppMode.TRACE_STATS)
     setSelectedNode(traceNew[traceNew.length - 1])
+    setTraceFilterId(id)
   }
 
   return (
@@ -214,6 +242,7 @@ const MainPage = () => {
             dataUrl={dataUrl}
             setDataUrl={setDataUrl}
             filterText={filterText}
+            setTraceFilterId={setTraceFilterId}
           />
         </div>
         <div className="vertical-stack">
@@ -293,6 +322,7 @@ const MainPage = () => {
               mode={mode}
               setTrace={setTrace}
               resetTrace={resetTrace}
+              setTraceFilterId={setTraceFilterId}
             />
           </div>
         </div>
@@ -320,6 +350,25 @@ const MainPage = () => {
             traceId={setTraceForId}
           />
         </div>
+        <div className="trace-alert-popup">
+          <h3>Note!</h3>
+          <p>⚠️ You are tracing <b>{traceFilterId === DataConstants.ROOT_ACT_ID ? 'the root act of kindness' : 'public acts of kindness that didn\'t come from kindness cards'}.</b> Adjacent acts may not be diretly linked to one another. All acts are simply sorted by date.</p>
+          {
+            showTraceWarning ? (
+              <Tooltip title={<h2>Close</h2>} arrow>
+                <Fab
+                  size="small"
+                  color="secondary"
+                  aria-label="close"
+                  onClick={() => setShowTraceWarning(false)}
+                  className="trace-alert-popup-close"
+                >
+                  <CloseIcon />
+                </Fab>
+              </Tooltip>
+            ) : null
+          }
+        </div>
       </div>
       <HelpDialog open={openDialog} setOpen={setOpenDialog} />
       <AddDialog open={openAddDialog} setOpen={setOpenAddDialog} />
@@ -328,7 +377,6 @@ const MainPage = () => {
 }
 
 const App = () => {
-  console.log(process.env.PUBLIC_URL)
   return (
     <HashRouter basename={'/'}>
       <Switch>

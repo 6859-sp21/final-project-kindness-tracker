@@ -12,7 +12,7 @@ import * as AppMode from '../../utils/appMode'
 import Tooltip from '@material-ui/core/Tooltip'
 import { Link } from 'react-router-dom'
 
-const Sidebar = ({ isLoading, selectedNode, setSelectedNode, clearSelectedNode, mode, setMode, trace, dataUrl, setDataUrl, filterText }) => {
+const Sidebar = ({ isLoading, selectedNode, setSelectedNode, clearSelectedNode, mode, setMode, trace, dataUrl, setDataUrl, filterText, setTraceFilterId }) => {
     // get a trace count
     let traceCount = 0
     if (selectedNode) {

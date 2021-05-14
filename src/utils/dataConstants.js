@@ -23,6 +23,9 @@ const CENTER_LAT_KEY_NAME = 'center_lat'
 // also add a constant for the root ID
 const ROOT_ACT_ID = 0
 
+// and one for the public ID
+const PUBLIC_ACT_ID = 123
+
 export {
     TIMESTAMP_KEY_NAME,
     ID_KEY_NAME,
@@ -41,4 +44,5 @@ export {
     TIMESTAMP_FORMAT,
 
     ROOT_ACT_ID,
+    PUBLIC_ACT_ID,
 }
