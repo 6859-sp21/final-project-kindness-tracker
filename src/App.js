@@ -386,7 +386,7 @@ const App = () => {
         <Route exact path='/paper'
           render={
             () => {
-              window.location.href = `${process.env.PUBLIC_URL}/kindness_tracker.pdf`;
+              window.location.href = `${process.env.PUBLIC_URL}/paper.pdf`;
               return null;
             }
           }>

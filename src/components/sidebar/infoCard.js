@@ -54,7 +54,7 @@ const SidebarInfoCard = () => {
                 </div>
             </div>
             <div className="sidebar-info-row sidebar-info-row-learn">
-                <Link to='/about'>
+                <Link to='/about' target="blank" rel="noopener noreferrer">
                     <Button variant="contained" color="primary">
                         Learn More
                 </Button>

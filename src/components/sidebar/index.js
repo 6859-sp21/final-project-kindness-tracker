@@ -106,7 +106,7 @@ const Sidebar = ({ isLoading, selectedNode, setSelectedNode, clearSelectedNode, 
                 <p className="sidebar-small-text">Christian Moroney, Jackson Bernatchez, Kevin Lyons</p>
                 <p className="sidebar-small-text">6.859 Final Project Spring 2021</p>
                 <p className="sidebar-small-text">
-                    <Link to='/about'>
+                    <Link to='/about' target="blank" rel="noopener noreferrer">
                         Learn More
                     </Link>
                 </p>
