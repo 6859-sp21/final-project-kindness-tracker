@@ -2,6 +2,7 @@ import MouseIcon from '@material-ui/icons/Mouse'
 import ExploreIcon from '@material-ui/icons/Explore'
 import ToggleOffIcon from '@material-ui/icons/ToggleOff'
 import SearchIcon from '@material-ui/icons/Search'
+import TrendingUpIcon from '@material-ui/icons/TrendingUp'
 import { Button } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 
@@ -17,7 +18,7 @@ const SidebarInfoCard = () => {
                     <MouseIcon fontSize="large" />
                 </div>
                 <div className="sidebar-info-right">
-                    <p><b>Click</b> a circle to explore that act of kindness further!</p>
+                    <p><b>Click</b> a circle to explore that act of kindness!</p>
                 </div>
             </div>
             <div className="sidebar-info-row">
@@ -25,7 +26,7 @@ const SidebarInfoCard = () => {
                     <ExploreIcon fontSize="large" />
                 </div>
                 <div className="sidebar-info-right">
-                    <p>Then, you can <b>trace</b> that act of kindness to see how may people have paid it forward.</p>
+                    <p><b>Trace</b> that act of kindness to see how may people have paid it forward.</p>
                 </div>
             </div>
             <div className="sidebar-info-row sidebar-info-row-search">
@@ -34,6 +35,14 @@ const SidebarInfoCard = () => {
                 </div>
                 <div className="sidebar-info-right">
                     <p><b>Search</b> for acts of kindness by description, location, or ID.</p>
+                </div>
+            </div>
+            <div className="sidebar-info-row sidebar-info-row-stats">
+                <div className="sidebar-info-left">
+                    <TrendingUpIcon fontSize="large" />
+                </div>
+                <div className="sidebar-info-right">
+                    <p>View <b>summary statistics</b> about the entire dataset.</p>
                 </div>
             </div>
             <div className="sidebar-info-row sidebar-info-row-toggle">
