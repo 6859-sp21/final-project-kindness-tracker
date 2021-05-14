@@ -66,9 +66,11 @@ const MainPage = () => {
       showTraceWarning) {
       d3.select('.trace-alert-popup')
         .style('left', '70%')
+        .style('box-shadow', null)
     } else {
       d3.select('.trace-alert-popup')
         .style('left', '100%')
+        .style('box-shadow', 'none')
     }
   }, [mode, traceFilterId, showTraceWarning])
 
