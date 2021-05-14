@@ -352,7 +352,7 @@ const MainPage = () => {
         </div>
         <div className="trace-alert-popup">
           <h3>Note!</h3>
-          <p>⚠️ You are tracing <b>{traceFilterId === DataConstants.ROOT_ACT_ID ? 'the root act of kindness' : 'public acts of kindness that didn\'t come from kindness cards'}.</b> Adjacent acts may not be diretly linked to one another. All acts are simply sorted by date.</p>
+          <p>⚠️ You are tracing <b>{traceFilterId === DataConstants.ROOT_ACT_ID ? 'the root act of kindness' : 'public acts of kindness that didn\'t come from kindness cards'}.</b> Adjacent acts may not be directly linked to one another. All acts are simply sorted by date.</p>
           {
             showTraceWarning ? (
               <Tooltip title={<h2>Close</h2>} arrow>
