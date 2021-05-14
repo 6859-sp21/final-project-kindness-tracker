@@ -35,10 +35,10 @@ const AboutPage = () => {
           <h2>Abstract</h2>
           <p>TODO Abstract goes here</p>
           <h2>Paper</h2>
-          <p>TODO Click here to access our paper on this work.</p>
+          <p>Click <Link to='/paper'><b>here</b></Link> to access our paper on this work.</p>
           <h2>Source Code</h2>
           <div className="about-horizontal-stack">
-            <p>View the source code for our application on GitHub <a href="https://github.com/6859-sp21/final-project-kindness-tracker" target="_blank">here</a>.</p>
+            <p>View the source code for our application on GitHub <a href="https://github.com/6859-sp21/final-project-kindness-tracker" target="_blank"><b>here</b></a>.</p>
             <div>
               <a href="https://github.com/6859-sp21/final-project-kindness-tracker" target="_blank">
                 <img className="sidebar-git-image about-git-image" src="https://image.flaticon.com/icons/png/512/25/25231.png"></img>

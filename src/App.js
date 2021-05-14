@@ -328,18 +328,27 @@ const MainPage = () => {
 }
 
 const App = () => {
+  console.log(process.env.PUBLIC_URL)
   return (
     <HashRouter basename={'/'}>
       <Switch>
         <Route exact path="/about">
           <AboutPage />
         </Route>
+        <Route exact path='/paper'
+          render={
+            () => {
+              window.location.href = `${process.env.PUBLIC_URL}/kindness_tracker.pdf`;
+              return null;
+            }
+          }>
+        </Route>
         <Route exact path="/">
           <MainPage />
         </Route>
-        <Route>
+        {/* <Route>
           <Redirect to="/" />
-        </Route>
+        </Route> */}
       </Switch>
     </HashRouter>
   )
