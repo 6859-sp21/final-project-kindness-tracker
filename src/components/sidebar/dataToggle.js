@@ -14,8 +14,12 @@ const DataToggle = ({ dataUrl, setDataUrl }) => {
 
     const label = dataUrl === DataConstants.REAL_DATA_URL ? 'Viewing Real Data' : 'Viewing Fake Data'
 
+    const description = dataUrl === DataConstants.REAL_DATA_URL ?
+        'You are currently viewing REAL acts of kindness!' :
+        'You are currently viewing FAKE acts of kindness for testing purposes only.'
+
     return (
-        <Tooltip title={<h2>Toggle to switch the data source.</h2>} arrow placement="top">
+        <Tooltip title={<h2>Toggle to switch the data source. {description}</h2>} arrow placement="top">
             <FormControlLabel
                 control={
                     <Switch
