@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/final-project-kindness-tracker/static/css/main.e498bedf.chunk.css",
-    "main.js": "/final-project-kindness-tracker/static/js/main.d8ffded4.chunk.js",
-    "main.js.map": "/final-project-kindness-tracker/static/js/main.d8ffded4.chunk.js.map",
+    "main.js": "/final-project-kindness-tracker/static/js/main.f9f0b571.chunk.js",
+    "main.js.map": "/final-project-kindness-tracker/static/js/main.f9f0b571.chunk.js.map",
     "runtime-main.js": "/final-project-kindness-tracker/static/js/runtime-main.1cfc7c36.js",
     "runtime-main.js.map": "/final-project-kindness-tracker/static/js/runtime-main.1cfc7c36.js.map",
     "static/js/2.36035cd4.chunk.js": "/final-project-kindness-tracker/static/js/2.36035cd4.chunk.js",
@@ -15,7 +15,7 @@
     "static/js/mapbox-gl-csp-worker.decd147c.worker.js": "/final-project-kindness-tracker/static/js/mapbox-gl-csp-worker.decd147c.worker.js",
     "static/js/mapbox-gl-csp-worker.decd147c.worker.js.map": "/final-project-kindness-tracker/static/js/mapbox-gl-csp-worker.decd147c.worker.js.map",
     "static/media/kindness_card_image.c3ba2bc2.png": "/final-project-kindness-tracker/static/media/kindness_card_image.c3ba2bc2.png",
-    "static/media/summary_image.2aeff084.png": "/final-project-kindness-tracker/static/media/summary_image.2aeff084.png",
+    "static/media/summary_image.dacc5cd3.png": "/final-project-kindness-tracker/static/media/summary_image.dacc5cd3.png",
     "static/media/triangle.c5a97129.png": "/final-project-kindness-tracker/static/media/triangle.c5a97129.png",
     "static/media/yoda_transparent.e7a97780.png": "/final-project-kindness-tracker/static/media/yoda_transparent.e7a97780.png"
   },
@@ -23,6 +23,6 @@
     "static/js/runtime-main.1cfc7c36.js",
     "static/js/2.36035cd4.chunk.js",
     "static/css/main.e498bedf.chunk.css",
-    "static/js/main.d8ffded4.chunk.js"
+    "static/js/main.f9f0b571.chunk.js"
   ]
 }
