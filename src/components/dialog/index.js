@@ -69,6 +69,14 @@ const HelpDialog = ({ open, setOpen }) => {
           </Typography>
           <Typography gutterBottom>
             The purpose of this app is to track the spread of acts of kindness and encourage people to pay it forward!
+            </Typography>
+          <div className="dialog-video-wrapper">
+            <video width="100%" controls="controls">
+              <source src="https://www.dropbox.com/s/5whse10x4ziqafc/6859%20-%20Kindness%20Tracker.mp4?raw=1" type="video/mp4" />
+            </video>
+          </div>
+          <Typography gutterBottom>
+            Check out our project page <Link to='/about' target="_blank" rel="noopener noreferrer">here</Link> for more information!
           </Typography>
           <Typography gutterBottom variant="h6">
             <b>🤔 &nbsp;How does it work?</b>
@@ -98,12 +106,6 @@ const HelpDialog = ({ open, setOpen }) => {
           <Typography gutterBottom>
             We just wrote a quick script to generate fake acts of kindness all over the United States, most of which are in Massachusetts.
             This data is just a placeholder while the app rolls out and more acts happen in the real world.
-          </Typography>
-          <Typography gutterBottom variant="h6">
-            <b>❓ &nbsp;How can I learn more?</b>
-          </Typography>
-          <Typography gutterBottom>
-            Check out our project page <Link to='/about'>here</Link> for more information!
           </Typography>
         </DialogContent>
       </Dialog>
