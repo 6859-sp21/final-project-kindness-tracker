@@ -13,7 +13,7 @@ const AboutPage = () => {
         <div className="about-big-text">
           <h1>😊 Kindness Tracker</h1>
         </div>
-        <Link to='/'>
+        <Link to='/' target="_blank" rel="noopener noreferrer">
           <Button
             variant="contained"
             color="primary"
