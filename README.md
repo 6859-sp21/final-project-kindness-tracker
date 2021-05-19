@@ -13,6 +13,7 @@ TODO
 ## links
 
 - [deployed app](http://bit.ly/kindness-tracker-app)
+- [teaser video](https://youtu.be/oispwOZaiFU)
 - [Google form](http://bit.ly/kindness-form)
 - [Google form prefilled w/ 123](http://bit.ly/your-kindness)
 - [original demo video](https://www.dropbox.com/s/5whse10x4ziqafc/6859%20-%20Kindness%20Tracker.mp4?dl=0)
