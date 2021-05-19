@@ -2,7 +2,7 @@
 
 ## Abstract
 
-TODO
+In the midst of current economic, political, and public health concerns, we believe that being kind to one another is more important than ever. That's why we developed Kindness Tracker, a data collection and visualization application for random acts of kindness. Utilizing physical "Kindness Cards", an active database, and a front-end application, we are able to visualize the spread of kindness across the country between friends, family, and total strangers. We have found that not only is it an enjoyable experience to observe the spread of kindness, but also a catalyst for future acts of kindness in viewers. Our hope is that this application plays a small role in increasing happiness across the country.
 
 ## Work Breakdown and Research Process
 

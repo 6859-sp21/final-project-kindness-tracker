@@ -32,8 +32,16 @@ const AboutPage = () => {
         </div>
 
         <div className="about-content-left">
+          <h2>Trailer Video</h2>
+          <p>TODO insert video here.</p>
           <h2>Abstract</h2>
-          <p>TODO Abstract goes here</p>
+          <p>In the midst of current economic, political, and public health concerns, we believe that being kind to one
+          another is more important than ever. That's why we developed Kindness Tracker, a data collection and
+          visualization application for random acts of kindness. Utilizing physical "Kindness Cards", an active
+          database, and a front-end application, we are able to visualize the spread of kindness across the country
+          between friends, family, and total strangers. We have found that not only is it an enjoyable experience to
+          observe the spread of kindness, but also a catalyst for future acts of kindness in viewers. Our hope is that
+            this application plays a small role in increasing happiness across the country.</p>
           <h2>Paper</h2>
           <p>Click <Link to='/paper' target="_blank" rel="noopener noreferrer"><b>here</b></Link> to access our paper on this work.</p>
           <h2>Source Code</h2>
@@ -45,8 +53,6 @@ const AboutPage = () => {
               </a>
             </div>
           </div>
-          <h2>Trailer Video</h2>
-          <p>TODO insert video here.</p>
           <h2>Google Form for Submissions</h2>
           <p>You can submit acts of kindness using our Google form here, using ID number <b>123</b>:</p>
           <p><a href="http://bit.ly/your-kindness" target="_blank"><code>bit.ly/your-kindness</code></a></p>
