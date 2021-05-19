@@ -1,26 +1,27 @@
 // We have included this script for reference. This file contains the code that runs each time a Google
 // Forms submission is made. We perform a lookup with the Google Maps API to convert the user-entered
 // address string into a machine readable lat/long object, with all associated metadata.
+// Written by C.T. Moroney and Jackson Bernatchez
 
 const API_KEY = '<REDACTED>'
 const SHEET_ID = '<REDACTED>'
 const kId = 'What is the ID Number on your kindness card? (We need this to track the spread of kindness!)'
 const kAddress = 'Where did the act of kindness take place? Be as specific as you want - we will look it up on Google Maps later.'
-const kDescription = 'Tell us about the act of kindness you received!'
+const kDescription = 'Tell us about the act of kindness you gave/received!'
 
 function onFormSubmit(e) {
   // sleep for 5 seconds to avoid any race conditions
   Utilities.sleep(5 * 1000)
-  var items = e.response.getItemResponses()
+  var items = e.response.getItemResponses();
   var itemValues = {}
   for (i in items) {
-    itemValues[items[i].getItem().getTitle()] = items[i].getResponse()
+    itemValues[items[i].getItem().getTitle()] = items[i].getResponse();
   }
   updateSpreadsheet(itemValues)
 }
 
 function rowOfEntry(sheet, itemValues) {
-  const data = sheet.getDataRange().getValues()
+  const data = sheet.getDataRange().getValues();
   const id = itemValues[kId]
   const address = itemValues[kAddress]
   const description = itemValues[kDescription]
@@ -52,14 +53,14 @@ function updateSpreadsheet(itemValues) {
 
   // TODO: add logic handling issues with this url fetch not working/address not able to return an actual location
   console.log("Address Supplied to Google Maps API -->", address)
-  var response = UrlFetchApp.fetch("https://maps.googleapis.com/maps/api/geocode/json?address=" + address + '&key=' + API_KEY)
-  console.log("\n\nGoogle Maps API URL Fetch Response Context Text -->", response.getContentText())
-  const rawGeoText = response.getContentText()
-  var geoData = JSON.parse(rawGeoText)
+  var response = UrlFetchApp.fetch("https://maps.googleapis.com/maps/api/geocode/json?address=" + address + '&key=' + API_KEY);
+  console.log("\n\nGoogle Maps API URL Fetch Response Context Text -->", response.getContentText());
+  const rawGeoText = response.getContentText();
+  var geoData = JSON.parse(rawGeoText);
 
   // Center of the Geographic Location
-  const latitude = geoData.results[0].geometry.location.lat
-  const longitude = geoData.results[0].geometry.location.lng
+  const latitude = geoData.results[0].geometry.location.lat;
+  const longitude = geoData.results[0].geometry.location.lng;
 
   // Geocoded Data for Location
   var formatted_address = geoData.results[0].formatted_address
@@ -114,7 +115,7 @@ function updateSpreadsheet(itemValues) {
 
 
 
-  var sheet = SpreadsheetApp.openById(SHEET_ID)
+  var sheet = SpreadsheetApp.openById(SHEET_ID);
   var lastRow = sheet.getLastRow()
   var lastRowNew = rowOfEntry(sheet, itemValues)
   if (lastRow !== lastRowNew) {
@@ -177,18 +178,18 @@ function debug() {
     'CITY where act of kindness took place': 'Boston',
     'STATE': 'MA',
     '[OPTIONAL] ZIP CODE': '02111',
-    '[Optional] STREET NAME': '49 Washington Street',
-    '[Optional] Tell us about the act of kindness you received!': 'Test 123'
+    '[Optional] STREET NAME': '21 Temple Place',
+    '[Optional] Tell us about the act of kindness you received!': 'Kevin got me a Chipotle bowl'
   }
 
   // Just Lat/Lon Data
   var other_test_dict = {
     'ID NUMBER on kindness card': '123',
-    'CITY where act of kindness took place': 'Portland',
+    'CITY where act of kindness took place': 'Belgrade',
     'STATE': 'ME',
     '[OPTIONAL] ZIP CODE': '04917',
-    '[Optional] STREET NAME': '123 Main Street',
-    '[Optional] Tell us about the act of kindness you received!': 'Test 456'
+    '[Optional] STREET NAME': '33 Berry Lane',
+    '[Optional] Tell us about the act of kindness you received!': 'Kevin got me a Garbanzo bowl'
   }
   updateSpreadsheet(test_dict)
 }
@@ -275,8 +276,8 @@ function debugGeoCode() {
   }
 
   // Center of the Geographic Location
-  const latitude = geoData.results[0].geometry.location.lat
-  const longitude = geoData.results[0].geometry.location.lng
+  const latitude = geoData.results[0].geometry.location.lat;
+  const longitude = geoData.results[0].geometry.location.lng;
 
   // Geocoded Data for Location
   var formatted_address = geoData.results[0].formatted_address
