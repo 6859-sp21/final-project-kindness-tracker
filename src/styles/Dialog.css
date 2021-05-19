@@ -1,7 +1,22 @@
 .kindness-card-image, .dialog-video-wrapper {
-    width: 70%;
-    padding-left: 15%;
-    padding-right: 15%;
+    width: 60%;
+    padding-left: 20%;
+    padding-right: 20%;
     padding-top: 10px;
     padding-bottom: 10px;
+}
+
+.dialog-video-wrapper iframe {
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    width: 90%;
+    height: 90%;
+}
+
+.dialog-video-wrapper-centered {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 */
+    height: 0;
+    text-align: center;
 }

@@ -70,10 +70,15 @@ const HelpDialog = ({ open, setOpen }) => {
           <Typography gutterBottom>
             The purpose of this app is to track the spread of acts of kindness and encourage people to pay it forward!
             </Typography>
-          <div className="dialog-video-wrapper">
-            <video width="100%" controls="controls">
-              <source src="https://www.dropbox.com/s/5whse10x4ziqafc/6859%20-%20Kindness%20Tracker.mp4?raw=1" type="video/mp4" />
-            </video>
+          <div className="dialog-video-wrapper dialog-video-wrapper-centered">
+            <iframe
+              src="https://www.youtube.com/embed/oispwOZaiFU"
+              title="YouTube video player"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            >
+            </iframe>
           </div>
           <Typography gutterBottom>
             Check out our project page <Link to='/about' target="_blank" rel="noopener noreferrer">here</Link> for more information!

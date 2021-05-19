@@ -33,7 +33,16 @@ const AboutPage = () => {
 
         <div className="about-content-left">
           <h2>Trailer Video</h2>
-          <p>TODO insert video here.</p>
+          <div className="about-video-wrapper about-video-wrapper-centered">
+            <iframe
+              src="https://www.youtube.com/embed/oispwOZaiFU"
+              title="YouTube video player"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            >
+            </iframe>
+          </div>
           <h2>Abstract</h2>
           <p>In the midst of current economic, political, and public health concerns, we believe that being kind to one
           another is more important than ever. That's why we developed Kindness Tracker, a data collection and
